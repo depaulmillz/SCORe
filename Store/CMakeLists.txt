@@ -1,0 +1,2 @@
+add_library(store INTERFACE)
+target_include_directories(store INTERFACE include)

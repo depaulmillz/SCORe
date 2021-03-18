@@ -1,0 +1,134 @@
+syntax = "proto2";
+
+package score;
+
+/*
+ Use to send to server to work on transaction
+ */
+/*message TxOperation {
+  enum OpType {
+    START = 0;
+    READ = 1;
+    WRITE = 2;
+    COMMIT = 3;
+    ROLLBACK = 4;
+  }
+  required OpType opType = 1;
+  optional string key = 2;
+  optional string value = 3;
+  optional uint64 txid = 4;
+}*/
+
+
+/*service TxRPC {
+  rpc StartTx(Empty) returns (TxIDMsg) {}
+  rpc Read(ReadOperation) returns (ReadOperationResponse) {}
+  rpc Write(WriteOperation) returns (WriteOperationResponse) {}
+  rpc Commit(TxIDMsg) returns (Committed) {}
+}*/
+
+service CControlRPC {
+
+  rpc DoReadRequest(ReadRequest) returns (ReadReturn) {}
+  rpc DoPrepare(Prepare) returns (Vote) {}
+  rpc DoDecide(Decide) returns (Committed) {}
+
+}
+
+message Empty {
+
+}
+
+message TxIDMsg {
+  required uint64 txid = 1;
+}
+
+message ReadOperation {
+  required uint64 txid = 1;
+  required string key = 2;
+}
+
+message ReadOperationResponse {
+  required uint64 txid = 1;
+  required string value = 2;
+  required bool aborted = 3;
+}
+
+message WriteOperation {
+  required uint64 txid = 1;
+  required string key = 2;
+  required string value = 3;
+}
+
+message WriteOperationResponse {
+  optional uint64 txid = 1;
+}
+
+/*
+Use to send to server to get response.
+ */
+message TxOperationResponse {
+  optional string value = 3;
+  optional uint64 txid = 4;
+}
+
+/*
+Read request message
+ */
+message ReadRequest {
+  required uint64 txid = 1;
+  required string key = 2;
+  required uint64 readSid = 3;
+  required bool firstRead = 4;
+}
+
+message ReadReturn {
+  required uint64 txid = 1;
+  required string key = 2;
+  required string value = 3;
+  required uint64 lastCommitted = 4;
+  required bool mostRecent = 5;
+}
+
+/*
+Prepare Message
+ */
+message Prepare {
+  required uint64 txid = 1;
+  required uint64 sid = 2;
+  message ReadSetElement {
+    required string key = 1;
+    required uint64 ver = 2;
+  }
+  message WriteSetElement {
+    required string key = 1;
+    required string value = 2;
+  }
+  repeated ReadSetElement rs = 3;
+  repeated WriteSetElement ws = 4;
+}
+
+/*
+Vote Message
+ */
+message Vote {
+  required uint64 txid = 1;
+  required uint64 sn = 2;
+  required bool outcome = 3;
+}
+
+/*
+Decide Message
+ */
+message Decide {
+  required uint64 txid = 1;
+  required uint64 fsn = 2;
+  required bool outcome = 3;
+}
+
+/*
+Committed Message
+ */
+message Committed {
+  required bool success = 1;
+}
