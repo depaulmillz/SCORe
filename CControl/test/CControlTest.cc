@@ -15,10 +15,14 @@
 using namespace score;
 
 TEST(CControlTest, AllocateAndDelete) {
+    spdlog::set_level(spdlog::level::trace);
+
     CControl c(std::make_shared<Context>(0, 1));
 }
 
 TEST(CControlTest, TestDoReadRequest) {
+    spdlog::set_level(spdlog::level::trace);
+
     CControl c(std::make_shared<Context>(0, 1));
     score::ReadRequest req;
     ReadReturn res;
@@ -33,6 +37,8 @@ TEST(CControlTest, TestDoReadRequest) {
 }
 
 TEST(CControlTest, TestTwoPC) {
+    spdlog::set_level(spdlog::level::trace);
+
     CControl c(std::make_shared<Context>(0, 1));
     Prepare req;
     Vote res;
@@ -64,6 +70,8 @@ TEST(CControlTest, TestTwoPC) {
 }
 
 TEST(CControlTest, TxAPIStartTest) {
+    spdlog::set_level(spdlog::level::trace);
+
     std::string addr = "127.0.0.1:8080";
 
     CControlContextPair pair(0, 1);
@@ -91,6 +99,8 @@ TEST(CControlTest, TxAPIStartTest) {
 }
 
 TEST(CControlTest, TxAPIReadWhatYouWriteTest) {
+    spdlog::set_level(spdlog::level::trace);
+
     std::string addr = "127.0.0.1:8080";
 
     CControlContextPair pair(0, 1);
@@ -129,6 +139,8 @@ TEST(CControlTest, TxAPIReadWhatYouWriteTest) {
 }
 
 TEST(CControlTest, TxAPIShouldCommit) {
+    spdlog::set_level(spdlog::level::trace);
+
     std::string addr = "127.0.0.1:8080";
 
     CControlContextPair pair(0, 1);
@@ -171,6 +183,8 @@ TEST(CControlTest, TxAPIShouldCommit) {
 }
 
 TEST(CControlTest, TxAPIShouldCommitAllReads) {
+    spdlog::set_level(spdlog::level::trace);
+
     std::string addr = "127.0.0.1:8080";
 
     CControlContextPair pair(0, 1);
@@ -209,6 +223,8 @@ TEST(CControlTest, TxAPIShouldCommitAllReads) {
 }
 
 TEST(CControlTest, TxClientAPIShouldCommitAllReads) {
+    spdlog::set_level(spdlog::level::trace);
+
     std::string internalAddr = "127.0.0.1:8080";
     std::string clientAddr = "127.0.0.1:8081";
 
@@ -247,6 +263,8 @@ TEST(CControlTest, TxClientAPIShouldCommitAllReads) {
 }
 
 TEST(CControlTest, TxClientAPIShouldCommitAllReadsServer) {
+    spdlog::set_level(spdlog::level::trace);
+
     std::vector<std::string> internalAddr = {"127.0.0.1:8080"};
     std::string clientAddr = "127.0.0.1:8081";
 

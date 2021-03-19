@@ -21,51 +21,28 @@ namespace score {
 
     class CControlRPCImpl final : public CControlRPC::Service {
     public:
-        CControlRPCImpl(std::shared_ptr<CControl> &control) : cc(control) {
+        CControlRPCImpl(std::shared_ptr<CControl> &control);
 
-        }
+        virtual ~CControlRPCImpl();
 
-        virtual ~CControlRPCImpl() {
+        grpc::Status DoReadRequest(::grpc::ServerContext *context,
+                                   const ::score::ReadRequest *request,
+                                   ::score::ReadReturn *response) override;
 
-        }
+        grpc::Status DoPrepare(::grpc::ServerContext *context,
+                               const ::score::Prepare *request,
+                               ::score::Vote *response) override;
 
-        grpc::Status DoReadRequest(::grpc::ServerContext *context, const ::score::ReadRequest *request,
-                                   ::score::ReadReturn *response) override {
-            SPDLOG_TRACE("In RPC");
-            cc->DoReadRequest(*request, response);
-            return ::grpc::Status::OK;
-        }
-
-        grpc::Status
-        DoPrepare(::grpc::ServerContext *context, const ::score::Prepare *request, ::score::Vote *response) override {
-            SPDLOG_TRACE("In RPC");
-
-            cc->DoPrepare(*request, response);
-            return ::grpc::Status::OK;
-        }
-
-        grpc::Status
-        DoDecide(::grpc::ServerContext *context, const ::score::Decide *request,
-                 ::score::Committed *response) override {
-            SPDLOG_TRACE("In RPC");
-
-            cc->DoDecide(*request, response);
-            return ::grpc::Status::OK;
-        }
+        grpc::Status DoDecide(::grpc::ServerContext *context,
+                              const ::score::Decide *request,
+                              ::score::Committed *response) override;
 
     private:
         std::shared_ptr<CControl> cc;
     };
 
-    std::unique_ptr<grpc::Server> RunServer(const std::string &server_address, std::shared_ptr<CControl> &cc) {
-        CControlRPCImpl* service = new CControlRPCImpl(cc); // TODO fix leak
-
-        grpc::ServerBuilder builder;
-        builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
-        builder.RegisterService(service);
-        std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
-        return std::move(server);
-    }
+    std::unique_ptr<grpc::Server> RunServer(const std::string &server_address,
+                                            std::shared_ptr<CControl> &cc);
 
 }
 

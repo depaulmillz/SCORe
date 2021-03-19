@@ -18,15 +18,9 @@ namespace score {
 
     struct Internals {
 
-        explicit Internals(const std::string &addr) :
-                c(grpc::CreateChannel(addr, grpc::InsecureChannelCredentials())),
-                stub_(std::move(TxRPC::NewStub(c))) {
+        explicit Internals(const std::string &addr);
 
-        }
-
-        ~Internals() {
-
-        }
+        ~Internals();
 
         std::shared_ptr<grpc::Channel> c;
         std::unique_ptr<TxRPC::Stub> stub_;
@@ -34,9 +28,7 @@ namespace score {
 
     class Tx {
     private:
-        Tx(uint64_t t, uint64_t n, std::shared_ptr<Internals> i) : txid(t), nodeid(n), internals(i), aborted(false) {
-
-        }
+        Tx(uint64_t t, uint64_t n, std::shared_ptr<Internals> i);
 
     public:
 
@@ -44,66 +36,13 @@ namespace score {
 
         Tx(Tx &&) = default;
 
-        ~Tx() {
+        ~Tx() = default;
 
-        }
+        std::pair<bool, std::string> Read(std::string key);
 
-        std::pair<bool, std::string> Read(std::string key) {
-            if(aborted){
-                return {false, ""};
-            }
+        bool Write(std::string key, std::string value);
 
-            grpc::ClientContext context;
-            ReadOperation request;
-
-            request.set_txid(txid);
-            request.set_nodeid(nodeid);
-            request.set_key(key);
-
-            ReadOperationResponse response;
-            internals->stub_->Read(&context, request, &response);
-
-            if(response.aborted()){
-                return {false, ""};
-            }
-
-            return {true, response.value()};
-        }
-
-        bool Write(std::string key, std::string value) {
-            if(aborted)
-                return false;
-
-            grpc::ClientContext context;
-            WriteOperation w;
-            WriteOperationResponse r;
-
-            w.set_txid(txid);
-            w.set_nodeid(nodeid);
-            w.set_key(key);
-            w.set_value(value);
-
-            internals->stub_->Write(&context, w, &r);
-
-            return true;
-        }
-
-        bool TryCommit() {
-            if(aborted)
-                return false;
-
-            grpc::ClientContext context;
-            TxIDMsg rq;
-
-            rq.set_txid(txid);
-            rq.set_nodeid(nodeid);
-
-            Committed resp;
-
-            internals->stub_->Commit(&context, rq, &resp);
-
-            return resp.success();
-        }
+        bool TryCommit();
 
         friend TxClient;
     private:
@@ -118,21 +57,11 @@ namespace score {
     class TxClient {
     public:
 
-        explicit TxClient(const std::string &addr) : internals(std::make_shared<Internals>(addr)) {
+        explicit TxClient(const std::string &addr);
 
-        }
+        ~TxClient();
 
-        ~TxClient() {
-
-        }
-
-        Tx StartTx() {
-            grpc::ClientContext context;
-            Empty e;
-            TxIDMsg t;
-            internals->stub_->StartTx(&context, e, &t);
-            return Tx(t.txid(), t.nodeid(), internals);
-        }
+        Tx StartTx();
 
     private:
         std::shared_ptr<Internals> internals;

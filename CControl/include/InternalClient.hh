@@ -24,41 +24,17 @@
 namespace score {
     struct InternalClient {
 
-        explicit InternalClient(const std::string &addr) :
-                c(grpc::CreateChannel(addr, grpc::InsecureChannelCredentials())),
-                stub_(std::move(CControlRPC::NewStub(c))) {
+        explicit InternalClient(const std::string &addr);
 
-        }
+        InternalClient(InternalClient &&other);
 
-        InternalClient(InternalClient &&other) {
-            this->c = std::move(other.c);
-            this->stub_ = std::move(other.stub_);
-        }
+        ~InternalClient();
 
-        ~InternalClient() {
-        }
+        void DoReadRequest(const ReadRequest &request, ReadReturn *response);
 
-        void DoReadRequest(const ReadRequest &request, ReadReturn *response) {
-            SPDLOG_TRACE("Calling stub");
+        void DoPrepare(const Prepare &request, Vote *response);
 
-            grpc::ClientContext context;
-            stub_->DoReadRequest(&context, request, response);
-        }
-
-        void DoPrepare(const Prepare &request, Vote *response) {
-
-            SPDLOG_TRACE("Calling stub");
-
-            grpc::ClientContext context;
-            stub_->DoPrepare(&context, request, response);
-        }
-
-        void DoDecide(const Decide &request, Committed *response) {
-            SPDLOG_TRACE("Calling stub");
-
-            grpc::ClientContext context;
-            stub_->DoDecide(&context, request, response);
-        }
+        void DoDecide(const Decide &request, Committed *response);
 
         std::shared_ptr<grpc::Channel> c;
         std::unique_ptr<CControlRPC::Stub> stub_;
