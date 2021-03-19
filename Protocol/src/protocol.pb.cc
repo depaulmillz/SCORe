@@ -291,15 +291,19 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_protocol_2eproto::offsets[] PR
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::score::TxIDMsg, txid_),
+  PROTOBUF_FIELD_OFFSET(::score::TxIDMsg, nodeid_),
   0,
+  1,
   PROTOBUF_FIELD_OFFSET(::score::ReadOperation, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::score::ReadOperation, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::score::ReadOperation, txid_),
+  PROTOBUF_FIELD_OFFSET(::score::ReadOperation, nodeid_),
   PROTOBUF_FIELD_OFFSET(::score::ReadOperation, key_),
   1,
+  2,
   0,
   PROTOBUF_FIELD_OFFSET(::score::ReadOperationResponse, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::score::ReadOperationResponse, _internal_metadata_),
@@ -307,20 +311,24 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_protocol_2eproto::offsets[] PR
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::score::ReadOperationResponse, txid_),
+  PROTOBUF_FIELD_OFFSET(::score::ReadOperationResponse, nodeid_),
   PROTOBUF_FIELD_OFFSET(::score::ReadOperationResponse, value_),
   PROTOBUF_FIELD_OFFSET(::score::ReadOperationResponse, aborted_),
   1,
-  0,
   2,
+  0,
+  3,
   PROTOBUF_FIELD_OFFSET(::score::WriteOperation, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::score::WriteOperation, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::score::WriteOperation, txid_),
+  PROTOBUF_FIELD_OFFSET(::score::WriteOperation, nodeid_),
   PROTOBUF_FIELD_OFFSET(::score::WriteOperation, key_),
   PROTOBUF_FIELD_OFFSET(::score::WriteOperation, value_),
   2,
+  3,
   0,
   1,
   PROTOBUF_FIELD_OFFSET(::score::WriteOperationResponse, _has_bits_),
@@ -329,7 +337,9 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_protocol_2eproto::offsets[] PR
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::score::WriteOperationResponse, txid_),
+  PROTOBUF_FIELD_OFFSET(::score::WriteOperationResponse, nodeid_),
   0,
+  1,
   PROTOBUF_FIELD_OFFSET(::score::TxOperationResponse, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::score::TxOperationResponse, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -337,36 +347,42 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_protocol_2eproto::offsets[] PR
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::score::TxOperationResponse, value_),
   PROTOBUF_FIELD_OFFSET(::score::TxOperationResponse, txid_),
+  PROTOBUF_FIELD_OFFSET(::score::TxOperationResponse, nodeid_),
   0,
   1,
+  2,
   PROTOBUF_FIELD_OFFSET(::score::ReadRequest, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::score::ReadRequest, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::score::ReadRequest, txid_),
+  PROTOBUF_FIELD_OFFSET(::score::ReadRequest, nodeid_),
   PROTOBUF_FIELD_OFFSET(::score::ReadRequest, key_),
   PROTOBUF_FIELD_OFFSET(::score::ReadRequest, readsid_),
   PROTOBUF_FIELD_OFFSET(::score::ReadRequest, firstread_),
   1,
-  0,
   2,
+  0,
   3,
+  4,
   PROTOBUF_FIELD_OFFSET(::score::ReadReturn, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::score::ReadReturn, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::score::ReadReturn, txid_),
+  PROTOBUF_FIELD_OFFSET(::score::ReadReturn, nodeid_),
   PROTOBUF_FIELD_OFFSET(::score::ReadReturn, key_),
   PROTOBUF_FIELD_OFFSET(::score::ReadReturn, value_),
   PROTOBUF_FIELD_OFFSET(::score::ReadReturn, lastcommitted_),
   PROTOBUF_FIELD_OFFSET(::score::ReadReturn, mostrecent_),
   2,
+  3,
   0,
   1,
-  3,
   4,
+  5,
   PROTOBUF_FIELD_OFFSET(::score::Prepare_ReadSetElement, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::score::Prepare_ReadSetElement, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -391,11 +407,13 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_protocol_2eproto::offsets[] PR
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::score::Prepare, txid_),
+  PROTOBUF_FIELD_OFFSET(::score::Prepare, nodeid_),
   PROTOBUF_FIELD_OFFSET(::score::Prepare, sid_),
   PROTOBUF_FIELD_OFFSET(::score::Prepare, rs_),
   PROTOBUF_FIELD_OFFSET(::score::Prepare, ws_),
   0,
   1,
+  2,
   ~0u,
   ~0u,
   PROTOBUF_FIELD_OFFSET(::score::Vote, _has_bits_),
@@ -404,22 +422,26 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_protocol_2eproto::offsets[] PR
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::score::Vote, txid_),
+  PROTOBUF_FIELD_OFFSET(::score::Vote, nodeid_),
   PROTOBUF_FIELD_OFFSET(::score::Vote, sn_),
   PROTOBUF_FIELD_OFFSET(::score::Vote, outcome_),
   0,
   1,
   2,
+  3,
   PROTOBUF_FIELD_OFFSET(::score::Decide, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::score::Decide, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::score::Decide, txid_),
+  PROTOBUF_FIELD_OFFSET(::score::Decide, nodeid_),
   PROTOBUF_FIELD_OFFSET(::score::Decide, fsn_),
   PROTOBUF_FIELD_OFFSET(::score::Decide, outcome_),
   0,
   1,
   2,
+  3,
   PROTOBUF_FIELD_OFFSET(::score::Committed, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::score::Committed, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -430,20 +452,20 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_protocol_2eproto::offsets[] PR
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::score::Empty)},
-  { 5, 11, sizeof(::score::TxIDMsg)},
-  { 12, 19, sizeof(::score::ReadOperation)},
-  { 21, 29, sizeof(::score::ReadOperationResponse)},
-  { 32, 40, sizeof(::score::WriteOperation)},
-  { 43, 49, sizeof(::score::WriteOperationResponse)},
-  { 50, 57, sizeof(::score::TxOperationResponse)},
-  { 59, 68, sizeof(::score::ReadRequest)},
-  { 72, 82, sizeof(::score::ReadReturn)},
-  { 87, 94, sizeof(::score::Prepare_ReadSetElement)},
-  { 96, 103, sizeof(::score::Prepare_WriteSetElement)},
-  { 105, 114, sizeof(::score::Prepare)},
-  { 118, 126, sizeof(::score::Vote)},
-  { 129, 137, sizeof(::score::Decide)},
-  { 140, 146, sizeof(::score::Committed)},
+  { 5, 12, sizeof(::score::TxIDMsg)},
+  { 14, 22, sizeof(::score::ReadOperation)},
+  { 25, 34, sizeof(::score::ReadOperationResponse)},
+  { 38, 47, sizeof(::score::WriteOperation)},
+  { 51, 58, sizeof(::score::WriteOperationResponse)},
+  { 60, 68, sizeof(::score::TxOperationResponse)},
+  { 71, 81, sizeof(::score::ReadRequest)},
+  { 86, 97, sizeof(::score::ReadReturn)},
+  { 103, 110, sizeof(::score::Prepare_ReadSetElement)},
+  { 112, 119, sizeof(::score::Prepare_WriteSetElement)},
+  { 121, 131, sizeof(::score::Prepare)},
+  { 136, 145, sizeof(::score::Vote)},
+  { 149, 158, sizeof(::score::Decide)},
+  { 162, 168, sizeof(::score::Committed)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -465,32 +487,42 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 };
 
 const char descriptor_table_protodef_protocol_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\016protocol.proto\022\005score\"\007\n\005Empty\"\027\n\007TxID"
-  "Msg\022\014\n\004txid\030\001 \002(\004\"*\n\rReadOperation\022\014\n\004tx"
-  "id\030\001 \002(\004\022\013\n\003key\030\002 \002(\t\"E\n\025ReadOperationRe"
-  "sponse\022\014\n\004txid\030\001 \002(\004\022\r\n\005value\030\002 \002(\t\022\017\n\007a"
-  "borted\030\003 \002(\010\":\n\016WriteOperation\022\014\n\004txid\030\001"
-  " \002(\004\022\013\n\003key\030\002 \002(\t\022\r\n\005value\030\003 \002(\t\"&\n\026Writ"
-  "eOperationResponse\022\014\n\004txid\030\001 \001(\004\"2\n\023TxOp"
-  "erationResponse\022\r\n\005value\030\003 \001(\t\022\014\n\004txid\030\004"
-  " \001(\004\"L\n\013ReadRequest\022\014\n\004txid\030\001 \002(\004\022\013\n\003key"
-  "\030\002 \002(\t\022\017\n\007readSid\030\003 \002(\004\022\021\n\tfirstRead\030\004 \002"
-  "(\010\"a\n\nReadReturn\022\014\n\004txid\030\001 \002(\004\022\013\n\003key\030\002 "
-  "\002(\t\022\r\n\005value\030\003 \002(\t\022\025\n\rlastCommitted\030\004 \002("
-  "\004\022\022\n\nmostRecent\030\005 \002(\010\"\326\001\n\007Prepare\022\014\n\004txi"
-  "d\030\001 \002(\004\022\013\n\003sid\030\002 \002(\004\022)\n\002rs\030\003 \003(\0132\035.score"
-  ".Prepare.ReadSetElement\022*\n\002ws\030\004 \003(\0132\036.sc"
-  "ore.Prepare.WriteSetElement\032*\n\016ReadSetEl"
-  "ement\022\013\n\003key\030\001 \002(\t\022\013\n\003ver\030\002 \002(\004\032-\n\017Write"
-  "SetElement\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \002(\t\"1"
-  "\n\004Vote\022\014\n\004txid\030\001 \002(\004\022\n\n\002sn\030\002 \002(\004\022\017\n\007outc"
-  "ome\030\003 \002(\010\"4\n\006Decide\022\014\n\004txid\030\001 \002(\004\022\013\n\003fsn"
-  "\030\002 \002(\004\022\017\n\007outcome\030\003 \002(\010\"\034\n\tCommitted\022\017\n\007"
-  "success\030\001 \002(\0102\242\001\n\013CControlRPC\0228\n\rDoReadR"
-  "equest\022\022.score.ReadRequest\032\021.score.ReadR"
-  "eturn\"\000\022*\n\tDoPrepare\022\016.score.Prepare\032\013.s"
-  "core.Vote\"\000\022-\n\010DoDecide\022\r.score.Decide\032\020"
-  ".score.Committed\"\000"
+  "\n\016protocol.proto\022\005score\"\007\n\005Empty\"\'\n\007TxID"
+  "Msg\022\014\n\004txid\030\001 \002(\004\022\016\n\006nodeid\030\002 \002(\004\":\n\rRea"
+  "dOperation\022\014\n\004txid\030\001 \002(\004\022\016\n\006nodeid\030\002 \002(\004"
+  "\022\013\n\003key\030\003 \002(\t\"U\n\025ReadOperationResponse\022\014"
+  "\n\004txid\030\001 \002(\004\022\016\n\006nodeid\030\002 \002(\004\022\r\n\005value\030\003 "
+  "\002(\t\022\017\n\007aborted\030\004 \002(\010\"J\n\016WriteOperation\022\014"
+  "\n\004txid\030\001 \002(\004\022\016\n\006nodeid\030\002 \002(\004\022\013\n\003key\030\003 \002("
+  "\t\022\r\n\005value\030\004 \002(\t\"6\n\026WriteOperationRespon"
+  "se\022\014\n\004txid\030\001 \002(\004\022\016\n\006nodeid\030\002 \002(\004\"B\n\023TxOp"
+  "erationResponse\022\r\n\005value\030\003 \001(\t\022\014\n\004txid\030\001"
+  " \002(\004\022\016\n\006nodeid\030\002 \002(\004\"\\\n\013ReadRequest\022\014\n\004t"
+  "xid\030\001 \002(\004\022\016\n\006nodeid\030\002 \002(\004\022\013\n\003key\030\003 \002(\t\022\017"
+  "\n\007readSid\030\004 \002(\004\022\021\n\tfirstRead\030\005 \002(\010\"q\n\nRe"
+  "adReturn\022\014\n\004txid\030\001 \002(\004\022\016\n\006nodeid\030\002 \002(\004\022\013"
+  "\n\003key\030\003 \002(\t\022\r\n\005value\030\004 \002(\t\022\025\n\rlastCommit"
+  "ted\030\005 \002(\004\022\022\n\nmostRecent\030\006 \002(\010\"\346\001\n\007Prepar"
+  "e\022\014\n\004txid\030\001 \002(\004\022\016\n\006nodeid\030\002 \002(\004\022\013\n\003sid\030\003"
+  " \002(\004\022)\n\002rs\030\004 \003(\0132\035.score.Prepare.ReadSet"
+  "Element\022*\n\002ws\030\005 \003(\0132\036.score.Prepare.Writ"
+  "eSetElement\032*\n\016ReadSetElement\022\013\n\003key\030\001 \002"
+  "(\t\022\013\n\003ver\030\002 \002(\004\032-\n\017WriteSetElement\022\013\n\003ke"
+  "y\030\001 \002(\t\022\r\n\005value\030\002 \002(\t\"A\n\004Vote\022\014\n\004txid\030\001"
+  " \002(\004\022\016\n\006nodeid\030\002 \002(\004\022\n\n\002sn\030\003 \002(\004\022\017\n\007outc"
+  "ome\030\004 \002(\010\"D\n\006Decide\022\014\n\004txid\030\001 \002(\004\022\016\n\006nod"
+  "eid\030\002 \002(\004\022\013\n\003fsn\030\003 \002(\004\022\017\n\007outcome\030\004 \002(\010\""
+  "\034\n\tCommitted\022\017\n\007success\030\001 \002(\0102\337\001\n\005TxRPC\022"
+  ")\n\007StartTx\022\014.score.Empty\032\016.score.TxIDMsg"
+  "\"\000\022<\n\004Read\022\024.score.ReadOperation\032\034.score"
+  ".ReadOperationResponse\"\000\022\?\n\005Write\022\025.scor"
+  "e.WriteOperation\032\035.score.WriteOperationR"
+  "esponse\"\000\022,\n\006Commit\022\016.score.TxIDMsg\032\020.sc"
+  "ore.Committed\"\0002\242\001\n\013CControlRPC\0228\n\rDoRea"
+  "dRequest\022\022.score.ReadRequest\032\021.score.Rea"
+  "dReturn\"\000\022*\n\tDoPrepare\022\016.score.Prepare\032\013"
+  ".score.Vote\"\000\022-\n\010DoDecide\022\r.score.Decide"
+  "\032\020.score.Committed\"\000"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_protocol_2eproto_deps[1] = {
 };
@@ -513,7 +545,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_pro
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_protocol_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_protocol_2eproto = {
-  false, false, descriptor_table_protodef_protocol_2eproto, "protocol.proto", 1018,
+  false, false, descriptor_table_protodef_protocol_2eproto, "protocol.proto", 1420,
   &descriptor_table_protocol_2eproto_once, descriptor_table_protocol_2eproto_sccs, descriptor_table_protocol_2eproto_deps, 15, 0,
   schemas, file_default_instances, TableStruct_protocol_2eproto::offsets,
   file_level_metadata_protocol_2eproto, 15, file_level_enum_descriptors_protocol_2eproto, file_level_service_descriptors_protocol_2eproto,
@@ -693,8 +725,11 @@ class TxIDMsg::_Internal {
   static void set_has_txid(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
+  static void set_has_nodeid(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
   static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x00000001) ^ 0x00000001) != 0;
+    return ((has_bits[0] & 0x00000003) ^ 0x00000003) != 0;
   }
 };
 
@@ -708,12 +743,17 @@ TxIDMsg::TxIDMsg(const TxIDMsg& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  txid_ = from.txid_;
+  ::memcpy(&txid_, &from.txid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&nodeid_) -
+    reinterpret_cast<char*>(&txid_)) + sizeof(nodeid_));
   // @@protoc_insertion_point(copy_constructor:score.TxIDMsg)
 }
 
 void TxIDMsg::SharedCtor() {
-  txid_ = PROTOBUF_ULONGLONG(0);
+  ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+      reinterpret_cast<char*>(&txid_) - reinterpret_cast<char*>(this)),
+      0, static_cast<size_t>(reinterpret_cast<char*>(&nodeid_) -
+      reinterpret_cast<char*>(&txid_)) + sizeof(nodeid_));
 }
 
 TxIDMsg::~TxIDMsg() {
@@ -747,7 +787,12 @@ void TxIDMsg::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  txid_ = PROTOBUF_ULONGLONG(0);
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    ::memset(&txid_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&nodeid_) -
+        reinterpret_cast<char*>(&txid_)) + sizeof(nodeid_));
+  }
   _has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -765,6 +810,14 @@ const char* TxIDMsg::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::in
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
           _Internal::set_has_txid(&has_bits);
           txid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required uint64 nodeid = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          _Internal::set_has_nodeid(&has_bits);
+          nodeid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -804,6 +857,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_txid(), target);
   }
 
+  // required uint64 nodeid = 2;
+  if (cached_has_bits & 0x00000002u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->_internal_nodeid(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -812,15 +871,43 @@ failure:
   return target;
 }
 
+size_t TxIDMsg::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:score.TxIDMsg)
+  size_t total_size = 0;
+
+  if (_internal_has_txid()) {
+    // required uint64 txid = 1;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_txid());
+  }
+
+  if (_internal_has_nodeid()) {
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
+  }
+
+  return total_size;
+}
 size_t TxIDMsg::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:score.TxIDMsg)
   size_t total_size = 0;
 
-  // required uint64 txid = 1;
-  if (_internal_has_txid()) {
+  if (((_has_bits_[0] & 0x00000003) ^ 0x00000003) == 0) {  // All required fields are present.
+    // required uint64 txid = 1;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_txid());
+
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
   }
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -857,8 +944,15 @@ void TxIDMsg::MergeFrom(const TxIDMsg& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_txid()) {
-    _internal_set_txid(from._internal_txid());
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      txid_ = from.txid_;
+    }
+    if (cached_has_bits & 0x00000002u) {
+      nodeid_ = from.nodeid_;
+    }
+    _has_bits_[0] |= cached_has_bits;
   }
 }
 
@@ -885,7 +979,12 @@ void TxIDMsg::InternalSwap(TxIDMsg* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
-  swap(txid_, other->txid_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(TxIDMsg, nodeid_)
+      + sizeof(TxIDMsg::nodeid_)
+      - PROTOBUF_FIELD_OFFSET(TxIDMsg, txid_)>(
+          reinterpret_cast<char*>(&txid_),
+          reinterpret_cast<char*>(&other->txid_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata TxIDMsg::GetMetadata() const {
@@ -901,11 +1000,14 @@ class ReadOperation::_Internal {
   static void set_has_txid(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
   }
+  static void set_has_nodeid(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
   static void set_has_key(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
   static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x00000003) ^ 0x00000003) != 0;
+    return ((has_bits[0] & 0x00000007) ^ 0x00000007) != 0;
   }
 };
 
@@ -924,14 +1026,19 @@ ReadOperation::ReadOperation(const ReadOperation& from)
     key_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_key(), 
       GetArena());
   }
-  txid_ = from.txid_;
+  ::memcpy(&txid_, &from.txid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&nodeid_) -
+    reinterpret_cast<char*>(&txid_)) + sizeof(nodeid_));
   // @@protoc_insertion_point(copy_constructor:score.ReadOperation)
 }
 
 void ReadOperation::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_ReadOperation_protocol_2eproto.base);
   key_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  txid_ = PROTOBUF_ULONGLONG(0);
+  ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+      reinterpret_cast<char*>(&txid_) - reinterpret_cast<char*>(this)),
+      0, static_cast<size_t>(reinterpret_cast<char*>(&nodeid_) -
+      reinterpret_cast<char*>(&txid_)) + sizeof(nodeid_));
 }
 
 ReadOperation::~ReadOperation() {
@@ -970,7 +1077,11 @@ void ReadOperation::Clear() {
   if (cached_has_bits & 0x00000001u) {
     key_.ClearNonDefaultToEmpty();
   }
-  txid_ = PROTOBUF_ULONGLONG(0);
+  if (cached_has_bits & 0x00000006u) {
+    ::memset(&txid_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&nodeid_) -
+        reinterpret_cast<char*>(&txid_)) + sizeof(nodeid_));
+  }
   _has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -991,9 +1102,17 @@ const char* ReadOperation::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required string key = 2;
+      // required uint64 nodeid = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          _Internal::set_has_nodeid(&has_bits);
+          nodeid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required string key = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
           auto str = _internal_mutable_key();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           #ifndef NDEBUG
@@ -1038,14 +1157,20 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_txid(), target);
   }
 
-  // required string key = 2;
+  // required uint64 nodeid = 2;
+  if (cached_has_bits & 0x00000004u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->_internal_nodeid(), target);
+  }
+
+  // required string key = 3;
   if (cached_has_bits & 0x00000001u) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
       this->_internal_key().data(), static_cast<int>(this->_internal_key().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
       "score.ReadOperation.key");
     target = stream->WriteStringMaybeAliased(
-        2, this->_internal_key(), target);
+        3, this->_internal_key(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1061,7 +1186,7 @@ size_t ReadOperation::RequiredFieldsByteSizeFallback() const {
   size_t total_size = 0;
 
   if (_internal_has_key()) {
-    // required string key = 2;
+    // required string key = 3;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_key());
@@ -1074,14 +1199,21 @@ size_t ReadOperation::RequiredFieldsByteSizeFallback() const {
         this->_internal_txid());
   }
 
+  if (_internal_has_nodeid()) {
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
+  }
+
   return total_size;
 }
 size_t ReadOperation::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:score.ReadOperation)
   size_t total_size = 0;
 
-  if (((_has_bits_[0] & 0x00000003) ^ 0x00000003) == 0) {  // All required fields are present.
-    // required string key = 2;
+  if (((_has_bits_[0] & 0x00000007) ^ 0x00000007) == 0) {  // All required fields are present.
+    // required string key = 3;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_key());
@@ -1090,6 +1222,11 @@ size_t ReadOperation::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_txid());
+
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
 
   } else {
     total_size += RequiredFieldsByteSizeFallback();
@@ -1130,12 +1267,15 @@ void ReadOperation::MergeFrom(const ReadOperation& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
+  if (cached_has_bits & 0x00000007u) {
     if (cached_has_bits & 0x00000001u) {
       _internal_set_key(from._internal_key());
     }
     if (cached_has_bits & 0x00000002u) {
       txid_ = from.txid_;
+    }
+    if (cached_has_bits & 0x00000004u) {
+      nodeid_ = from.nodeid_;
     }
     _has_bits_[0] |= cached_has_bits;
   }
@@ -1165,7 +1305,12 @@ void ReadOperation::InternalSwap(ReadOperation* other) {
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   key_.Swap(&other->key_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  swap(txid_, other->txid_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(ReadOperation, nodeid_)
+      + sizeof(ReadOperation::nodeid_)
+      - PROTOBUF_FIELD_OFFSET(ReadOperation, txid_)>(
+          reinterpret_cast<char*>(&txid_),
+          reinterpret_cast<char*>(&other->txid_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata ReadOperation::GetMetadata() const {
@@ -1181,14 +1326,17 @@ class ReadOperationResponse::_Internal {
   static void set_has_txid(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
   }
+  static void set_has_nodeid(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
   static void set_has_value(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
   static void set_has_aborted(HasBits* has_bits) {
-    (*has_bits)[0] |= 4u;
+    (*has_bits)[0] |= 8u;
   }
   static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x00000007) ^ 0x00000007) != 0;
+    return ((has_bits[0] & 0x0000000f) ^ 0x0000000f) != 0;
   }
 };
 
@@ -1258,7 +1406,7 @@ void ReadOperationResponse::Clear() {
   if (cached_has_bits & 0x00000001u) {
     value_.ClearNonDefaultToEmpty();
   }
-  if (cached_has_bits & 0x00000006u) {
+  if (cached_has_bits & 0x0000000eu) {
     ::memset(&txid_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&aborted_) -
         reinterpret_cast<char*>(&txid_)) + sizeof(aborted_));
@@ -1283,9 +1431,17 @@ const char* ReadOperationResponse::_InternalParse(const char* ptr, ::PROTOBUF_NA
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required string value = 2;
+      // required uint64 nodeid = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          _Internal::set_has_nodeid(&has_bits);
+          nodeid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required string value = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
           auto str = _internal_mutable_value();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           #ifndef NDEBUG
@@ -1294,9 +1450,9 @@ const char* ReadOperationResponse::_InternalParse(const char* ptr, ::PROTOBUF_NA
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required bool aborted = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+      // required bool aborted = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
           _Internal::set_has_aborted(&has_bits);
           aborted_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
@@ -1338,20 +1494,26 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_txid(), target);
   }
 
-  // required string value = 2;
+  // required uint64 nodeid = 2;
+  if (cached_has_bits & 0x00000004u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->_internal_nodeid(), target);
+  }
+
+  // required string value = 3;
   if (cached_has_bits & 0x00000001u) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
       this->_internal_value().data(), static_cast<int>(this->_internal_value().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
       "score.ReadOperationResponse.value");
     target = stream->WriteStringMaybeAliased(
-        2, this->_internal_value(), target);
+        3, this->_internal_value(), target);
   }
 
-  // required bool aborted = 3;
-  if (cached_has_bits & 0x00000004u) {
+  // required bool aborted = 4;
+  if (cached_has_bits & 0x00000008u) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(3, this->_internal_aborted(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(4, this->_internal_aborted(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1367,7 +1529,7 @@ size_t ReadOperationResponse::RequiredFieldsByteSizeFallback() const {
   size_t total_size = 0;
 
   if (_internal_has_value()) {
-    // required string value = 2;
+    // required string value = 3;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_value());
@@ -1380,8 +1542,15 @@ size_t ReadOperationResponse::RequiredFieldsByteSizeFallback() const {
         this->_internal_txid());
   }
 
+  if (_internal_has_nodeid()) {
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
+  }
+
   if (_internal_has_aborted()) {
-    // required bool aborted = 3;
+    // required bool aborted = 4;
     total_size += 1 + 1;
   }
 
@@ -1391,8 +1560,8 @@ size_t ReadOperationResponse::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:score.ReadOperationResponse)
   size_t total_size = 0;
 
-  if (((_has_bits_[0] & 0x00000007) ^ 0x00000007) == 0) {  // All required fields are present.
-    // required string value = 2;
+  if (((_has_bits_[0] & 0x0000000f) ^ 0x0000000f) == 0) {  // All required fields are present.
+    // required string value = 3;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_value());
@@ -1402,7 +1571,12 @@ size_t ReadOperationResponse::ByteSizeLong() const {
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_txid());
 
-    // required bool aborted = 3;
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
+
+    // required bool aborted = 4;
     total_size += 1 + 1;
 
   } else {
@@ -1444,7 +1618,7 @@ void ReadOperationResponse::MergeFrom(const ReadOperationResponse& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x0000000fu) {
     if (cached_has_bits & 0x00000001u) {
       _internal_set_value(from._internal_value());
     }
@@ -1452,6 +1626,9 @@ void ReadOperationResponse::MergeFrom(const ReadOperationResponse& from) {
       txid_ = from.txid_;
     }
     if (cached_has_bits & 0x00000004u) {
+      nodeid_ = from.nodeid_;
+    }
+    if (cached_has_bits & 0x00000008u) {
       aborted_ = from.aborted_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -1503,6 +1680,9 @@ class WriteOperation::_Internal {
   static void set_has_txid(HasBits* has_bits) {
     (*has_bits)[0] |= 4u;
   }
+  static void set_has_nodeid(HasBits* has_bits) {
+    (*has_bits)[0] |= 8u;
+  }
   static void set_has_key(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
@@ -1510,7 +1690,7 @@ class WriteOperation::_Internal {
     (*has_bits)[0] |= 2u;
   }
   static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x00000007) ^ 0x00000007) != 0;
+    return ((has_bits[0] & 0x0000000f) ^ 0x0000000f) != 0;
   }
 };
 
@@ -1534,7 +1714,9 @@ WriteOperation::WriteOperation(const WriteOperation& from)
     value_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_value(), 
       GetArena());
   }
-  txid_ = from.txid_;
+  ::memcpy(&txid_, &from.txid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&nodeid_) -
+    reinterpret_cast<char*>(&txid_)) + sizeof(nodeid_));
   // @@protoc_insertion_point(copy_constructor:score.WriteOperation)
 }
 
@@ -1542,7 +1724,10 @@ void WriteOperation::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_WriteOperation_protocol_2eproto.base);
   key_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   value_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  txid_ = PROTOBUF_ULONGLONG(0);
+  ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+      reinterpret_cast<char*>(&txid_) - reinterpret_cast<char*>(this)),
+      0, static_cast<size_t>(reinterpret_cast<char*>(&nodeid_) -
+      reinterpret_cast<char*>(&txid_)) + sizeof(nodeid_));
 }
 
 WriteOperation::~WriteOperation() {
@@ -1587,7 +1772,11 @@ void WriteOperation::Clear() {
       value_.ClearNonDefaultToEmpty();
     }
   }
-  txid_ = PROTOBUF_ULONGLONG(0);
+  if (cached_has_bits & 0x0000000cu) {
+    ::memset(&txid_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&nodeid_) -
+        reinterpret_cast<char*>(&txid_)) + sizeof(nodeid_));
+  }
   _has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -1608,9 +1797,17 @@ const char* WriteOperation::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required string key = 2;
+      // required uint64 nodeid = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          _Internal::set_has_nodeid(&has_bits);
+          nodeid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required string key = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
           auto str = _internal_mutable_key();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           #ifndef NDEBUG
@@ -1619,9 +1816,9 @@ const char* WriteOperation::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required string value = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+      // required string value = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
           auto str = _internal_mutable_value();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           #ifndef NDEBUG
@@ -1666,24 +1863,30 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_txid(), target);
   }
 
-  // required string key = 2;
+  // required uint64 nodeid = 2;
+  if (cached_has_bits & 0x00000008u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->_internal_nodeid(), target);
+  }
+
+  // required string key = 3;
   if (cached_has_bits & 0x00000001u) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
       this->_internal_key().data(), static_cast<int>(this->_internal_key().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
       "score.WriteOperation.key");
     target = stream->WriteStringMaybeAliased(
-        2, this->_internal_key(), target);
+        3, this->_internal_key(), target);
   }
 
-  // required string value = 3;
+  // required string value = 4;
   if (cached_has_bits & 0x00000002u) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
       this->_internal_value().data(), static_cast<int>(this->_internal_value().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
       "score.WriteOperation.value");
     target = stream->WriteStringMaybeAliased(
-        3, this->_internal_value(), target);
+        4, this->_internal_value(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1699,14 +1902,14 @@ size_t WriteOperation::RequiredFieldsByteSizeFallback() const {
   size_t total_size = 0;
 
   if (_internal_has_key()) {
-    // required string key = 2;
+    // required string key = 3;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_key());
   }
 
   if (_internal_has_value()) {
-    // required string value = 3;
+    // required string value = 4;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_value());
@@ -1719,19 +1922,26 @@ size_t WriteOperation::RequiredFieldsByteSizeFallback() const {
         this->_internal_txid());
   }
 
+  if (_internal_has_nodeid()) {
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
+  }
+
   return total_size;
 }
 size_t WriteOperation::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:score.WriteOperation)
   size_t total_size = 0;
 
-  if (((_has_bits_[0] & 0x00000007) ^ 0x00000007) == 0) {  // All required fields are present.
-    // required string key = 2;
+  if (((_has_bits_[0] & 0x0000000f) ^ 0x0000000f) == 0) {  // All required fields are present.
+    // required string key = 3;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_key());
 
-    // required string value = 3;
+    // required string value = 4;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_value());
@@ -1740,6 +1950,11 @@ size_t WriteOperation::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_txid());
+
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
 
   } else {
     total_size += RequiredFieldsByteSizeFallback();
@@ -1780,7 +1995,7 @@ void WriteOperation::MergeFrom(const WriteOperation& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x0000000fu) {
     if (cached_has_bits & 0x00000001u) {
       _internal_set_key(from._internal_key());
     }
@@ -1789,6 +2004,9 @@ void WriteOperation::MergeFrom(const WriteOperation& from) {
     }
     if (cached_has_bits & 0x00000004u) {
       txid_ = from.txid_;
+    }
+    if (cached_has_bits & 0x00000008u) {
+      nodeid_ = from.nodeid_;
     }
     _has_bits_[0] |= cached_has_bits;
   }
@@ -1819,7 +2037,12 @@ void WriteOperation::InternalSwap(WriteOperation* other) {
   swap(_has_bits_[0], other->_has_bits_[0]);
   key_.Swap(&other->key_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   value_.Swap(&other->value_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  swap(txid_, other->txid_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(WriteOperation, nodeid_)
+      + sizeof(WriteOperation::nodeid_)
+      - PROTOBUF_FIELD_OFFSET(WriteOperation, txid_)>(
+          reinterpret_cast<char*>(&txid_),
+          reinterpret_cast<char*>(&other->txid_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata WriteOperation::GetMetadata() const {
@@ -1835,6 +2058,12 @@ class WriteOperationResponse::_Internal {
   static void set_has_txid(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
+  static void set_has_nodeid(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+  static bool MissingRequiredFields(const HasBits& has_bits) {
+    return ((has_bits[0] & 0x00000003) ^ 0x00000003) != 0;
+  }
 };
 
 WriteOperationResponse::WriteOperationResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena)
@@ -1847,12 +2076,17 @@ WriteOperationResponse::WriteOperationResponse(const WriteOperationResponse& fro
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  txid_ = from.txid_;
+  ::memcpy(&txid_, &from.txid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&nodeid_) -
+    reinterpret_cast<char*>(&txid_)) + sizeof(nodeid_));
   // @@protoc_insertion_point(copy_constructor:score.WriteOperationResponse)
 }
 
 void WriteOperationResponse::SharedCtor() {
-  txid_ = PROTOBUF_ULONGLONG(0);
+  ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+      reinterpret_cast<char*>(&txid_) - reinterpret_cast<char*>(this)),
+      0, static_cast<size_t>(reinterpret_cast<char*>(&nodeid_) -
+      reinterpret_cast<char*>(&txid_)) + sizeof(nodeid_));
 }
 
 WriteOperationResponse::~WriteOperationResponse() {
@@ -1886,7 +2120,12 @@ void WriteOperationResponse::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  txid_ = PROTOBUF_ULONGLONG(0);
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    ::memset(&txid_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&nodeid_) -
+        reinterpret_cast<char*>(&txid_)) + sizeof(nodeid_));
+  }
   _has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -1899,11 +2138,19 @@ const char* WriteOperationResponse::_InternalParse(const char* ptr, ::PROTOBUF_N
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // optional uint64 txid = 1;
+      // required uint64 txid = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
           _Internal::set_has_txid(&has_bits);
           txid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required uint64 nodeid = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          _Internal::set_has_nodeid(&has_bits);
+          nodeid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1937,10 +2184,16 @@ failure:
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // optional uint64 txid = 1;
+  // required uint64 txid = 1;
   if (cached_has_bits & 0x00000001u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_txid(), target);
+  }
+
+  // required uint64 nodeid = 2;
+  if (cached_has_bits & 0x00000002u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->_internal_nodeid(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1951,21 +2204,47 @@ failure:
   return target;
 }
 
-size_t WriteOperationResponse::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:score.WriteOperationResponse)
+size_t WriteOperationResponse::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:score.WriteOperationResponse)
   size_t total_size = 0;
 
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // optional uint64 txid = 1;
-  cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
+  if (_internal_has_txid()) {
+    // required uint64 txid = 1;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_txid());
   }
+
+  if (_internal_has_nodeid()) {
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
+  }
+
+  return total_size;
+}
+size_t WriteOperationResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:score.WriteOperationResponse)
+  size_t total_size = 0;
+
+  if (((_has_bits_[0] & 0x00000003) ^ 0x00000003) == 0) {  // All required fields are present.
+    // required uint64 txid = 1;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_txid());
+
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
+  }
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
@@ -1998,8 +2277,15 @@ void WriteOperationResponse::MergeFrom(const WriteOperationResponse& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_txid()) {
-    _internal_set_txid(from._internal_txid());
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      txid_ = from.txid_;
+    }
+    if (cached_has_bits & 0x00000002u) {
+      nodeid_ = from.nodeid_;
+    }
+    _has_bits_[0] |= cached_has_bits;
   }
 }
 
@@ -2018,6 +2304,7 @@ void WriteOperationResponse::CopyFrom(const WriteOperationResponse& from) {
 }
 
 bool WriteOperationResponse::IsInitialized() const {
+  if (_Internal::MissingRequiredFields(_has_bits_)) return false;
   return true;
 }
 
@@ -2025,7 +2312,12 @@ void WriteOperationResponse::InternalSwap(WriteOperationResponse* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
-  swap(txid_, other->txid_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(WriteOperationResponse, nodeid_)
+      + sizeof(WriteOperationResponse::nodeid_)
+      - PROTOBUF_FIELD_OFFSET(WriteOperationResponse, txid_)>(
+          reinterpret_cast<char*>(&txid_),
+          reinterpret_cast<char*>(&other->txid_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata WriteOperationResponse::GetMetadata() const {
@@ -2044,6 +2336,12 @@ class TxOperationResponse::_Internal {
   static void set_has_txid(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
   }
+  static void set_has_nodeid(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
+  static bool MissingRequiredFields(const HasBits& has_bits) {
+    return ((has_bits[0] & 0x00000006) ^ 0x00000006) != 0;
+  }
 };
 
 TxOperationResponse::TxOperationResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena)
@@ -2061,14 +2359,19 @@ TxOperationResponse::TxOperationResponse(const TxOperationResponse& from)
     value_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_value(), 
       GetArena());
   }
-  txid_ = from.txid_;
+  ::memcpy(&txid_, &from.txid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&nodeid_) -
+    reinterpret_cast<char*>(&txid_)) + sizeof(nodeid_));
   // @@protoc_insertion_point(copy_constructor:score.TxOperationResponse)
 }
 
 void TxOperationResponse::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_TxOperationResponse_protocol_2eproto.base);
   value_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  txid_ = PROTOBUF_ULONGLONG(0);
+  ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+      reinterpret_cast<char*>(&txid_) - reinterpret_cast<char*>(this)),
+      0, static_cast<size_t>(reinterpret_cast<char*>(&nodeid_) -
+      reinterpret_cast<char*>(&txid_)) + sizeof(nodeid_));
 }
 
 TxOperationResponse::~TxOperationResponse() {
@@ -2107,7 +2410,11 @@ void TxOperationResponse::Clear() {
   if (cached_has_bits & 0x00000001u) {
     value_.ClearNonDefaultToEmpty();
   }
-  txid_ = PROTOBUF_ULONGLONG(0);
+  if (cached_has_bits & 0x00000006u) {
+    ::memset(&txid_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&nodeid_) -
+        reinterpret_cast<char*>(&txid_)) + sizeof(nodeid_));
+  }
   _has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -2120,6 +2427,22 @@ const char* TxOperationResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAME
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
+      // required uint64 txid = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          _Internal::set_has_txid(&has_bits);
+          txid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required uint64 nodeid = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          _Internal::set_has_nodeid(&has_bits);
+          nodeid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
       // optional string value = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
@@ -2128,14 +2451,6 @@ const char* TxOperationResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAME
           #ifndef NDEBUG
           ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "score.TxOperationResponse.value");
           #endif  // !NDEBUG
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // optional uint64 txid = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
-          _Internal::set_has_txid(&has_bits);
-          txid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -2169,6 +2484,18 @@ failure:
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
+  // required uint64 txid = 1;
+  if (cached_has_bits & 0x00000002u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_txid(), target);
+  }
+
+  // required uint64 nodeid = 2;
+  if (cached_has_bits & 0x00000004u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->_internal_nodeid(), target);
+  }
+
   // optional string value = 3;
   if (cached_has_bits & 0x00000001u) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
@@ -2179,12 +2506,6 @@ failure:
         3, this->_internal_value(), target);
   }
 
-  // optional uint64 txid = 4;
-  if (cached_has_bits & 0x00000002u) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(4, this->_internal_txid(), target);
-  }
-
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -2193,31 +2514,56 @@ failure:
   return target;
 }
 
+size_t TxOperationResponse::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:score.TxOperationResponse)
+  size_t total_size = 0;
+
+  if (_internal_has_txid()) {
+    // required uint64 txid = 1;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_txid());
+  }
+
+  if (_internal_has_nodeid()) {
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
+  }
+
+  return total_size;
+}
 size_t TxOperationResponse::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:score.TxOperationResponse)
   size_t total_size = 0;
 
+  if (((_has_bits_[0] & 0x00000006) ^ 0x00000006) == 0) {  // All required fields are present.
+    // required uint64 txid = 1;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_txid());
+
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
+  }
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  // optional string value = 3;
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
-    // optional string value = 3;
-    if (cached_has_bits & 0x00000001u) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-          this->_internal_value());
-    }
-
-    // optional uint64 txid = 4;
-    if (cached_has_bits & 0x00000002u) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-          this->_internal_txid());
-    }
-
+  if (cached_has_bits & 0x00000001u) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_value());
   }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
         _internal_metadata_, total_size, &_cached_size_);
@@ -2250,12 +2596,15 @@ void TxOperationResponse::MergeFrom(const TxOperationResponse& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
+  if (cached_has_bits & 0x00000007u) {
     if (cached_has_bits & 0x00000001u) {
       _internal_set_value(from._internal_value());
     }
     if (cached_has_bits & 0x00000002u) {
       txid_ = from.txid_;
+    }
+    if (cached_has_bits & 0x00000004u) {
+      nodeid_ = from.nodeid_;
     }
     _has_bits_[0] |= cached_has_bits;
   }
@@ -2276,6 +2625,7 @@ void TxOperationResponse::CopyFrom(const TxOperationResponse& from) {
 }
 
 bool TxOperationResponse::IsInitialized() const {
+  if (_Internal::MissingRequiredFields(_has_bits_)) return false;
   return true;
 }
 
@@ -2284,7 +2634,12 @@ void TxOperationResponse::InternalSwap(TxOperationResponse* other) {
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   value_.Swap(&other->value_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  swap(txid_, other->txid_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(TxOperationResponse, nodeid_)
+      + sizeof(TxOperationResponse::nodeid_)
+      - PROTOBUF_FIELD_OFFSET(TxOperationResponse, txid_)>(
+          reinterpret_cast<char*>(&txid_),
+          reinterpret_cast<char*>(&other->txid_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata TxOperationResponse::GetMetadata() const {
@@ -2300,17 +2655,20 @@ class ReadRequest::_Internal {
   static void set_has_txid(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
   }
+  static void set_has_nodeid(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
   static void set_has_key(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
   static void set_has_readsid(HasBits* has_bits) {
-    (*has_bits)[0] |= 4u;
-  }
-  static void set_has_firstread(HasBits* has_bits) {
     (*has_bits)[0] |= 8u;
   }
+  static void set_has_firstread(HasBits* has_bits) {
+    (*has_bits)[0] |= 16u;
+  }
   static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x0000000f) ^ 0x0000000f) != 0;
+    return ((has_bits[0] & 0x0000001f) ^ 0x0000001f) != 0;
   }
 };
 
@@ -2380,7 +2738,7 @@ void ReadRequest::Clear() {
   if (cached_has_bits & 0x00000001u) {
     key_.ClearNonDefaultToEmpty();
   }
-  if (cached_has_bits & 0x0000000eu) {
+  if (cached_has_bits & 0x0000001eu) {
     ::memset(&txid_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&firstread_) -
         reinterpret_cast<char*>(&txid_)) + sizeof(firstread_));
@@ -2405,9 +2763,17 @@ const char* ReadRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required string key = 2;
+      // required uint64 nodeid = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          _Internal::set_has_nodeid(&has_bits);
+          nodeid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required string key = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
           auto str = _internal_mutable_key();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           #ifndef NDEBUG
@@ -2416,17 +2782,17 @@ const char* ReadRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required uint64 readSid = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+      // required uint64 readSid = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
           _Internal::set_has_readsid(&has_bits);
           readsid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required bool firstRead = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+      // required bool firstRead = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
           _Internal::set_has_firstread(&has_bits);
           firstread_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
@@ -2468,26 +2834,32 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_txid(), target);
   }
 
-  // required string key = 2;
+  // required uint64 nodeid = 2;
+  if (cached_has_bits & 0x00000004u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->_internal_nodeid(), target);
+  }
+
+  // required string key = 3;
   if (cached_has_bits & 0x00000001u) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
       this->_internal_key().data(), static_cast<int>(this->_internal_key().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
       "score.ReadRequest.key");
     target = stream->WriteStringMaybeAliased(
-        2, this->_internal_key(), target);
+        3, this->_internal_key(), target);
   }
 
-  // required uint64 readSid = 3;
-  if (cached_has_bits & 0x00000004u) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(3, this->_internal_readsid(), target);
-  }
-
-  // required bool firstRead = 4;
+  // required uint64 readSid = 4;
   if (cached_has_bits & 0x00000008u) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(4, this->_internal_firstread(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(4, this->_internal_readsid(), target);
+  }
+
+  // required bool firstRead = 5;
+  if (cached_has_bits & 0x00000010u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(5, this->_internal_firstread(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -2503,7 +2875,7 @@ size_t ReadRequest::RequiredFieldsByteSizeFallback() const {
   size_t total_size = 0;
 
   if (_internal_has_key()) {
-    // required string key = 2;
+    // required string key = 3;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_key());
@@ -2516,15 +2888,22 @@ size_t ReadRequest::RequiredFieldsByteSizeFallback() const {
         this->_internal_txid());
   }
 
+  if (_internal_has_nodeid()) {
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
+  }
+
   if (_internal_has_readsid()) {
-    // required uint64 readSid = 3;
+    // required uint64 readSid = 4;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_readsid());
   }
 
   if (_internal_has_firstread()) {
-    // required bool firstRead = 4;
+    // required bool firstRead = 5;
     total_size += 1 + 1;
   }
 
@@ -2534,8 +2913,8 @@ size_t ReadRequest::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:score.ReadRequest)
   size_t total_size = 0;
 
-  if (((_has_bits_[0] & 0x0000000f) ^ 0x0000000f) == 0) {  // All required fields are present.
-    // required string key = 2;
+  if (((_has_bits_[0] & 0x0000001f) ^ 0x0000001f) == 0) {  // All required fields are present.
+    // required string key = 3;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_key());
@@ -2545,12 +2924,17 @@ size_t ReadRequest::ByteSizeLong() const {
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_txid());
 
-    // required uint64 readSid = 3;
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
+
+    // required uint64 readSid = 4;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_readsid());
 
-    // required bool firstRead = 4;
+    // required bool firstRead = 5;
     total_size += 1 + 1;
 
   } else {
@@ -2592,7 +2976,7 @@ void ReadRequest::MergeFrom(const ReadRequest& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x0000000fu) {
+  if (cached_has_bits & 0x0000001fu) {
     if (cached_has_bits & 0x00000001u) {
       _internal_set_key(from._internal_key());
     }
@@ -2600,9 +2984,12 @@ void ReadRequest::MergeFrom(const ReadRequest& from) {
       txid_ = from.txid_;
     }
     if (cached_has_bits & 0x00000004u) {
-      readsid_ = from.readsid_;
+      nodeid_ = from.nodeid_;
     }
     if (cached_has_bits & 0x00000008u) {
+      readsid_ = from.readsid_;
+    }
+    if (cached_has_bits & 0x00000010u) {
       firstread_ = from.firstread_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -2654,6 +3041,9 @@ class ReadReturn::_Internal {
   static void set_has_txid(HasBits* has_bits) {
     (*has_bits)[0] |= 4u;
   }
+  static void set_has_nodeid(HasBits* has_bits) {
+    (*has_bits)[0] |= 8u;
+  }
   static void set_has_key(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
@@ -2661,13 +3051,13 @@ class ReadReturn::_Internal {
     (*has_bits)[0] |= 2u;
   }
   static void set_has_lastcommitted(HasBits* has_bits) {
-    (*has_bits)[0] |= 8u;
-  }
-  static void set_has_mostrecent(HasBits* has_bits) {
     (*has_bits)[0] |= 16u;
   }
+  static void set_has_mostrecent(HasBits* has_bits) {
+    (*has_bits)[0] |= 32u;
+  }
   static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x0000001f) ^ 0x0000001f) != 0;
+    return ((has_bits[0] & 0x0000003f) ^ 0x0000003f) != 0;
   }
 };
 
@@ -2749,7 +3139,7 @@ void ReadReturn::Clear() {
       value_.ClearNonDefaultToEmpty();
     }
   }
-  if (cached_has_bits & 0x0000001cu) {
+  if (cached_has_bits & 0x0000003cu) {
     ::memset(&txid_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&mostrecent_) -
         reinterpret_cast<char*>(&txid_)) + sizeof(mostrecent_));
@@ -2774,9 +3164,17 @@ const char* ReadReturn::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID:
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required string key = 2;
+      // required uint64 nodeid = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          _Internal::set_has_nodeid(&has_bits);
+          nodeid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required string key = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
           auto str = _internal_mutable_key();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           #ifndef NDEBUG
@@ -2785,9 +3183,9 @@ const char* ReadReturn::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID:
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required string value = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+      // required string value = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
           auto str = _internal_mutable_value();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           #ifndef NDEBUG
@@ -2796,17 +3194,17 @@ const char* ReadReturn::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID:
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required uint64 lastCommitted = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+      // required uint64 lastCommitted = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
           _Internal::set_has_lastcommitted(&has_bits);
           lastcommitted_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required bool mostRecent = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
+      // required bool mostRecent = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 48)) {
           _Internal::set_has_mostrecent(&has_bits);
           mostrecent_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
@@ -2848,36 +3246,42 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_txid(), target);
   }
 
-  // required string key = 2;
+  // required uint64 nodeid = 2;
+  if (cached_has_bits & 0x00000008u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->_internal_nodeid(), target);
+  }
+
+  // required string key = 3;
   if (cached_has_bits & 0x00000001u) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
       this->_internal_key().data(), static_cast<int>(this->_internal_key().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
       "score.ReadReturn.key");
     target = stream->WriteStringMaybeAliased(
-        2, this->_internal_key(), target);
+        3, this->_internal_key(), target);
   }
 
-  // required string value = 3;
+  // required string value = 4;
   if (cached_has_bits & 0x00000002u) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
       this->_internal_value().data(), static_cast<int>(this->_internal_value().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
       "score.ReadReturn.value");
     target = stream->WriteStringMaybeAliased(
-        3, this->_internal_value(), target);
+        4, this->_internal_value(), target);
   }
 
-  // required uint64 lastCommitted = 4;
-  if (cached_has_bits & 0x00000008u) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(4, this->_internal_lastcommitted(), target);
-  }
-
-  // required bool mostRecent = 5;
+  // required uint64 lastCommitted = 5;
   if (cached_has_bits & 0x00000010u) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(5, this->_internal_mostrecent(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(5, this->_internal_lastcommitted(), target);
+  }
+
+  // required bool mostRecent = 6;
+  if (cached_has_bits & 0x00000020u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(6, this->_internal_mostrecent(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -2893,14 +3297,14 @@ size_t ReadReturn::RequiredFieldsByteSizeFallback() const {
   size_t total_size = 0;
 
   if (_internal_has_key()) {
-    // required string key = 2;
+    // required string key = 3;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_key());
   }
 
   if (_internal_has_value()) {
-    // required string value = 3;
+    // required string value = 4;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_value());
@@ -2913,15 +3317,22 @@ size_t ReadReturn::RequiredFieldsByteSizeFallback() const {
         this->_internal_txid());
   }
 
+  if (_internal_has_nodeid()) {
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
+  }
+
   if (_internal_has_lastcommitted()) {
-    // required uint64 lastCommitted = 4;
+    // required uint64 lastCommitted = 5;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_lastcommitted());
   }
 
   if (_internal_has_mostrecent()) {
-    // required bool mostRecent = 5;
+    // required bool mostRecent = 6;
     total_size += 1 + 1;
   }
 
@@ -2931,13 +3342,13 @@ size_t ReadReturn::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:score.ReadReturn)
   size_t total_size = 0;
 
-  if (((_has_bits_[0] & 0x0000001f) ^ 0x0000001f) == 0) {  // All required fields are present.
-    // required string key = 2;
+  if (((_has_bits_[0] & 0x0000003f) ^ 0x0000003f) == 0) {  // All required fields are present.
+    // required string key = 3;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_key());
 
-    // required string value = 3;
+    // required string value = 4;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_value());
@@ -2947,12 +3358,17 @@ size_t ReadReturn::ByteSizeLong() const {
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_txid());
 
-    // required uint64 lastCommitted = 4;
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
+
+    // required uint64 lastCommitted = 5;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_lastcommitted());
 
-    // required bool mostRecent = 5;
+    // required bool mostRecent = 6;
     total_size += 1 + 1;
 
   } else {
@@ -2994,7 +3410,7 @@ void ReadReturn::MergeFrom(const ReadReturn& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x0000001fu) {
+  if (cached_has_bits & 0x0000003fu) {
     if (cached_has_bits & 0x00000001u) {
       _internal_set_key(from._internal_key());
     }
@@ -3005,9 +3421,12 @@ void ReadReturn::MergeFrom(const ReadReturn& from) {
       txid_ = from.txid_;
     }
     if (cached_has_bits & 0x00000008u) {
-      lastcommitted_ = from.lastcommitted_;
+      nodeid_ = from.nodeid_;
     }
     if (cached_has_bits & 0x00000010u) {
+      lastcommitted_ = from.lastcommitted_;
+    }
+    if (cached_has_bits & 0x00000020u) {
       mostrecent_ = from.mostrecent_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -3635,11 +4054,14 @@ class Prepare::_Internal {
   static void set_has_txid(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
-  static void set_has_sid(HasBits* has_bits) {
+  static void set_has_nodeid(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
   }
+  static void set_has_sid(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
   static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x00000003) ^ 0x00000003) != 0;
+    return ((has_bits[0] & 0x00000007) ^ 0x00000007) != 0;
   }
 };
 
@@ -3705,7 +4127,7 @@ void Prepare::Clear() {
   rs_.Clear();
   ws_.Clear();
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
+  if (cached_has_bits & 0x00000007u) {
     ::memset(&txid_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&sid_) -
         reinterpret_cast<char*>(&txid_)) + sizeof(sid_));
@@ -3730,36 +4152,44 @@ const char* Prepare::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::in
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required uint64 sid = 2;
+      // required uint64 nodeid = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          _Internal::set_has_nodeid(&has_bits);
+          nodeid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required uint64 sid = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
           _Internal::set_has_sid(&has_bits);
           sid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // repeated .score.Prepare.ReadSetElement rs = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+      // repeated .score.Prepare.ReadSetElement rs = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
           ptr -= 1;
           do {
             ptr += 1;
             ptr = ctx->ParseMessage(_internal_add_rs(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<26>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<34>(ptr));
         } else goto handle_unusual;
         continue;
-      // repeated .score.Prepare.WriteSetElement ws = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+      // repeated .score.Prepare.WriteSetElement ws = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
           ptr -= 1;
           do {
             ptr += 1;
             ptr = ctx->ParseMessage(_internal_add_ws(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<34>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<42>(ptr));
         } else goto handle_unusual;
         continue;
       default: {
@@ -3798,26 +4228,32 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_txid(), target);
   }
 
-  // required uint64 sid = 2;
+  // required uint64 nodeid = 2;
   if (cached_has_bits & 0x00000002u) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->_internal_sid(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->_internal_nodeid(), target);
   }
 
-  // repeated .score.Prepare.ReadSetElement rs = 3;
+  // required uint64 sid = 3;
+  if (cached_has_bits & 0x00000004u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(3, this->_internal_sid(), target);
+  }
+
+  // repeated .score.Prepare.ReadSetElement rs = 4;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->_internal_rs_size()); i < n; i++) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(3, this->_internal_rs(i), target, stream);
+      InternalWriteMessage(4, this->_internal_rs(i), target, stream);
   }
 
-  // repeated .score.Prepare.WriteSetElement ws = 4;
+  // repeated .score.Prepare.WriteSetElement ws = 5;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->_internal_ws_size()); i < n; i++) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(4, this->_internal_ws(i), target, stream);
+      InternalWriteMessage(5, this->_internal_ws(i), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -3839,8 +4275,15 @@ size_t Prepare::RequiredFieldsByteSizeFallback() const {
         this->_internal_txid());
   }
 
+  if (_internal_has_nodeid()) {
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
+  }
+
   if (_internal_has_sid()) {
-    // required uint64 sid = 2;
+    // required uint64 sid = 3;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_sid());
@@ -3852,13 +4295,18 @@ size_t Prepare::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:score.Prepare)
   size_t total_size = 0;
 
-  if (((_has_bits_[0] & 0x00000003) ^ 0x00000003) == 0) {  // All required fields are present.
+  if (((_has_bits_[0] & 0x00000007) ^ 0x00000007) == 0) {  // All required fields are present.
     // required uint64 txid = 1;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_txid());
 
-    // required uint64 sid = 2;
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
+
+    // required uint64 sid = 3;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_sid());
@@ -3870,14 +4318,14 @@ size_t Prepare::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated .score.Prepare.ReadSetElement rs = 3;
+  // repeated .score.Prepare.ReadSetElement rs = 4;
   total_size += 1UL * this->_internal_rs_size();
   for (const auto& msg : this->rs_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
-  // repeated .score.Prepare.WriteSetElement ws = 4;
+  // repeated .score.Prepare.WriteSetElement ws = 5;
   total_size += 1UL * this->_internal_ws_size();
   for (const auto& msg : this->ws_) {
     total_size +=
@@ -3918,11 +4366,14 @@ void Prepare::MergeFrom(const Prepare& from) {
   rs_.MergeFrom(from.rs_);
   ws_.MergeFrom(from.ws_);
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
+  if (cached_has_bits & 0x00000007u) {
     if (cached_has_bits & 0x00000001u) {
       txid_ = from.txid_;
     }
     if (cached_has_bits & 0x00000002u) {
+      nodeid_ = from.nodeid_;
+    }
+    if (cached_has_bits & 0x00000004u) {
       sid_ = from.sid_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -3977,14 +4428,17 @@ class Vote::_Internal {
   static void set_has_txid(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
-  static void set_has_sn(HasBits* has_bits) {
+  static void set_has_nodeid(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
   }
-  static void set_has_outcome(HasBits* has_bits) {
+  static void set_has_sn(HasBits* has_bits) {
     (*has_bits)[0] |= 4u;
   }
+  static void set_has_outcome(HasBits* has_bits) {
+    (*has_bits)[0] |= 8u;
+  }
   static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x00000007) ^ 0x00000007) != 0;
+    return ((has_bits[0] & 0x0000000f) ^ 0x0000000f) != 0;
   }
 };
 
@@ -4043,7 +4497,7 @@ void Vote::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x0000000fu) {
     ::memset(&txid_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&outcome_) -
         reinterpret_cast<char*>(&txid_)) + sizeof(outcome_));
@@ -4068,17 +4522,25 @@ const char* Vote::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::inter
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required uint64 sn = 2;
+      // required uint64 nodeid = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          _Internal::set_has_nodeid(&has_bits);
+          nodeid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required uint64 sn = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
           _Internal::set_has_sn(&has_bits);
           sn_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required bool outcome = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+      // required bool outcome = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
           _Internal::set_has_outcome(&has_bits);
           outcome_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
@@ -4120,16 +4582,22 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_txid(), target);
   }
 
-  // required uint64 sn = 2;
+  // required uint64 nodeid = 2;
   if (cached_has_bits & 0x00000002u) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->_internal_sn(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->_internal_nodeid(), target);
   }
 
-  // required bool outcome = 3;
+  // required uint64 sn = 3;
   if (cached_has_bits & 0x00000004u) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(3, this->_internal_outcome(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(3, this->_internal_sn(), target);
+  }
+
+  // required bool outcome = 4;
+  if (cached_has_bits & 0x00000008u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(4, this->_internal_outcome(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -4151,15 +4619,22 @@ size_t Vote::RequiredFieldsByteSizeFallback() const {
         this->_internal_txid());
   }
 
+  if (_internal_has_nodeid()) {
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
+  }
+
   if (_internal_has_sn()) {
-    // required uint64 sn = 2;
+    // required uint64 sn = 3;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_sn());
   }
 
   if (_internal_has_outcome()) {
-    // required bool outcome = 3;
+    // required bool outcome = 4;
     total_size += 1 + 1;
   }
 
@@ -4169,18 +4644,23 @@ size_t Vote::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:score.Vote)
   size_t total_size = 0;
 
-  if (((_has_bits_[0] & 0x00000007) ^ 0x00000007) == 0) {  // All required fields are present.
+  if (((_has_bits_[0] & 0x0000000f) ^ 0x0000000f) == 0) {  // All required fields are present.
     // required uint64 txid = 1;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_txid());
 
-    // required uint64 sn = 2;
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
+
+    // required uint64 sn = 3;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_sn());
 
-    // required bool outcome = 3;
+    // required bool outcome = 4;
     total_size += 1 + 1;
 
   } else {
@@ -4222,14 +4702,17 @@ void Vote::MergeFrom(const Vote& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x0000000fu) {
     if (cached_has_bits & 0x00000001u) {
       txid_ = from.txid_;
     }
     if (cached_has_bits & 0x00000002u) {
-      sn_ = from.sn_;
+      nodeid_ = from.nodeid_;
     }
     if (cached_has_bits & 0x00000004u) {
+      sn_ = from.sn_;
+    }
+    if (cached_has_bits & 0x00000008u) {
       outcome_ = from.outcome_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -4280,14 +4763,17 @@ class Decide::_Internal {
   static void set_has_txid(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
-  static void set_has_fsn(HasBits* has_bits) {
+  static void set_has_nodeid(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
   }
-  static void set_has_outcome(HasBits* has_bits) {
+  static void set_has_fsn(HasBits* has_bits) {
     (*has_bits)[0] |= 4u;
   }
+  static void set_has_outcome(HasBits* has_bits) {
+    (*has_bits)[0] |= 8u;
+  }
   static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x00000007) ^ 0x00000007) != 0;
+    return ((has_bits[0] & 0x0000000f) ^ 0x0000000f) != 0;
   }
 };
 
@@ -4346,7 +4832,7 @@ void Decide::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x0000000fu) {
     ::memset(&txid_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&outcome_) -
         reinterpret_cast<char*>(&txid_)) + sizeof(outcome_));
@@ -4371,17 +4857,25 @@ const char* Decide::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::int
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required uint64 fsn = 2;
+      // required uint64 nodeid = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          _Internal::set_has_nodeid(&has_bits);
+          nodeid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required uint64 fsn = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
           _Internal::set_has_fsn(&has_bits);
           fsn_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required bool outcome = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+      // required bool outcome = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
           _Internal::set_has_outcome(&has_bits);
           outcome_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
@@ -4423,16 +4917,22 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_txid(), target);
   }
 
-  // required uint64 fsn = 2;
+  // required uint64 nodeid = 2;
   if (cached_has_bits & 0x00000002u) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->_internal_fsn(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->_internal_nodeid(), target);
   }
 
-  // required bool outcome = 3;
+  // required uint64 fsn = 3;
   if (cached_has_bits & 0x00000004u) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(3, this->_internal_outcome(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(3, this->_internal_fsn(), target);
+  }
+
+  // required bool outcome = 4;
+  if (cached_has_bits & 0x00000008u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(4, this->_internal_outcome(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -4454,15 +4954,22 @@ size_t Decide::RequiredFieldsByteSizeFallback() const {
         this->_internal_txid());
   }
 
+  if (_internal_has_nodeid()) {
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
+  }
+
   if (_internal_has_fsn()) {
-    // required uint64 fsn = 2;
+    // required uint64 fsn = 3;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_fsn());
   }
 
   if (_internal_has_outcome()) {
-    // required bool outcome = 3;
+    // required bool outcome = 4;
     total_size += 1 + 1;
   }
 
@@ -4472,18 +4979,23 @@ size_t Decide::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:score.Decide)
   size_t total_size = 0;
 
-  if (((_has_bits_[0] & 0x00000007) ^ 0x00000007) == 0) {  // All required fields are present.
+  if (((_has_bits_[0] & 0x0000000f) ^ 0x0000000f) == 0) {  // All required fields are present.
     // required uint64 txid = 1;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_txid());
 
-    // required uint64 fsn = 2;
+    // required uint64 nodeid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_nodeid());
+
+    // required uint64 fsn = 3;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_fsn());
 
-    // required bool outcome = 3;
+    // required bool outcome = 4;
     total_size += 1 + 1;
 
   } else {
@@ -4525,14 +5037,17 @@ void Decide::MergeFrom(const Decide& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x0000000fu) {
     if (cached_has_bits & 0x00000001u) {
       txid_ = from.txid_;
     }
     if (cached_has_bits & 0x00000002u) {
-      fsn_ = from.fsn_;
+      nodeid_ = from.nodeid_;
     }
     if (cached_has_bits & 0x00000004u) {
+      fsn_ = from.fsn_;
+    }
+    if (cached_has_bits & 0x00000008u) {
       outcome_ = from.outcome_;
     }
     _has_bits_[0] |= cached_has_bits;

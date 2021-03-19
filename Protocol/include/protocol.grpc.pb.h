@@ -45,13 +45,867 @@ namespace score {
 // optional uint64 txid = 4;
 // }
 //
-// service TxRPC {
-// rpc StartTx(Empty) returns (TxIDMsg) {}
-// rpc Read(ReadOperation) returns (ReadOperationResponse) {}
-// rpc Write(WriteOperation) returns (WriteOperationResponse) {}
-// rpc Commit(TxIDMsg) returns (Committed) {}
-// }
-//
+class TxRPC final {
+ public:
+  static constexpr char const* service_full_name() {
+    return "score.TxRPC";
+  }
+  class StubInterface {
+   public:
+    virtual ~StubInterface() {}
+    virtual ::grpc::Status StartTx(::grpc::ClientContext* context, const ::score::Empty& request, ::score::TxIDMsg* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::score::TxIDMsg>> AsyncStartTx(::grpc::ClientContext* context, const ::score::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::score::TxIDMsg>>(AsyncStartTxRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::score::TxIDMsg>> PrepareAsyncStartTx(::grpc::ClientContext* context, const ::score::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::score::TxIDMsg>>(PrepareAsyncStartTxRaw(context, request, cq));
+    }
+    virtual ::grpc::Status Read(::grpc::ClientContext* context, const ::score::ReadOperation& request, ::score::ReadOperationResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::score::ReadOperationResponse>> AsyncRead(::grpc::ClientContext* context, const ::score::ReadOperation& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::score::ReadOperationResponse>>(AsyncReadRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::score::ReadOperationResponse>> PrepareAsyncRead(::grpc::ClientContext* context, const ::score::ReadOperation& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::score::ReadOperationResponse>>(PrepareAsyncReadRaw(context, request, cq));
+    }
+    virtual ::grpc::Status Write(::grpc::ClientContext* context, const ::score::WriteOperation& request, ::score::WriteOperationResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::score::WriteOperationResponse>> AsyncWrite(::grpc::ClientContext* context, const ::score::WriteOperation& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::score::WriteOperationResponse>>(AsyncWriteRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::score::WriteOperationResponse>> PrepareAsyncWrite(::grpc::ClientContext* context, const ::score::WriteOperation& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::score::WriteOperationResponse>>(PrepareAsyncWriteRaw(context, request, cq));
+    }
+    virtual ::grpc::Status Commit(::grpc::ClientContext* context, const ::score::TxIDMsg& request, ::score::Committed* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::score::Committed>> AsyncCommit(::grpc::ClientContext* context, const ::score::TxIDMsg& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::score::Committed>>(AsyncCommitRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::score::Committed>> PrepareAsyncCommit(::grpc::ClientContext* context, const ::score::TxIDMsg& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::score::Committed>>(PrepareAsyncCommitRaw(context, request, cq));
+    }
+    class experimental_async_interface {
+     public:
+      virtual ~experimental_async_interface() {}
+      virtual void StartTx(::grpc::ClientContext* context, const ::score::Empty* request, ::score::TxIDMsg* response, std::function<void(::grpc::Status)>) = 0;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      virtual void StartTx(::grpc::ClientContext* context, const ::score::Empty* request, ::score::TxIDMsg* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      #else
+      virtual void StartTx(::grpc::ClientContext* context, const ::score::Empty* request, ::score::TxIDMsg* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      #endif
+      virtual void Read(::grpc::ClientContext* context, const ::score::ReadOperation* request, ::score::ReadOperationResponse* response, std::function<void(::grpc::Status)>) = 0;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      virtual void Read(::grpc::ClientContext* context, const ::score::ReadOperation* request, ::score::ReadOperationResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      #else
+      virtual void Read(::grpc::ClientContext* context, const ::score::ReadOperation* request, ::score::ReadOperationResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      #endif
+      virtual void Write(::grpc::ClientContext* context, const ::score::WriteOperation* request, ::score::WriteOperationResponse* response, std::function<void(::grpc::Status)>) = 0;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      virtual void Write(::grpc::ClientContext* context, const ::score::WriteOperation* request, ::score::WriteOperationResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      #else
+      virtual void Write(::grpc::ClientContext* context, const ::score::WriteOperation* request, ::score::WriteOperationResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      #endif
+      virtual void Commit(::grpc::ClientContext* context, const ::score::TxIDMsg* request, ::score::Committed* response, std::function<void(::grpc::Status)>) = 0;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      virtual void Commit(::grpc::ClientContext* context, const ::score::TxIDMsg* request, ::score::Committed* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      #else
+      virtual void Commit(::grpc::ClientContext* context, const ::score::TxIDMsg* request, ::score::Committed* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      #endif
+    };
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    typedef class experimental_async_interface async_interface;
+    #endif
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    async_interface* async() { return experimental_async(); }
+    #endif
+    virtual class experimental_async_interface* experimental_async() { return nullptr; }
+  private:
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::score::TxIDMsg>* AsyncStartTxRaw(::grpc::ClientContext* context, const ::score::Empty& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::score::TxIDMsg>* PrepareAsyncStartTxRaw(::grpc::ClientContext* context, const ::score::Empty& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::score::ReadOperationResponse>* AsyncReadRaw(::grpc::ClientContext* context, const ::score::ReadOperation& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::score::ReadOperationResponse>* PrepareAsyncReadRaw(::grpc::ClientContext* context, const ::score::ReadOperation& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::score::WriteOperationResponse>* AsyncWriteRaw(::grpc::ClientContext* context, const ::score::WriteOperation& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::score::WriteOperationResponse>* PrepareAsyncWriteRaw(::grpc::ClientContext* context, const ::score::WriteOperation& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::score::Committed>* AsyncCommitRaw(::grpc::ClientContext* context, const ::score::TxIDMsg& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::score::Committed>* PrepareAsyncCommitRaw(::grpc::ClientContext* context, const ::score::TxIDMsg& request, ::grpc::CompletionQueue* cq) = 0;
+  };
+  class Stub final : public StubInterface {
+   public:
+    Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel);
+    ::grpc::Status StartTx(::grpc::ClientContext* context, const ::score::Empty& request, ::score::TxIDMsg* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::score::TxIDMsg>> AsyncStartTx(::grpc::ClientContext* context, const ::score::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::score::TxIDMsg>>(AsyncStartTxRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::score::TxIDMsg>> PrepareAsyncStartTx(::grpc::ClientContext* context, const ::score::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::score::TxIDMsg>>(PrepareAsyncStartTxRaw(context, request, cq));
+    }
+    ::grpc::Status Read(::grpc::ClientContext* context, const ::score::ReadOperation& request, ::score::ReadOperationResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::score::ReadOperationResponse>> AsyncRead(::grpc::ClientContext* context, const ::score::ReadOperation& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::score::ReadOperationResponse>>(AsyncReadRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::score::ReadOperationResponse>> PrepareAsyncRead(::grpc::ClientContext* context, const ::score::ReadOperation& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::score::ReadOperationResponse>>(PrepareAsyncReadRaw(context, request, cq));
+    }
+    ::grpc::Status Write(::grpc::ClientContext* context, const ::score::WriteOperation& request, ::score::WriteOperationResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::score::WriteOperationResponse>> AsyncWrite(::grpc::ClientContext* context, const ::score::WriteOperation& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::score::WriteOperationResponse>>(AsyncWriteRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::score::WriteOperationResponse>> PrepareAsyncWrite(::grpc::ClientContext* context, const ::score::WriteOperation& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::score::WriteOperationResponse>>(PrepareAsyncWriteRaw(context, request, cq));
+    }
+    ::grpc::Status Commit(::grpc::ClientContext* context, const ::score::TxIDMsg& request, ::score::Committed* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::score::Committed>> AsyncCommit(::grpc::ClientContext* context, const ::score::TxIDMsg& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::score::Committed>>(AsyncCommitRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::score::Committed>> PrepareAsyncCommit(::grpc::ClientContext* context, const ::score::TxIDMsg& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::score::Committed>>(PrepareAsyncCommitRaw(context, request, cq));
+    }
+    class experimental_async final :
+      public StubInterface::experimental_async_interface {
+     public:
+      void StartTx(::grpc::ClientContext* context, const ::score::Empty* request, ::score::TxIDMsg* response, std::function<void(::grpc::Status)>) override;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      void StartTx(::grpc::ClientContext* context, const ::score::Empty* request, ::score::TxIDMsg* response, ::grpc::ClientUnaryReactor* reactor) override;
+      #else
+      void StartTx(::grpc::ClientContext* context, const ::score::Empty* request, ::score::TxIDMsg* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      #endif
+      void Read(::grpc::ClientContext* context, const ::score::ReadOperation* request, ::score::ReadOperationResponse* response, std::function<void(::grpc::Status)>) override;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      void Read(::grpc::ClientContext* context, const ::score::ReadOperation* request, ::score::ReadOperationResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      #else
+      void Read(::grpc::ClientContext* context, const ::score::ReadOperation* request, ::score::ReadOperationResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      #endif
+      void Write(::grpc::ClientContext* context, const ::score::WriteOperation* request, ::score::WriteOperationResponse* response, std::function<void(::grpc::Status)>) override;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      void Write(::grpc::ClientContext* context, const ::score::WriteOperation* request, ::score::WriteOperationResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      #else
+      void Write(::grpc::ClientContext* context, const ::score::WriteOperation* request, ::score::WriteOperationResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      #endif
+      void Commit(::grpc::ClientContext* context, const ::score::TxIDMsg* request, ::score::Committed* response, std::function<void(::grpc::Status)>) override;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      void Commit(::grpc::ClientContext* context, const ::score::TxIDMsg* request, ::score::Committed* response, ::grpc::ClientUnaryReactor* reactor) override;
+      #else
+      void Commit(::grpc::ClientContext* context, const ::score::TxIDMsg* request, ::score::Committed* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      #endif
+     private:
+      friend class Stub;
+      explicit experimental_async(Stub* stub): stub_(stub) { }
+      Stub* stub() { return stub_; }
+      Stub* stub_;
+    };
+    class experimental_async_interface* experimental_async() override { return &async_stub_; }
+
+   private:
+    std::shared_ptr< ::grpc::ChannelInterface> channel_;
+    class experimental_async async_stub_{this};
+    ::grpc::ClientAsyncResponseReader< ::score::TxIDMsg>* AsyncStartTxRaw(::grpc::ClientContext* context, const ::score::Empty& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::score::TxIDMsg>* PrepareAsyncStartTxRaw(::grpc::ClientContext* context, const ::score::Empty& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::score::ReadOperationResponse>* AsyncReadRaw(::grpc::ClientContext* context, const ::score::ReadOperation& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::score::ReadOperationResponse>* PrepareAsyncReadRaw(::grpc::ClientContext* context, const ::score::ReadOperation& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::score::WriteOperationResponse>* AsyncWriteRaw(::grpc::ClientContext* context, const ::score::WriteOperation& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::score::WriteOperationResponse>* PrepareAsyncWriteRaw(::grpc::ClientContext* context, const ::score::WriteOperation& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::score::Committed>* AsyncCommitRaw(::grpc::ClientContext* context, const ::score::TxIDMsg& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::score::Committed>* PrepareAsyncCommitRaw(::grpc::ClientContext* context, const ::score::TxIDMsg& request, ::grpc::CompletionQueue* cq) override;
+    const ::grpc::internal::RpcMethod rpcmethod_StartTx_;
+    const ::grpc::internal::RpcMethod rpcmethod_Read_;
+    const ::grpc::internal::RpcMethod rpcmethod_Write_;
+    const ::grpc::internal::RpcMethod rpcmethod_Commit_;
+  };
+  static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
+
+  class Service : public ::grpc::Service {
+   public:
+    Service();
+    virtual ~Service();
+    virtual ::grpc::Status StartTx(::grpc::ServerContext* context, const ::score::Empty* request, ::score::TxIDMsg* response);
+    virtual ::grpc::Status Read(::grpc::ServerContext* context, const ::score::ReadOperation* request, ::score::ReadOperationResponse* response);
+    virtual ::grpc::Status Write(::grpc::ServerContext* context, const ::score::WriteOperation* request, ::score::WriteOperationResponse* response);
+    virtual ::grpc::Status Commit(::grpc::ServerContext* context, const ::score::TxIDMsg* request, ::score::Committed* response);
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_StartTx : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_StartTx() {
+      ::grpc::Service::MarkMethodAsync(0);
+    }
+    ~WithAsyncMethod_StartTx() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status StartTx(::grpc::ServerContext* /*context*/, const ::score::Empty* /*request*/, ::score::TxIDMsg* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestStartTx(::grpc::ServerContext* context, ::score::Empty* request, ::grpc::ServerAsyncResponseWriter< ::score::TxIDMsg>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_Read : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_Read() {
+      ::grpc::Service::MarkMethodAsync(1);
+    }
+    ~WithAsyncMethod_Read() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Read(::grpc::ServerContext* /*context*/, const ::score::ReadOperation* /*request*/, ::score::ReadOperationResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestRead(::grpc::ServerContext* context, ::score::ReadOperation* request, ::grpc::ServerAsyncResponseWriter< ::score::ReadOperationResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_Write : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_Write() {
+      ::grpc::Service::MarkMethodAsync(2);
+    }
+    ~WithAsyncMethod_Write() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Write(::grpc::ServerContext* /*context*/, const ::score::WriteOperation* /*request*/, ::score::WriteOperationResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestWrite(::grpc::ServerContext* context, ::score::WriteOperation* request, ::grpc::ServerAsyncResponseWriter< ::score::WriteOperationResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_Commit : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_Commit() {
+      ::grpc::Service::MarkMethodAsync(3);
+    }
+    ~WithAsyncMethod_Commit() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Commit(::grpc::ServerContext* /*context*/, const ::score::TxIDMsg* /*request*/, ::score::Committed* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestCommit(::grpc::ServerContext* context, ::score::TxIDMsg* request, ::grpc::ServerAsyncResponseWriter< ::score::Committed>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_StartTx<WithAsyncMethod_Read<WithAsyncMethod_Write<WithAsyncMethod_Commit<Service > > > > AsyncService;
+  template <class BaseClass>
+  class ExperimentalWithCallbackMethod_StartTx : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithCallbackMethod_StartTx() {
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodCallback(0,
+          new ::grpc::internal::CallbackUnaryHandler< ::score::Empty, ::score::TxIDMsg>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::score::Empty* request, ::score::TxIDMsg* response) { return this->StartTx(context, request, response); }));}
+    void SetMessageAllocatorFor_StartTx(
+        ::grpc::experimental::MessageAllocator< ::score::Empty, ::score::TxIDMsg>* allocator) {
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(0);
+    #else
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::experimental().GetHandler(0);
+    #endif
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::score::Empty, ::score::TxIDMsg>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~ExperimentalWithCallbackMethod_StartTx() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status StartTx(::grpc::ServerContext* /*context*/, const ::score::Empty* /*request*/, ::score::TxIDMsg* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* StartTx(
+      ::grpc::CallbackServerContext* /*context*/, const ::score::Empty* /*request*/, ::score::TxIDMsg* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* StartTx(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::score::Empty* /*request*/, ::score::TxIDMsg* /*response*/)
+    #endif
+      { return nullptr; }
+  };
+  template <class BaseClass>
+  class ExperimentalWithCallbackMethod_Read : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithCallbackMethod_Read() {
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodCallback(1,
+          new ::grpc::internal::CallbackUnaryHandler< ::score::ReadOperation, ::score::ReadOperationResponse>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::score::ReadOperation* request, ::score::ReadOperationResponse* response) { return this->Read(context, request, response); }));}
+    void SetMessageAllocatorFor_Read(
+        ::grpc::experimental::MessageAllocator< ::score::ReadOperation, ::score::ReadOperationResponse>* allocator) {
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(1);
+    #else
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::experimental().GetHandler(1);
+    #endif
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::score::ReadOperation, ::score::ReadOperationResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~ExperimentalWithCallbackMethod_Read() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Read(::grpc::ServerContext* /*context*/, const ::score::ReadOperation* /*request*/, ::score::ReadOperationResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* Read(
+      ::grpc::CallbackServerContext* /*context*/, const ::score::ReadOperation* /*request*/, ::score::ReadOperationResponse* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* Read(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::score::ReadOperation* /*request*/, ::score::ReadOperationResponse* /*response*/)
+    #endif
+      { return nullptr; }
+  };
+  template <class BaseClass>
+  class ExperimentalWithCallbackMethod_Write : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithCallbackMethod_Write() {
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodCallback(2,
+          new ::grpc::internal::CallbackUnaryHandler< ::score::WriteOperation, ::score::WriteOperationResponse>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::score::WriteOperation* request, ::score::WriteOperationResponse* response) { return this->Write(context, request, response); }));}
+    void SetMessageAllocatorFor_Write(
+        ::grpc::experimental::MessageAllocator< ::score::WriteOperation, ::score::WriteOperationResponse>* allocator) {
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
+    #else
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::experimental().GetHandler(2);
+    #endif
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::score::WriteOperation, ::score::WriteOperationResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~ExperimentalWithCallbackMethod_Write() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Write(::grpc::ServerContext* /*context*/, const ::score::WriteOperation* /*request*/, ::score::WriteOperationResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* Write(
+      ::grpc::CallbackServerContext* /*context*/, const ::score::WriteOperation* /*request*/, ::score::WriteOperationResponse* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* Write(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::score::WriteOperation* /*request*/, ::score::WriteOperationResponse* /*response*/)
+    #endif
+      { return nullptr; }
+  };
+  template <class BaseClass>
+  class ExperimentalWithCallbackMethod_Commit : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithCallbackMethod_Commit() {
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodCallback(3,
+          new ::grpc::internal::CallbackUnaryHandler< ::score::TxIDMsg, ::score::Committed>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::score::TxIDMsg* request, ::score::Committed* response) { return this->Commit(context, request, response); }));}
+    void SetMessageAllocatorFor_Commit(
+        ::grpc::experimental::MessageAllocator< ::score::TxIDMsg, ::score::Committed>* allocator) {
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
+    #else
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::experimental().GetHandler(3);
+    #endif
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::score::TxIDMsg, ::score::Committed>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~ExperimentalWithCallbackMethod_Commit() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Commit(::grpc::ServerContext* /*context*/, const ::score::TxIDMsg* /*request*/, ::score::Committed* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* Commit(
+      ::grpc::CallbackServerContext* /*context*/, const ::score::TxIDMsg* /*request*/, ::score::Committed* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* Commit(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::score::TxIDMsg* /*request*/, ::score::Committed* /*response*/)
+    #endif
+      { return nullptr; }
+  };
+  #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+  typedef ExperimentalWithCallbackMethod_StartTx<ExperimentalWithCallbackMethod_Read<ExperimentalWithCallbackMethod_Write<ExperimentalWithCallbackMethod_Commit<Service > > > > CallbackService;
+  #endif
+
+  typedef ExperimentalWithCallbackMethod_StartTx<ExperimentalWithCallbackMethod_Read<ExperimentalWithCallbackMethod_Write<ExperimentalWithCallbackMethod_Commit<Service > > > > ExperimentalCallbackService;
+  template <class BaseClass>
+  class WithGenericMethod_StartTx : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_StartTx() {
+      ::grpc::Service::MarkMethodGeneric(0);
+    }
+    ~WithGenericMethod_StartTx() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status StartTx(::grpc::ServerContext* /*context*/, const ::score::Empty* /*request*/, ::score::TxIDMsg* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_Read : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_Read() {
+      ::grpc::Service::MarkMethodGeneric(1);
+    }
+    ~WithGenericMethod_Read() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Read(::grpc::ServerContext* /*context*/, const ::score::ReadOperation* /*request*/, ::score::ReadOperationResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_Write : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_Write() {
+      ::grpc::Service::MarkMethodGeneric(2);
+    }
+    ~WithGenericMethod_Write() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Write(::grpc::ServerContext* /*context*/, const ::score::WriteOperation* /*request*/, ::score::WriteOperationResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_Commit : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_Commit() {
+      ::grpc::Service::MarkMethodGeneric(3);
+    }
+    ~WithGenericMethod_Commit() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Commit(::grpc::ServerContext* /*context*/, const ::score::TxIDMsg* /*request*/, ::score::Committed* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_StartTx : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_StartTx() {
+      ::grpc::Service::MarkMethodRaw(0);
+    }
+    ~WithRawMethod_StartTx() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status StartTx(::grpc::ServerContext* /*context*/, const ::score::Empty* /*request*/, ::score::TxIDMsg* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestStartTx(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_Read : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_Read() {
+      ::grpc::Service::MarkMethodRaw(1);
+    }
+    ~WithRawMethod_Read() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Read(::grpc::ServerContext* /*context*/, const ::score::ReadOperation* /*request*/, ::score::ReadOperationResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestRead(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_Write : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_Write() {
+      ::grpc::Service::MarkMethodRaw(2);
+    }
+    ~WithRawMethod_Write() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Write(::grpc::ServerContext* /*context*/, const ::score::WriteOperation* /*request*/, ::score::WriteOperationResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestWrite(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_Commit : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_Commit() {
+      ::grpc::Service::MarkMethodRaw(3);
+    }
+    ~WithRawMethod_Commit() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Commit(::grpc::ServerContext* /*context*/, const ::score::TxIDMsg* /*request*/, ::score::Committed* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestCommit(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class ExperimentalWithRawCallbackMethod_StartTx : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithRawCallbackMethod_StartTx() {
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodRawCallback(0,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->StartTx(context, request, response); }));
+    }
+    ~ExperimentalWithRawCallbackMethod_StartTx() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status StartTx(::grpc::ServerContext* /*context*/, const ::score::Empty* /*request*/, ::score::TxIDMsg* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* StartTx(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* StartTx(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #endif
+      { return nullptr; }
+  };
+  template <class BaseClass>
+  class ExperimentalWithRawCallbackMethod_Read : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithRawCallbackMethod_Read() {
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodRawCallback(1,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->Read(context, request, response); }));
+    }
+    ~ExperimentalWithRawCallbackMethod_Read() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Read(::grpc::ServerContext* /*context*/, const ::score::ReadOperation* /*request*/, ::score::ReadOperationResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* Read(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* Read(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #endif
+      { return nullptr; }
+  };
+  template <class BaseClass>
+  class ExperimentalWithRawCallbackMethod_Write : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithRawCallbackMethod_Write() {
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodRawCallback(2,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->Write(context, request, response); }));
+    }
+    ~ExperimentalWithRawCallbackMethod_Write() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Write(::grpc::ServerContext* /*context*/, const ::score::WriteOperation* /*request*/, ::score::WriteOperationResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* Write(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* Write(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #endif
+      { return nullptr; }
+  };
+  template <class BaseClass>
+  class ExperimentalWithRawCallbackMethod_Commit : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithRawCallbackMethod_Commit() {
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodRawCallback(3,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->Commit(context, request, response); }));
+    }
+    ~ExperimentalWithRawCallbackMethod_Commit() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Commit(::grpc::ServerContext* /*context*/, const ::score::TxIDMsg* /*request*/, ::score::Committed* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* Commit(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* Commit(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #endif
+      { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_StartTx : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_StartTx() {
+      ::grpc::Service::MarkMethodStreamed(0,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::score::Empty, ::score::TxIDMsg>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::score::Empty, ::score::TxIDMsg>* streamer) {
+                       return this->StreamedStartTx(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_StartTx() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status StartTx(::grpc::ServerContext* /*context*/, const ::score::Empty* /*request*/, ::score::TxIDMsg* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedStartTx(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::score::Empty,::score::TxIDMsg>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_Read : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_Read() {
+      ::grpc::Service::MarkMethodStreamed(1,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::score::ReadOperation, ::score::ReadOperationResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::score::ReadOperation, ::score::ReadOperationResponse>* streamer) {
+                       return this->StreamedRead(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_Read() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status Read(::grpc::ServerContext* /*context*/, const ::score::ReadOperation* /*request*/, ::score::ReadOperationResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedRead(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::score::ReadOperation,::score::ReadOperationResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_Write : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_Write() {
+      ::grpc::Service::MarkMethodStreamed(2,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::score::WriteOperation, ::score::WriteOperationResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::score::WriteOperation, ::score::WriteOperationResponse>* streamer) {
+                       return this->StreamedWrite(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_Write() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status Write(::grpc::ServerContext* /*context*/, const ::score::WriteOperation* /*request*/, ::score::WriteOperationResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedWrite(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::score::WriteOperation,::score::WriteOperationResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_Commit : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_Commit() {
+      ::grpc::Service::MarkMethodStreamed(3,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::score::TxIDMsg, ::score::Committed>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::score::TxIDMsg, ::score::Committed>* streamer) {
+                       return this->StreamedCommit(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_Commit() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status Commit(::grpc::ServerContext* /*context*/, const ::score::TxIDMsg* /*request*/, ::score::Committed* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedCommit(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::score::TxIDMsg,::score::Committed>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_StartTx<WithStreamedUnaryMethod_Read<WithStreamedUnaryMethod_Write<WithStreamedUnaryMethod_Commit<Service > > > > StreamedUnaryService;
+  typedef Service SplitStreamedService;
+  typedef WithStreamedUnaryMethod_StartTx<WithStreamedUnaryMethod_Read<WithStreamedUnaryMethod_Write<WithStreamedUnaryMethod_Commit<Service > > > > StreamedService;
+};
+
 class CControlRPC final {
  public:
   static constexpr char const* service_full_name() {

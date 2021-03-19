@@ -20,12 +20,12 @@ package score;
 }*/
 
 
-/*service TxRPC {
+service TxRPC {
   rpc StartTx(Empty) returns (TxIDMsg) {}
   rpc Read(ReadOperation) returns (ReadOperationResponse) {}
   rpc Write(WriteOperation) returns (WriteOperationResponse) {}
   rpc Commit(TxIDMsg) returns (Committed) {}
-}*/
+}
 
 service CControlRPC {
 
@@ -41,27 +41,32 @@ message Empty {
 
 message TxIDMsg {
   required uint64 txid = 1;
+  required uint64 nodeid = 2;
 }
 
 message ReadOperation {
   required uint64 txid = 1;
-  required string key = 2;
+  required uint64 nodeid = 2;
+  required string key = 3;
 }
 
 message ReadOperationResponse {
   required uint64 txid = 1;
-  required string value = 2;
-  required bool aborted = 3;
+  required uint64 nodeid = 2;
+  required string value = 3;
+  required bool aborted = 4;
 }
 
 message WriteOperation {
   required uint64 txid = 1;
-  required string key = 2;
-  required string value = 3;
+  required uint64 nodeid = 2;
+  required string key = 3;
+  required string value = 4;
 }
 
 message WriteOperationResponse {
-  optional uint64 txid = 1;
+  required uint64 txid = 1;
+  required uint64 nodeid = 2;
 }
 
 /*
@@ -69,7 +74,8 @@ Use to send to server to get response.
  */
 message TxOperationResponse {
   optional string value = 3;
-  optional uint64 txid = 4;
+  required uint64 txid = 1;
+  required uint64 nodeid = 2;
 }
 
 /*
@@ -77,17 +83,19 @@ Read request message
  */
 message ReadRequest {
   required uint64 txid = 1;
-  required string key = 2;
-  required uint64 readSid = 3;
-  required bool firstRead = 4;
+  required uint64 nodeid = 2;
+  required string key = 3;
+  required uint64 readSid = 4;
+  required bool firstRead = 5;
 }
 
 message ReadReturn {
   required uint64 txid = 1;
-  required string key = 2;
-  required string value = 3;
-  required uint64 lastCommitted = 4;
-  required bool mostRecent = 5;
+  required uint64 nodeid = 2;
+  required string key = 3;
+  required string value = 4;
+  required uint64 lastCommitted = 5;
+  required bool mostRecent = 6;
 }
 
 /*
@@ -95,7 +103,8 @@ Prepare Message
  */
 message Prepare {
   required uint64 txid = 1;
-  required uint64 sid = 2;
+  required uint64 nodeid = 2;
+  required uint64 sid = 3;
   message ReadSetElement {
     required string key = 1;
     required uint64 ver = 2;
@@ -104,8 +113,8 @@ message Prepare {
     required string key = 1;
     required string value = 2;
   }
-  repeated ReadSetElement rs = 3;
-  repeated WriteSetElement ws = 4;
+  repeated ReadSetElement rs = 4;
+  repeated WriteSetElement ws = 5;
 }
 
 /*
@@ -113,8 +122,9 @@ Vote Message
  */
 message Vote {
   required uint64 txid = 1;
-  required uint64 sn = 2;
-  required bool outcome = 3;
+  required uint64 nodeid = 2;
+  required uint64 sn = 3;
+  required bool outcome = 4;
 }
 
 /*
@@ -122,8 +132,9 @@ Decide Message
  */
 message Decide {
   required uint64 txid = 1;
-  required uint64 fsn = 2;
-  required bool outcome = 3;
+  required uint64 nodeid = 2;
+  required uint64 fsn = 3;
+  required bool outcome = 4;
 }
 
 /*

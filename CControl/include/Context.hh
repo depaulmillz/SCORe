@@ -16,6 +16,13 @@
 #define SCORE_CONTEXT_HH
 
 namespace score {
+
+    struct OpTriple {
+        txid_t txid;
+        uint64_t node;
+        version_t sn;
+    };
+
     struct Context {
 
         explicit Context(uint64_t rank_, uint64_t nodes_) : rank(rank_), nodes(nodes_) {
@@ -27,8 +34,8 @@ namespace score {
         }
 
 
-        using q_t = std::queue <std::pair<txid_t, version_t>>;
-        using p_t = std::deque <std::pair<txid_t, version_t>>;
+        using q_t = std::queue<OpTriple>;
+        using p_t = std::deque<OpTriple>;
 
         map_t m;
 
@@ -37,17 +44,17 @@ namespace score {
         std::atomic_uint64_t txid_counter{0};
         uint64_t rank;
         uint64_t nodes;
-        tbb::concurrent_hash_map <txid_t, Transaction> txMap;
-        using txMapAccessor = tbb::concurrent_hash_map<txid_t, Transaction>::accessor;
+        tbb::concurrent_hash_map<std::pair<txid_t, uint64_t>, Transaction> txMap;
+        using txMapAccessor = tbb::concurrent_hash_map<std::pair<txid_t, uint64_t>, Transaction>::accessor;
 
-        std::list <uint64_t> replicas(const data_t &key) {
-            std::list <uint64_t> l;
-            l.push_front(std::hash < data_t > {}(key) % nodes);
+        std::list<uint64_t> replicas(const data_t &key) {
+            std::list<uint64_t> l;
+            l.push_front(std::hash<data_t>{}(key) % nodes);
             return l;
         }
 
         bool thisNodeIsAReplica(const data_t &key) {
-            return std::hash < data_t > {}(key) % nodes == rank;
+            return std::hash<data_t>{}(key) % nodes == rank;
         }
 
 
@@ -61,7 +68,7 @@ namespace score {
             while (commitID < sid && exclusiveUnlocked(key));
             accessor_t a;
             if (m.find(a, key)) {
-                std::shared_ptr <VersionList> v = a->second;
+                std::shared_ptr<VersionList> v = a->second;
                 shared_lock sl(v->mtx);
                 bool isFirst = true;
                 for (auto &elm : v->l) {
@@ -74,7 +81,7 @@ namespace score {
             return {data_t(), commitID, START_VERSION};
         }
 
-        void updateNodeTimestamps(version_t lastCommitted, const std::unique_lock <std::mutex> &stateLock) {
+        void updateNodeTimestamps(version_t lastCommitted, const std::unique_lock<std::mutex> &stateLock) {
             assert(stateLock.owns_lock());
             nextID = std::max(nextID, lastCommitted);
             maxSeen = std::max(maxSeen, lastCommitted);
@@ -110,34 +117,34 @@ namespace score {
         }
 
         // need to be holding state mutex to call
-        void uponCondition(const std::unique_lock <std::mutex> &stateLock) {
+        void uponCondition(const std::unique_lock<std::mutex> &stateLock) {
             assert(stateLock.owns_lock());
             if (maxSeen > commitID && pendQ.empty() && stableQ.empty()) {
                 commitID = std::max(maxSeen, commitID);
             }
         }
 
-        q_t &getStableQ(const std::unique_lock <std::mutex> &stateLock) {
+        q_t &getStableQ(const std::unique_lock<std::mutex> &stateLock) {
             assert(stateLock.owns_lock());
             return stableQ;
         }
 
-        p_t &getPendQ(const std::unique_lock <std::mutex> &stateLock) {
+        p_t &getPendQ(const std::unique_lock<std::mutex> &stateLock) {
             assert(stateLock.owns_lock());
             return pendQ;
         }
 
-        version_t &getNextID(const std::unique_lock <std::mutex> &stateLock) {
+        version_t &getNextID(const std::unique_lock<std::mutex> &stateLock) {
             assert(stateLock.owns_lock());
             return nextID;
         }
 
-        version_t &getCommitID(const std::unique_lock <std::mutex> &stateLock) {
+        version_t &getCommitID(const std::unique_lock<std::mutex> &stateLock) {
             assert(stateLock.owns_lock());
             return commitID;
         }
 
-        version_t &getMaxSeen(const std::unique_lock <std::mutex> &stateLock) {
+        version_t &getMaxSeen(const std::unique_lock<std::mutex> &stateLock) {
             assert(stateLock.owns_lock());
             return maxSeen;
         }

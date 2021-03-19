@@ -35,6 +35,7 @@ namespace score {
             stateLock.unlock();
 
             response->set_txid(request.txid());
+            response->set_nodeid(request.nodeid());
             response->set_key(key);
             response->set_value(std::get<0>(p));
             response->set_mostrecent(std::get<2>(p));
@@ -43,7 +44,7 @@ namespace score {
         }
 
         void DoPrepare(const Prepare &request, Vote *response) {
-            std::cerr << "Running DoPrepare" << std::endl;
+            //std::cerr << "Running DoPrepare" << std::endl;
             std::map<data_t, bool> toLock;
             for (auto &r : request.ws()) {
                 toLock[r.key()] = false;
@@ -71,7 +72,8 @@ namespace score {
                     stateLock.unlock();
                     // put tx in txMap
                     Context::txMapAccessor a;
-                    ctx_->txMap.insert(a, request.txid());
+                    std::cerr << "Inserting " << request.txid() << "," << request.nodeid() << std::endl;
+                    ctx_->txMap.insert(a, {request.txid(), request.nodeid()});
 
                     Transaction tx;
 
@@ -90,9 +92,10 @@ namespace score {
                 }
             }
             response->set_txid(request.txid());
+            response->set_nodeid(request.nodeid());
             response->set_sn(sn);
             response->set_outcome(outcome);
-            std::cerr << "Returned from DoPrepare" << std::endl;
+            //std::cerr << "Returned from DoPrepare" << std::endl;
         }
 
         void DoDecide(const Decide &request, Committed *response) {
@@ -100,11 +103,15 @@ namespace score {
 
             if (request.outcome()) {
                 ctx_->getNextID(stateLock) = std::max(ctx_->getNextID(stateLock), request.fsn());
-                ctx_->getStableQ(stateLock).push({request.txid(), request.fsn()});
+                OpTriple o;
+                o.txid = request.txid();
+                o.node = request.nodeid();
+                o.sn = request.fsn();
+                ctx_->getStableQ(stateLock).push(o);
                 response->set_success(true);
             }
             for (auto iter = ctx_->getPendQ(stateLock).begin(); iter != ctx_->getPendQ(stateLock).end(); ++iter) {
-                if (iter->first == request.txid()) {
+                if (iter->txid == request.txid()) {
                     ctx_->getPendQ(stateLock).erase(iter);
                     break;
                 }
@@ -112,7 +119,8 @@ namespace score {
             if (!request.outcome()) {
                 std::map<data_t, bool> toLock;
                 Context::txMapAccessor a;
-                ctx_->txMap.find(a, request.txid());
+                //std::cerr << "Finding " << request.txid() << "," << request.nodeid() << std::endl;
+                ctx_->txMap.find(a, {request.txid(), request.nodeid()});
 
                 for (auto &r : a->second.ws) {
                     toLock[r.first] = false;
@@ -129,12 +137,15 @@ namespace score {
 
         void commitCondition(const std::unique_lock<std::mutex> &stateLock) {
             if (!ctx_->getStableQ(stateLock).empty()) {
-                txid_t fsn = ctx_->getStableQ(stateLock).front().first;
-                // does not exist a pending transaction with a timestamp less than the newest one to be commited
-                if (ctx_->getPendQ(stateLock).empty() || (ctx_->getPendQ(stateLock).front().first >= fsn)) {
+                version_t fsn = ctx_->getStableQ(stateLock).front().sn;
+                // does not exist a pending transaction with a timestamp less than the newest one to be committed
+                if (ctx_->getPendQ(stateLock).empty() || (ctx_->getPendQ(stateLock).front().sn >= fsn)) {
                     std::map<data_t, bool> toLock;
                     Context::txMapAccessor a;
-                    ctx_->txMap.find(a, fsn);
+                    txid_t txid = ctx_->getStableQ(stateLock).front().txid;
+                    uint64_t nodeid = ctx_->getStableQ(stateLock).front().node;
+                    //std::cerr << "Finding " << txid << "," << nodeid << std::endl;
+                    ctx_->txMap.find(a, {txid, nodeid});
 
                     for (auto &r : a->second.ws) {
                         accessor_t ma;

@@ -1,7 +1,3 @@
-set(protobuf_MODULE_COMPATIBLE ON)
-find_package(protobuf CONFIG REQUIRED)
-find_package(gRPC CONFIG REQUIRED)
-
 #file(GLOB ProtoFiles "${CMAKE_CURRENT_SOURCE_DIR}/pb/*.proto")
 #protobuf_generate_cpp(ProtoSources ProtoHeaders ${ProtoFiles})
 

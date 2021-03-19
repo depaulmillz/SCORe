@@ -21,6 +21,193 @@
 #include <grpcpp/impl/codegen/sync_stream.h>
 namespace score {
 
+static const char* TxRPC_method_names[] = {
+  "/score.TxRPC/StartTx",
+  "/score.TxRPC/Read",
+  "/score.TxRPC/Write",
+  "/score.TxRPC/Commit",
+};
+
+std::unique_ptr< TxRPC::Stub> TxRPC::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
+  (void)options;
+  std::unique_ptr< TxRPC::Stub> stub(new TxRPC::Stub(channel));
+  return stub;
+}
+
+TxRPC::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel)
+  : channel_(channel), rpcmethod_StartTx_(TxRPC_method_names[0], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_Read_(TxRPC_method_names[1], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_Write_(TxRPC_method_names[2], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_Commit_(TxRPC_method_names[3], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  {}
+
+::grpc::Status TxRPC::Stub::StartTx(::grpc::ClientContext* context, const ::score::Empty& request, ::score::TxIDMsg* response) {
+  return ::grpc::internal::BlockingUnaryCall(channel_.get(), rpcmethod_StartTx_, context, request, response);
+}
+
+void TxRPC::Stub::experimental_async::StartTx(::grpc::ClientContext* context, const ::score::Empty* request, ::score::TxIDMsg* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall(stub_->channel_.get(), stub_->rpcmethod_StartTx_, context, request, response, std::move(f));
+}
+
+void TxRPC::Stub::experimental_async::StartTx(::grpc::ClientContext* context, const ::score::Empty* request, ::score::TxIDMsg* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create(stub_->channel_.get(), stub_->rpcmethod_StartTx_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::score::TxIDMsg>* TxRPC::Stub::PrepareAsyncStartTxRaw(::grpc::ClientContext* context, const ::score::Empty& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderFactory< ::score::TxIDMsg>::Create(channel_.get(), cq, rpcmethod_StartTx_, context, request, false);
+}
+
+::grpc::ClientAsyncResponseReader< ::score::TxIDMsg>* TxRPC::Stub::AsyncStartTxRaw(::grpc::ClientContext* context, const ::score::Empty& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncStartTxRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status TxRPC::Stub::Read(::grpc::ClientContext* context, const ::score::ReadOperation& request, ::score::ReadOperationResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall(channel_.get(), rpcmethod_Read_, context, request, response);
+}
+
+void TxRPC::Stub::experimental_async::Read(::grpc::ClientContext* context, const ::score::ReadOperation* request, ::score::ReadOperationResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall(stub_->channel_.get(), stub_->rpcmethod_Read_, context, request, response, std::move(f));
+}
+
+void TxRPC::Stub::experimental_async::Read(::grpc::ClientContext* context, const ::score::ReadOperation* request, ::score::ReadOperationResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create(stub_->channel_.get(), stub_->rpcmethod_Read_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::score::ReadOperationResponse>* TxRPC::Stub::PrepareAsyncReadRaw(::grpc::ClientContext* context, const ::score::ReadOperation& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderFactory< ::score::ReadOperationResponse>::Create(channel_.get(), cq, rpcmethod_Read_, context, request, false);
+}
+
+::grpc::ClientAsyncResponseReader< ::score::ReadOperationResponse>* TxRPC::Stub::AsyncReadRaw(::grpc::ClientContext* context, const ::score::ReadOperation& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncReadRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status TxRPC::Stub::Write(::grpc::ClientContext* context, const ::score::WriteOperation& request, ::score::WriteOperationResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall(channel_.get(), rpcmethod_Write_, context, request, response);
+}
+
+void TxRPC::Stub::experimental_async::Write(::grpc::ClientContext* context, const ::score::WriteOperation* request, ::score::WriteOperationResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall(stub_->channel_.get(), stub_->rpcmethod_Write_, context, request, response, std::move(f));
+}
+
+void TxRPC::Stub::experimental_async::Write(::grpc::ClientContext* context, const ::score::WriteOperation* request, ::score::WriteOperationResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create(stub_->channel_.get(), stub_->rpcmethod_Write_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::score::WriteOperationResponse>* TxRPC::Stub::PrepareAsyncWriteRaw(::grpc::ClientContext* context, const ::score::WriteOperation& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderFactory< ::score::WriteOperationResponse>::Create(channel_.get(), cq, rpcmethod_Write_, context, request, false);
+}
+
+::grpc::ClientAsyncResponseReader< ::score::WriteOperationResponse>* TxRPC::Stub::AsyncWriteRaw(::grpc::ClientContext* context, const ::score::WriteOperation& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncWriteRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status TxRPC::Stub::Commit(::grpc::ClientContext* context, const ::score::TxIDMsg& request, ::score::Committed* response) {
+  return ::grpc::internal::BlockingUnaryCall(channel_.get(), rpcmethod_Commit_, context, request, response);
+}
+
+void TxRPC::Stub::experimental_async::Commit(::grpc::ClientContext* context, const ::score::TxIDMsg* request, ::score::Committed* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall(stub_->channel_.get(), stub_->rpcmethod_Commit_, context, request, response, std::move(f));
+}
+
+void TxRPC::Stub::experimental_async::Commit(::grpc::ClientContext* context, const ::score::TxIDMsg* request, ::score::Committed* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create(stub_->channel_.get(), stub_->rpcmethod_Commit_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::score::Committed>* TxRPC::Stub::PrepareAsyncCommitRaw(::grpc::ClientContext* context, const ::score::TxIDMsg& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderFactory< ::score::Committed>::Create(channel_.get(), cq, rpcmethod_Commit_, context, request, false);
+}
+
+::grpc::ClientAsyncResponseReader< ::score::Committed>* TxRPC::Stub::AsyncCommitRaw(::grpc::ClientContext* context, const ::score::TxIDMsg& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncCommitRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+TxRPC::Service::Service() {
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      TxRPC_method_names[0],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< TxRPC::Service, ::score::Empty, ::score::TxIDMsg>(
+          [](TxRPC::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::score::Empty* req,
+             ::score::TxIDMsg* resp) {
+               return service->StartTx(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      TxRPC_method_names[1],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< TxRPC::Service, ::score::ReadOperation, ::score::ReadOperationResponse>(
+          [](TxRPC::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::score::ReadOperation* req,
+             ::score::ReadOperationResponse* resp) {
+               return service->Read(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      TxRPC_method_names[2],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< TxRPC::Service, ::score::WriteOperation, ::score::WriteOperationResponse>(
+          [](TxRPC::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::score::WriteOperation* req,
+             ::score::WriteOperationResponse* resp) {
+               return service->Write(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      TxRPC_method_names[3],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< TxRPC::Service, ::score::TxIDMsg, ::score::Committed>(
+          [](TxRPC::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::score::TxIDMsg* req,
+             ::score::Committed* resp) {
+               return service->Commit(ctx, req, resp);
+             }, this)));
+}
+
+TxRPC::Service::~Service() {
+}
+
+::grpc::Status TxRPC::Service::StartTx(::grpc::ServerContext* context, const ::score::Empty* request, ::score::TxIDMsg* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status TxRPC::Service::Read(::grpc::ServerContext* context, const ::score::ReadOperation* request, ::score::ReadOperationResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status TxRPC::Service::Write(::grpc::ServerContext* context, const ::score::WriteOperation* request, ::score::WriteOperationResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status TxRPC::Service::Commit(::grpc::ServerContext* context, const ::score::TxIDMsg* request, ::score::Committed* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+
 static const char* CControlRPC_method_names[] = {
   "/score.CControlRPC/DoReadRequest",
   "/score.CControlRPC/DoPrepare",

@@ -9,6 +9,7 @@
 #include <CControlRPC.hh>
 #include "gtest/gtest.h"
 #include "protocol.pb.h"
+#include <TxClientAPI.hh>
 
 using namespace score;
 
@@ -35,6 +36,7 @@ TEST(CControlTest, TestTwoPC) {
     Prepare req;
     Vote res;
     req.set_txid(1);
+    req.set_nodeid(0);
     req.set_sid(1);
     auto r = req.add_rs();
     r->set_key("hi");
@@ -51,6 +53,7 @@ TEST(CControlTest, TestTwoPC) {
     Committed cm;
 
     d.set_txid(1);
+    d.set_nodeid(0);
     d.set_outcome(true);
     d.set_fsn(res.sn());
 
@@ -103,10 +106,13 @@ TEST(CControlTest, TxAPIReadWhatYouWriteTest) {
     TxIDMsg res;
     txapi.StartTx(e, &res);
     auto txid = res.txid();
+    auto node = res.nodeid();
+
     WriteOperation w;
     w.set_key("hi");
     w.set_value("test");
     w.set_txid(txid);
+    w.set_nodeid(node);
     WriteOperationResponse res2;
     txapi.Write(w, &res2);
     ASSERT_TRUE(res2.txid() == txid);
@@ -138,16 +144,20 @@ TEST(CControlTest, TxAPIShouldCommit) {
     TxIDMsg res;
     txapi.StartTx(e, &res);
     auto txid = res.txid();
+    auto node = res.nodeid();
+
     WriteOperation w;
     w.set_key("hi");
     w.set_value("test");
     w.set_txid(txid);
+    w.set_nodeid(node);
     WriteOperationResponse res2;
     txapi.Write(w, &res2);
     ASSERT_TRUE(res2.txid() == txid);
     ReadOperation r;
     r.set_key("hi");
     r.set_txid(txid);
+    r.set_nodeid(node);
     ReadOperationResponse res3;
     txapi.Read(r, &res3);
     ASSERT_TRUE(res3.value() == "test") << "Should read own writes";
@@ -176,17 +186,61 @@ TEST(CControlTest, TxAPIShouldCommitAllReads) {
     TxIDMsg res;
     txapi.StartTx(e, &res);
     auto txid = res.txid();
+    auto node = res.nodeid();
+
     ReadOperation r;
     r.set_key("hi");
     r.set_txid(txid);
+    r.set_nodeid(node);
+
     ReadOperationResponse res2;
     txapi.Read(r, &res2);
     ASSERT_TRUE(res2.txid() == txid);
     Committed committed;
     res.set_txid(txid);
+    res.set_nodeid(node);
+
     txapi.Commit(res, &committed);
     ASSERT_TRUE(committed.success()) << "Should succeed\n";
     std::cerr << "Done\n";
     server->Shutdown();
     f.get();
+}
+
+TEST(CControlTest, TxClientAPIShouldCommitAllReads) {
+    std::string internalAddr = "127.0.0.1:8080";
+    std::string clientAddr = "127.0.0.1:8081";
+
+    CControlContextPair pair(0, 1);
+
+    auto server = RunServer(internalAddr, pair.cc);
+
+    auto f = std::async([&]() {
+        server->Wait();
+    });
+
+    std::vector<std::shared_ptr<InternalClient>> servers;
+    servers.push_back(std::make_shared<InternalClient>(internalAddr));
+
+    auto server2 = RunClientSideServer(clientAddr, pair.ctx, servers);
+
+    auto f2 = std::async([&]() {
+        server2->Wait();
+    });
+
+    TxClient client(clientAddr);
+
+    auto tx = client.StartTx();
+
+    ASSERT_TRUE(tx.Read("Hi").first);
+
+    ASSERT_TRUE(tx.Read("Hi2").first);
+
+    ASSERT_TRUE(tx.TryCommit()) << "Should succeed\n";
+    std::cerr << "Done\n";
+
+    server->Shutdown();
+    server2->Shutdown();
+    f.get();
+    f2.get();
 }

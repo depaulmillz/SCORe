@@ -371,6 +371,7 @@ class TxIDMsg PROTOBUF_FINAL :
 
   enum : int {
     kTxidFieldNumber = 1,
+    kNodeidFieldNumber = 2,
   };
   // required uint64 txid = 1;
   bool has_txid() const;
@@ -385,9 +386,25 @@ class TxIDMsg PROTOBUF_FINAL :
   void _internal_set_txid(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
+  // required uint64 nodeid = 2;
+  bool has_nodeid() const;
+  private:
+  bool _internal_has_nodeid() const;
+  public:
+  void clear_nodeid();
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid() const;
+  void set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_nodeid() const;
+  void _internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  public:
+
   // @@protoc_insertion_point(class_scope:score.TxIDMsg)
  private:
   class _Internal;
+
+  // helper for ByteSizeLong()
+  size_t RequiredFieldsByteSizeFallback() const;
 
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
@@ -395,6 +412,7 @@ class TxIDMsg PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::uint64 txid_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid_;
   friend struct ::TableStruct_protocol_2eproto;
 };
 // -------------------------------------------------------------------
@@ -518,10 +536,11 @@ class ReadOperation PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kKeyFieldNumber = 2,
+    kKeyFieldNumber = 3,
     kTxidFieldNumber = 1,
+    kNodeidFieldNumber = 2,
   };
-  // required string key = 2;
+  // required string key = 3;
   bool has_key() const;
   private:
   bool _internal_has_key() const;
@@ -554,6 +573,19 @@ class ReadOperation PROTOBUF_FINAL :
   void _internal_set_txid(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
+  // required uint64 nodeid = 2;
+  bool has_nodeid() const;
+  private:
+  bool _internal_has_nodeid() const;
+  public:
+  void clear_nodeid();
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid() const;
+  void set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_nodeid() const;
+  void _internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  public:
+
   // @@protoc_insertion_point(class_scope:score.ReadOperation)
  private:
   class _Internal;
@@ -568,6 +600,7 @@ class ReadOperation PROTOBUF_FINAL :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr key_;
   ::PROTOBUF_NAMESPACE_ID::uint64 txid_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid_;
   friend struct ::TableStruct_protocol_2eproto;
 };
 // -------------------------------------------------------------------
@@ -691,11 +724,12 @@ class ReadOperationResponse PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kValueFieldNumber = 2,
+    kValueFieldNumber = 3,
     kTxidFieldNumber = 1,
-    kAbortedFieldNumber = 3,
+    kNodeidFieldNumber = 2,
+    kAbortedFieldNumber = 4,
   };
-  // required string value = 2;
+  // required string value = 3;
   bool has_value() const;
   private:
   bool _internal_has_value() const;
@@ -728,7 +762,20 @@ class ReadOperationResponse PROTOBUF_FINAL :
   void _internal_set_txid(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
-  // required bool aborted = 3;
+  // required uint64 nodeid = 2;
+  bool has_nodeid() const;
+  private:
+  bool _internal_has_nodeid() const;
+  public:
+  void clear_nodeid();
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid() const;
+  void set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_nodeid() const;
+  void _internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  public:
+
+  // required bool aborted = 4;
   bool has_aborted() const;
   private:
   bool _internal_has_aborted() const;
@@ -755,6 +802,7 @@ class ReadOperationResponse PROTOBUF_FINAL :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr value_;
   ::PROTOBUF_NAMESPACE_ID::uint64 txid_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid_;
   bool aborted_;
   friend struct ::TableStruct_protocol_2eproto;
 };
@@ -879,11 +927,12 @@ class WriteOperation PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kKeyFieldNumber = 2,
-    kValueFieldNumber = 3,
+    kKeyFieldNumber = 3,
+    kValueFieldNumber = 4,
     kTxidFieldNumber = 1,
+    kNodeidFieldNumber = 2,
   };
-  // required string key = 2;
+  // required string key = 3;
   bool has_key() const;
   private:
   bool _internal_has_key() const;
@@ -903,7 +952,7 @@ class WriteOperation PROTOBUF_FINAL :
   std::string* _internal_mutable_key();
   public:
 
-  // required string value = 3;
+  // required string value = 4;
   bool has_value() const;
   private:
   bool _internal_has_value() const;
@@ -936,6 +985,19 @@ class WriteOperation PROTOBUF_FINAL :
   void _internal_set_txid(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
+  // required uint64 nodeid = 2;
+  bool has_nodeid() const;
+  private:
+  bool _internal_has_nodeid() const;
+  public:
+  void clear_nodeid();
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid() const;
+  void set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_nodeid() const;
+  void _internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  public:
+
   // @@protoc_insertion_point(class_scope:score.WriteOperation)
  private:
   class _Internal;
@@ -951,6 +1013,7 @@ class WriteOperation PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr key_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr value_;
   ::PROTOBUF_NAMESPACE_ID::uint64 txid_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid_;
   friend struct ::TableStruct_protocol_2eproto;
 };
 // -------------------------------------------------------------------
@@ -1075,8 +1138,9 @@ class WriteOperationResponse PROTOBUF_FINAL :
 
   enum : int {
     kTxidFieldNumber = 1,
+    kNodeidFieldNumber = 2,
   };
-  // optional uint64 txid = 1;
+  // required uint64 txid = 1;
   bool has_txid() const;
   private:
   bool _internal_has_txid() const;
@@ -1089,9 +1153,25 @@ class WriteOperationResponse PROTOBUF_FINAL :
   void _internal_set_txid(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
+  // required uint64 nodeid = 2;
+  bool has_nodeid() const;
+  private:
+  bool _internal_has_nodeid() const;
+  public:
+  void clear_nodeid();
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid() const;
+  void set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_nodeid() const;
+  void _internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  public:
+
   // @@protoc_insertion_point(class_scope:score.WriteOperationResponse)
  private:
   class _Internal;
+
+  // helper for ByteSizeLong()
+  size_t RequiredFieldsByteSizeFallback() const;
 
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
@@ -1099,6 +1179,7 @@ class WriteOperationResponse PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::uint64 txid_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid_;
   friend struct ::TableStruct_protocol_2eproto;
 };
 // -------------------------------------------------------------------
@@ -1223,7 +1304,8 @@ class TxOperationResponse PROTOBUF_FINAL :
 
   enum : int {
     kValueFieldNumber = 3,
-    kTxidFieldNumber = 4,
+    kTxidFieldNumber = 1,
+    kNodeidFieldNumber = 2,
   };
   // optional string value = 3;
   bool has_value() const;
@@ -1245,7 +1327,7 @@ class TxOperationResponse PROTOBUF_FINAL :
   std::string* _internal_mutable_value();
   public:
 
-  // optional uint64 txid = 4;
+  // required uint64 txid = 1;
   bool has_txid() const;
   private:
   bool _internal_has_txid() const;
@@ -1258,9 +1340,25 @@ class TxOperationResponse PROTOBUF_FINAL :
   void _internal_set_txid(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
+  // required uint64 nodeid = 2;
+  bool has_nodeid() const;
+  private:
+  bool _internal_has_nodeid() const;
+  public:
+  void clear_nodeid();
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid() const;
+  void set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_nodeid() const;
+  void _internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  public:
+
   // @@protoc_insertion_point(class_scope:score.TxOperationResponse)
  private:
   class _Internal;
+
+  // helper for ByteSizeLong()
+  size_t RequiredFieldsByteSizeFallback() const;
 
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
@@ -1269,6 +1367,7 @@ class TxOperationResponse PROTOBUF_FINAL :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr value_;
   ::PROTOBUF_NAMESPACE_ID::uint64 txid_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid_;
   friend struct ::TableStruct_protocol_2eproto;
 };
 // -------------------------------------------------------------------
@@ -1392,12 +1491,13 @@ class ReadRequest PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kKeyFieldNumber = 2,
+    kKeyFieldNumber = 3,
     kTxidFieldNumber = 1,
-    kReadSidFieldNumber = 3,
-    kFirstReadFieldNumber = 4,
+    kNodeidFieldNumber = 2,
+    kReadSidFieldNumber = 4,
+    kFirstReadFieldNumber = 5,
   };
-  // required string key = 2;
+  // required string key = 3;
   bool has_key() const;
   private:
   bool _internal_has_key() const;
@@ -1430,7 +1530,20 @@ class ReadRequest PROTOBUF_FINAL :
   void _internal_set_txid(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
-  // required uint64 readSid = 3;
+  // required uint64 nodeid = 2;
+  bool has_nodeid() const;
+  private:
+  bool _internal_has_nodeid() const;
+  public:
+  void clear_nodeid();
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid() const;
+  void set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_nodeid() const;
+  void _internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  public:
+
+  // required uint64 readSid = 4;
   bool has_readsid() const;
   private:
   bool _internal_has_readsid() const;
@@ -1443,7 +1556,7 @@ class ReadRequest PROTOBUF_FINAL :
   void _internal_set_readsid(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
-  // required bool firstRead = 4;
+  // required bool firstRead = 5;
   bool has_firstread() const;
   private:
   bool _internal_has_firstread() const;
@@ -1470,6 +1583,7 @@ class ReadRequest PROTOBUF_FINAL :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr key_;
   ::PROTOBUF_NAMESPACE_ID::uint64 txid_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid_;
   ::PROTOBUF_NAMESPACE_ID::uint64 readsid_;
   bool firstread_;
   friend struct ::TableStruct_protocol_2eproto;
@@ -1595,13 +1709,14 @@ class ReadReturn PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kKeyFieldNumber = 2,
-    kValueFieldNumber = 3,
+    kKeyFieldNumber = 3,
+    kValueFieldNumber = 4,
     kTxidFieldNumber = 1,
-    kLastCommittedFieldNumber = 4,
-    kMostRecentFieldNumber = 5,
+    kNodeidFieldNumber = 2,
+    kLastCommittedFieldNumber = 5,
+    kMostRecentFieldNumber = 6,
   };
-  // required string key = 2;
+  // required string key = 3;
   bool has_key() const;
   private:
   bool _internal_has_key() const;
@@ -1621,7 +1736,7 @@ class ReadReturn PROTOBUF_FINAL :
   std::string* _internal_mutable_key();
   public:
 
-  // required string value = 3;
+  // required string value = 4;
   bool has_value() const;
   private:
   bool _internal_has_value() const;
@@ -1654,7 +1769,20 @@ class ReadReturn PROTOBUF_FINAL :
   void _internal_set_txid(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
-  // required uint64 lastCommitted = 4;
+  // required uint64 nodeid = 2;
+  bool has_nodeid() const;
+  private:
+  bool _internal_has_nodeid() const;
+  public:
+  void clear_nodeid();
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid() const;
+  void set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_nodeid() const;
+  void _internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  public:
+
+  // required uint64 lastCommitted = 5;
   bool has_lastcommitted() const;
   private:
   bool _internal_has_lastcommitted() const;
@@ -1667,7 +1795,7 @@ class ReadReturn PROTOBUF_FINAL :
   void _internal_set_lastcommitted(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
-  // required bool mostRecent = 5;
+  // required bool mostRecent = 6;
   bool has_mostrecent() const;
   private:
   bool _internal_has_mostrecent() const;
@@ -1695,6 +1823,7 @@ class ReadReturn PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr key_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr value_;
   ::PROTOBUF_NAMESPACE_ID::uint64 txid_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid_;
   ::PROTOBUF_NAMESPACE_ID::uint64 lastcommitted_;
   bool mostrecent_;
   friend struct ::TableStruct_protocol_2eproto;
@@ -2176,12 +2305,13 @@ class Prepare PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kRsFieldNumber = 3,
-    kWsFieldNumber = 4,
+    kRsFieldNumber = 4,
+    kWsFieldNumber = 5,
     kTxidFieldNumber = 1,
-    kSidFieldNumber = 2,
+    kNodeidFieldNumber = 2,
+    kSidFieldNumber = 3,
   };
-  // repeated .score.Prepare.ReadSetElement rs = 3;
+  // repeated .score.Prepare.ReadSetElement rs = 4;
   int rs_size() const;
   private:
   int _internal_rs_size() const;
@@ -2199,7 +2329,7 @@ class Prepare PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::score::Prepare_ReadSetElement >&
       rs() const;
 
-  // repeated .score.Prepare.WriteSetElement ws = 4;
+  // repeated .score.Prepare.WriteSetElement ws = 5;
   int ws_size() const;
   private:
   int _internal_ws_size() const;
@@ -2230,7 +2360,20 @@ class Prepare PROTOBUF_FINAL :
   void _internal_set_txid(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
-  // required uint64 sid = 2;
+  // required uint64 nodeid = 2;
+  bool has_nodeid() const;
+  private:
+  bool _internal_has_nodeid() const;
+  public:
+  void clear_nodeid();
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid() const;
+  void set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_nodeid() const;
+  void _internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  public:
+
+  // required uint64 sid = 3;
   bool has_sid() const;
   private:
   bool _internal_has_sid() const;
@@ -2258,6 +2401,7 @@ class Prepare PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::score::Prepare_ReadSetElement > rs_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::score::Prepare_WriteSetElement > ws_;
   ::PROTOBUF_NAMESPACE_ID::uint64 txid_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid_;
   ::PROTOBUF_NAMESPACE_ID::uint64 sid_;
   friend struct ::TableStruct_protocol_2eproto;
 };
@@ -2383,8 +2527,9 @@ class Vote PROTOBUF_FINAL :
 
   enum : int {
     kTxidFieldNumber = 1,
-    kSnFieldNumber = 2,
-    kOutcomeFieldNumber = 3,
+    kNodeidFieldNumber = 2,
+    kSnFieldNumber = 3,
+    kOutcomeFieldNumber = 4,
   };
   // required uint64 txid = 1;
   bool has_txid() const;
@@ -2399,7 +2544,20 @@ class Vote PROTOBUF_FINAL :
   void _internal_set_txid(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
-  // required uint64 sn = 2;
+  // required uint64 nodeid = 2;
+  bool has_nodeid() const;
+  private:
+  bool _internal_has_nodeid() const;
+  public:
+  void clear_nodeid();
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid() const;
+  void set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_nodeid() const;
+  void _internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  public:
+
+  // required uint64 sn = 3;
   bool has_sn() const;
   private:
   bool _internal_has_sn() const;
@@ -2412,7 +2570,7 @@ class Vote PROTOBUF_FINAL :
   void _internal_set_sn(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
-  // required bool outcome = 3;
+  // required bool outcome = 4;
   bool has_outcome() const;
   private:
   bool _internal_has_outcome() const;
@@ -2438,6 +2596,7 @@ class Vote PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::uint64 txid_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid_;
   ::PROTOBUF_NAMESPACE_ID::uint64 sn_;
   bool outcome_;
   friend struct ::TableStruct_protocol_2eproto;
@@ -2564,8 +2723,9 @@ class Decide PROTOBUF_FINAL :
 
   enum : int {
     kTxidFieldNumber = 1,
-    kFsnFieldNumber = 2,
-    kOutcomeFieldNumber = 3,
+    kNodeidFieldNumber = 2,
+    kFsnFieldNumber = 3,
+    kOutcomeFieldNumber = 4,
   };
   // required uint64 txid = 1;
   bool has_txid() const;
@@ -2580,7 +2740,20 @@ class Decide PROTOBUF_FINAL :
   void _internal_set_txid(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
-  // required uint64 fsn = 2;
+  // required uint64 nodeid = 2;
+  bool has_nodeid() const;
+  private:
+  bool _internal_has_nodeid() const;
+  public:
+  void clear_nodeid();
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid() const;
+  void set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_nodeid() const;
+  void _internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  public:
+
+  // required uint64 fsn = 3;
   bool has_fsn() const;
   private:
   bool _internal_has_fsn() const;
@@ -2593,7 +2766,7 @@ class Decide PROTOBUF_FINAL :
   void _internal_set_fsn(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
-  // required bool outcome = 3;
+  // required bool outcome = 4;
   bool has_outcome() const;
   private:
   bool _internal_has_outcome() const;
@@ -2619,6 +2792,7 @@ class Decide PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::uint64 txid_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 nodeid_;
   ::PROTOBUF_NAMESPACE_ID::uint64 fsn_;
   bool outcome_;
   friend struct ::TableStruct_protocol_2eproto;
@@ -2814,6 +2988,34 @@ inline void TxIDMsg::set_txid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   // @@protoc_insertion_point(field_set:score.TxIDMsg.txid)
 }
 
+// required uint64 nodeid = 2;
+inline bool TxIDMsg::_internal_has_nodeid() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool TxIDMsg::has_nodeid() const {
+  return _internal_has_nodeid();
+}
+inline void TxIDMsg::clear_nodeid() {
+  nodeid_ = PROTOBUF_ULONGLONG(0);
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 TxIDMsg::_internal_nodeid() const {
+  return nodeid_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 TxIDMsg::nodeid() const {
+  // @@protoc_insertion_point(field_get:score.TxIDMsg.nodeid)
+  return _internal_nodeid();
+}
+inline void TxIDMsg::_internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _has_bits_[0] |= 0x00000002u;
+  nodeid_ = value;
+}
+inline void TxIDMsg::set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _internal_set_nodeid(value);
+  // @@protoc_insertion_point(field_set:score.TxIDMsg.nodeid)
+}
+
 // -------------------------------------------------------------------
 
 // ReadOperation
@@ -2846,7 +3048,35 @@ inline void ReadOperation::set_txid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   // @@protoc_insertion_point(field_set:score.ReadOperation.txid)
 }
 
-// required string key = 2;
+// required uint64 nodeid = 2;
+inline bool ReadOperation::_internal_has_nodeid() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool ReadOperation::has_nodeid() const {
+  return _internal_has_nodeid();
+}
+inline void ReadOperation::clear_nodeid() {
+  nodeid_ = PROTOBUF_ULONGLONG(0);
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 ReadOperation::_internal_nodeid() const {
+  return nodeid_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 ReadOperation::nodeid() const {
+  // @@protoc_insertion_point(field_get:score.ReadOperation.nodeid)
+  return _internal_nodeid();
+}
+inline void ReadOperation::_internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _has_bits_[0] |= 0x00000004u;
+  nodeid_ = value;
+}
+inline void ReadOperation::set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _internal_set_nodeid(value);
+  // @@protoc_insertion_point(field_set:score.ReadOperation.nodeid)
+}
+
+// required string key = 3;
 inline bool ReadOperation::_internal_has_key() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
@@ -2951,7 +3181,35 @@ inline void ReadOperationResponse::set_txid(::PROTOBUF_NAMESPACE_ID::uint64 valu
   // @@protoc_insertion_point(field_set:score.ReadOperationResponse.txid)
 }
 
-// required string value = 2;
+// required uint64 nodeid = 2;
+inline bool ReadOperationResponse::_internal_has_nodeid() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool ReadOperationResponse::has_nodeid() const {
+  return _internal_has_nodeid();
+}
+inline void ReadOperationResponse::clear_nodeid() {
+  nodeid_ = PROTOBUF_ULONGLONG(0);
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 ReadOperationResponse::_internal_nodeid() const {
+  return nodeid_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 ReadOperationResponse::nodeid() const {
+  // @@protoc_insertion_point(field_get:score.ReadOperationResponse.nodeid)
+  return _internal_nodeid();
+}
+inline void ReadOperationResponse::_internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _has_bits_[0] |= 0x00000004u;
+  nodeid_ = value;
+}
+inline void ReadOperationResponse::set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _internal_set_nodeid(value);
+  // @@protoc_insertion_point(field_set:score.ReadOperationResponse.nodeid)
+}
+
+// required string value = 3;
 inline bool ReadOperationResponse::_internal_has_value() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
@@ -3024,9 +3282,9 @@ inline void ReadOperationResponse::set_allocated_value(std::string* value) {
   // @@protoc_insertion_point(field_set_allocated:score.ReadOperationResponse.value)
 }
 
-// required bool aborted = 3;
+// required bool aborted = 4;
 inline bool ReadOperationResponse::_internal_has_aborted() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
 inline bool ReadOperationResponse::has_aborted() const {
@@ -3034,7 +3292,7 @@ inline bool ReadOperationResponse::has_aborted() const {
 }
 inline void ReadOperationResponse::clear_aborted() {
   aborted_ = false;
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline bool ReadOperationResponse::_internal_aborted() const {
   return aborted_;
@@ -3044,7 +3302,7 @@ inline bool ReadOperationResponse::aborted() const {
   return _internal_aborted();
 }
 inline void ReadOperationResponse::_internal_set_aborted(bool value) {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   aborted_ = value;
 }
 inline void ReadOperationResponse::set_aborted(bool value) {
@@ -3084,7 +3342,35 @@ inline void WriteOperation::set_txid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   // @@protoc_insertion_point(field_set:score.WriteOperation.txid)
 }
 
-// required string key = 2;
+// required uint64 nodeid = 2;
+inline bool WriteOperation::_internal_has_nodeid() const {
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  return value;
+}
+inline bool WriteOperation::has_nodeid() const {
+  return _internal_has_nodeid();
+}
+inline void WriteOperation::clear_nodeid() {
+  nodeid_ = PROTOBUF_ULONGLONG(0);
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 WriteOperation::_internal_nodeid() const {
+  return nodeid_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 WriteOperation::nodeid() const {
+  // @@protoc_insertion_point(field_get:score.WriteOperation.nodeid)
+  return _internal_nodeid();
+}
+inline void WriteOperation::_internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _has_bits_[0] |= 0x00000008u;
+  nodeid_ = value;
+}
+inline void WriteOperation::set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _internal_set_nodeid(value);
+  // @@protoc_insertion_point(field_set:score.WriteOperation.nodeid)
+}
+
+// required string key = 3;
 inline bool WriteOperation::_internal_has_key() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
@@ -3157,7 +3443,7 @@ inline void WriteOperation::set_allocated_key(std::string* key) {
   // @@protoc_insertion_point(field_set_allocated:score.WriteOperation.key)
 }
 
-// required string value = 3;
+// required string value = 4;
 inline bool WriteOperation::_internal_has_value() const {
   bool value = (_has_bits_[0] & 0x00000002u) != 0;
   return value;
@@ -3234,7 +3520,7 @@ inline void WriteOperation::set_allocated_value(std::string* value) {
 
 // WriteOperationResponse
 
-// optional uint64 txid = 1;
+// required uint64 txid = 1;
 inline bool WriteOperationResponse::_internal_has_txid() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
@@ -3260,6 +3546,34 @@ inline void WriteOperationResponse::_internal_set_txid(::PROTOBUF_NAMESPACE_ID::
 inline void WriteOperationResponse::set_txid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   _internal_set_txid(value);
   // @@protoc_insertion_point(field_set:score.WriteOperationResponse.txid)
+}
+
+// required uint64 nodeid = 2;
+inline bool WriteOperationResponse::_internal_has_nodeid() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool WriteOperationResponse::has_nodeid() const {
+  return _internal_has_nodeid();
+}
+inline void WriteOperationResponse::clear_nodeid() {
+  nodeid_ = PROTOBUF_ULONGLONG(0);
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 WriteOperationResponse::_internal_nodeid() const {
+  return nodeid_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 WriteOperationResponse::nodeid() const {
+  // @@protoc_insertion_point(field_get:score.WriteOperationResponse.nodeid)
+  return _internal_nodeid();
+}
+inline void WriteOperationResponse::_internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _has_bits_[0] |= 0x00000002u;
+  nodeid_ = value;
+}
+inline void WriteOperationResponse::set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _internal_set_nodeid(value);
+  // @@protoc_insertion_point(field_set:score.WriteOperationResponse.nodeid)
 }
 
 // -------------------------------------------------------------------
@@ -3339,7 +3653,7 @@ inline void TxOperationResponse::set_allocated_value(std::string* value) {
   // @@protoc_insertion_point(field_set_allocated:score.TxOperationResponse.value)
 }
 
-// optional uint64 txid = 4;
+// required uint64 txid = 1;
 inline bool TxOperationResponse::_internal_has_txid() const {
   bool value = (_has_bits_[0] & 0x00000002u) != 0;
   return value;
@@ -3365,6 +3679,34 @@ inline void TxOperationResponse::_internal_set_txid(::PROTOBUF_NAMESPACE_ID::uin
 inline void TxOperationResponse::set_txid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   _internal_set_txid(value);
   // @@protoc_insertion_point(field_set:score.TxOperationResponse.txid)
+}
+
+// required uint64 nodeid = 2;
+inline bool TxOperationResponse::_internal_has_nodeid() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool TxOperationResponse::has_nodeid() const {
+  return _internal_has_nodeid();
+}
+inline void TxOperationResponse::clear_nodeid() {
+  nodeid_ = PROTOBUF_ULONGLONG(0);
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 TxOperationResponse::_internal_nodeid() const {
+  return nodeid_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 TxOperationResponse::nodeid() const {
+  // @@protoc_insertion_point(field_get:score.TxOperationResponse.nodeid)
+  return _internal_nodeid();
+}
+inline void TxOperationResponse::_internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _has_bits_[0] |= 0x00000004u;
+  nodeid_ = value;
+}
+inline void TxOperationResponse::set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _internal_set_nodeid(value);
+  // @@protoc_insertion_point(field_set:score.TxOperationResponse.nodeid)
 }
 
 // -------------------------------------------------------------------
@@ -3399,7 +3741,35 @@ inline void ReadRequest::set_txid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   // @@protoc_insertion_point(field_set:score.ReadRequest.txid)
 }
 
-// required string key = 2;
+// required uint64 nodeid = 2;
+inline bool ReadRequest::_internal_has_nodeid() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool ReadRequest::has_nodeid() const {
+  return _internal_has_nodeid();
+}
+inline void ReadRequest::clear_nodeid() {
+  nodeid_ = PROTOBUF_ULONGLONG(0);
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 ReadRequest::_internal_nodeid() const {
+  return nodeid_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 ReadRequest::nodeid() const {
+  // @@protoc_insertion_point(field_get:score.ReadRequest.nodeid)
+  return _internal_nodeid();
+}
+inline void ReadRequest::_internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _has_bits_[0] |= 0x00000004u;
+  nodeid_ = value;
+}
+inline void ReadRequest::set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _internal_set_nodeid(value);
+  // @@protoc_insertion_point(field_set:score.ReadRequest.nodeid)
+}
+
+// required string key = 3;
 inline bool ReadRequest::_internal_has_key() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
@@ -3472,9 +3842,9 @@ inline void ReadRequest::set_allocated_key(std::string* key) {
   // @@protoc_insertion_point(field_set_allocated:score.ReadRequest.key)
 }
 
-// required uint64 readSid = 3;
+// required uint64 readSid = 4;
 inline bool ReadRequest::_internal_has_readsid() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
 inline bool ReadRequest::has_readsid() const {
@@ -3482,7 +3852,7 @@ inline bool ReadRequest::has_readsid() const {
 }
 inline void ReadRequest::clear_readsid() {
   readsid_ = PROTOBUF_ULONGLONG(0);
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint64 ReadRequest::_internal_readsid() const {
   return readsid_;
@@ -3492,7 +3862,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint64 ReadRequest::readsid() const {
   return _internal_readsid();
 }
 inline void ReadRequest::_internal_set_readsid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   readsid_ = value;
 }
 inline void ReadRequest::set_readsid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
@@ -3500,9 +3870,9 @@ inline void ReadRequest::set_readsid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   // @@protoc_insertion_point(field_set:score.ReadRequest.readSid)
 }
 
-// required bool firstRead = 4;
+// required bool firstRead = 5;
 inline bool ReadRequest::_internal_has_firstread() const {
-  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
 inline bool ReadRequest::has_firstread() const {
@@ -3510,7 +3880,7 @@ inline bool ReadRequest::has_firstread() const {
 }
 inline void ReadRequest::clear_firstread() {
   firstread_ = false;
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline bool ReadRequest::_internal_firstread() const {
   return firstread_;
@@ -3520,7 +3890,7 @@ inline bool ReadRequest::firstread() const {
   return _internal_firstread();
 }
 inline void ReadRequest::_internal_set_firstread(bool value) {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
   firstread_ = value;
 }
 inline void ReadRequest::set_firstread(bool value) {
@@ -3560,7 +3930,35 @@ inline void ReadReturn::set_txid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   // @@protoc_insertion_point(field_set:score.ReadReturn.txid)
 }
 
-// required string key = 2;
+// required uint64 nodeid = 2;
+inline bool ReadReturn::_internal_has_nodeid() const {
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  return value;
+}
+inline bool ReadReturn::has_nodeid() const {
+  return _internal_has_nodeid();
+}
+inline void ReadReturn::clear_nodeid() {
+  nodeid_ = PROTOBUF_ULONGLONG(0);
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 ReadReturn::_internal_nodeid() const {
+  return nodeid_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 ReadReturn::nodeid() const {
+  // @@protoc_insertion_point(field_get:score.ReadReturn.nodeid)
+  return _internal_nodeid();
+}
+inline void ReadReturn::_internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _has_bits_[0] |= 0x00000008u;
+  nodeid_ = value;
+}
+inline void ReadReturn::set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _internal_set_nodeid(value);
+  // @@protoc_insertion_point(field_set:score.ReadReturn.nodeid)
+}
+
+// required string key = 3;
 inline bool ReadReturn::_internal_has_key() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
@@ -3633,7 +4031,7 @@ inline void ReadReturn::set_allocated_key(std::string* key) {
   // @@protoc_insertion_point(field_set_allocated:score.ReadReturn.key)
 }
 
-// required string value = 3;
+// required string value = 4;
 inline bool ReadReturn::_internal_has_value() const {
   bool value = (_has_bits_[0] & 0x00000002u) != 0;
   return value;
@@ -3706,9 +4104,9 @@ inline void ReadReturn::set_allocated_value(std::string* value) {
   // @@protoc_insertion_point(field_set_allocated:score.ReadReturn.value)
 }
 
-// required uint64 lastCommitted = 4;
+// required uint64 lastCommitted = 5;
 inline bool ReadReturn::_internal_has_lastcommitted() const {
-  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
 inline bool ReadReturn::has_lastcommitted() const {
@@ -3716,7 +4114,7 @@ inline bool ReadReturn::has_lastcommitted() const {
 }
 inline void ReadReturn::clear_lastcommitted() {
   lastcommitted_ = PROTOBUF_ULONGLONG(0);
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint64 ReadReturn::_internal_lastcommitted() const {
   return lastcommitted_;
@@ -3726,7 +4124,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint64 ReadReturn::lastcommitted() const {
   return _internal_lastcommitted();
 }
 inline void ReadReturn::_internal_set_lastcommitted(::PROTOBUF_NAMESPACE_ID::uint64 value) {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
   lastcommitted_ = value;
 }
 inline void ReadReturn::set_lastcommitted(::PROTOBUF_NAMESPACE_ID::uint64 value) {
@@ -3734,9 +4132,9 @@ inline void ReadReturn::set_lastcommitted(::PROTOBUF_NAMESPACE_ID::uint64 value)
   // @@protoc_insertion_point(field_set:score.ReadReturn.lastCommitted)
 }
 
-// required bool mostRecent = 5;
+// required bool mostRecent = 6;
 inline bool ReadReturn::_internal_has_mostrecent() const {
-  bool value = (_has_bits_[0] & 0x00000010u) != 0;
+  bool value = (_has_bits_[0] & 0x00000020u) != 0;
   return value;
 }
 inline bool ReadReturn::has_mostrecent() const {
@@ -3744,7 +4142,7 @@ inline bool ReadReturn::has_mostrecent() const {
 }
 inline void ReadReturn::clear_mostrecent() {
   mostrecent_ = false;
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline bool ReadReturn::_internal_mostrecent() const {
   return mostrecent_;
@@ -3754,7 +4152,7 @@ inline bool ReadReturn::mostrecent() const {
   return _internal_mostrecent();
 }
 inline void ReadReturn::_internal_set_mostrecent(bool value) {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000020u;
   mostrecent_ = value;
 }
 inline void ReadReturn::set_mostrecent(bool value) {
@@ -4049,9 +4447,37 @@ inline void Prepare::set_txid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   // @@protoc_insertion_point(field_set:score.Prepare.txid)
 }
 
-// required uint64 sid = 2;
-inline bool Prepare::_internal_has_sid() const {
+// required uint64 nodeid = 2;
+inline bool Prepare::_internal_has_nodeid() const {
   bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool Prepare::has_nodeid() const {
+  return _internal_has_nodeid();
+}
+inline void Prepare::clear_nodeid() {
+  nodeid_ = PROTOBUF_ULONGLONG(0);
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 Prepare::_internal_nodeid() const {
+  return nodeid_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 Prepare::nodeid() const {
+  // @@protoc_insertion_point(field_get:score.Prepare.nodeid)
+  return _internal_nodeid();
+}
+inline void Prepare::_internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _has_bits_[0] |= 0x00000002u;
+  nodeid_ = value;
+}
+inline void Prepare::set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _internal_set_nodeid(value);
+  // @@protoc_insertion_point(field_set:score.Prepare.nodeid)
+}
+
+// required uint64 sid = 3;
+inline bool Prepare::_internal_has_sid() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
 inline bool Prepare::has_sid() const {
@@ -4059,7 +4485,7 @@ inline bool Prepare::has_sid() const {
 }
 inline void Prepare::clear_sid() {
   sid_ = PROTOBUF_ULONGLONG(0);
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint64 Prepare::_internal_sid() const {
   return sid_;
@@ -4069,7 +4495,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint64 Prepare::sid() const {
   return _internal_sid();
 }
 inline void Prepare::_internal_set_sid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   sid_ = value;
 }
 inline void Prepare::set_sid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
@@ -4077,7 +4503,7 @@ inline void Prepare::set_sid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   // @@protoc_insertion_point(field_set:score.Prepare.sid)
 }
 
-// repeated .score.Prepare.ReadSetElement rs = 3;
+// repeated .score.Prepare.ReadSetElement rs = 4;
 inline int Prepare::_internal_rs_size() const {
   return rs_.size();
 }
@@ -4116,7 +4542,7 @@ Prepare::rs() const {
   return rs_;
 }
 
-// repeated .score.Prepare.WriteSetElement ws = 4;
+// repeated .score.Prepare.WriteSetElement ws = 5;
 inline int Prepare::_internal_ws_size() const {
   return ws_.size();
 }
@@ -4187,9 +4613,37 @@ inline void Vote::set_txid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   // @@protoc_insertion_point(field_set:score.Vote.txid)
 }
 
-// required uint64 sn = 2;
-inline bool Vote::_internal_has_sn() const {
+// required uint64 nodeid = 2;
+inline bool Vote::_internal_has_nodeid() const {
   bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool Vote::has_nodeid() const {
+  return _internal_has_nodeid();
+}
+inline void Vote::clear_nodeid() {
+  nodeid_ = PROTOBUF_ULONGLONG(0);
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 Vote::_internal_nodeid() const {
+  return nodeid_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 Vote::nodeid() const {
+  // @@protoc_insertion_point(field_get:score.Vote.nodeid)
+  return _internal_nodeid();
+}
+inline void Vote::_internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _has_bits_[0] |= 0x00000002u;
+  nodeid_ = value;
+}
+inline void Vote::set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _internal_set_nodeid(value);
+  // @@protoc_insertion_point(field_set:score.Vote.nodeid)
+}
+
+// required uint64 sn = 3;
+inline bool Vote::_internal_has_sn() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
 inline bool Vote::has_sn() const {
@@ -4197,7 +4651,7 @@ inline bool Vote::has_sn() const {
 }
 inline void Vote::clear_sn() {
   sn_ = PROTOBUF_ULONGLONG(0);
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint64 Vote::_internal_sn() const {
   return sn_;
@@ -4207,7 +4661,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint64 Vote::sn() const {
   return _internal_sn();
 }
 inline void Vote::_internal_set_sn(::PROTOBUF_NAMESPACE_ID::uint64 value) {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   sn_ = value;
 }
 inline void Vote::set_sn(::PROTOBUF_NAMESPACE_ID::uint64 value) {
@@ -4215,9 +4669,9 @@ inline void Vote::set_sn(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   // @@protoc_insertion_point(field_set:score.Vote.sn)
 }
 
-// required bool outcome = 3;
+// required bool outcome = 4;
 inline bool Vote::_internal_has_outcome() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
 inline bool Vote::has_outcome() const {
@@ -4225,7 +4679,7 @@ inline bool Vote::has_outcome() const {
 }
 inline void Vote::clear_outcome() {
   outcome_ = false;
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline bool Vote::_internal_outcome() const {
   return outcome_;
@@ -4235,7 +4689,7 @@ inline bool Vote::outcome() const {
   return _internal_outcome();
 }
 inline void Vote::_internal_set_outcome(bool value) {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   outcome_ = value;
 }
 inline void Vote::set_outcome(bool value) {
@@ -4275,9 +4729,37 @@ inline void Decide::set_txid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   // @@protoc_insertion_point(field_set:score.Decide.txid)
 }
 
-// required uint64 fsn = 2;
-inline bool Decide::_internal_has_fsn() const {
+// required uint64 nodeid = 2;
+inline bool Decide::_internal_has_nodeid() const {
   bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool Decide::has_nodeid() const {
+  return _internal_has_nodeid();
+}
+inline void Decide::clear_nodeid() {
+  nodeid_ = PROTOBUF_ULONGLONG(0);
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 Decide::_internal_nodeid() const {
+  return nodeid_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 Decide::nodeid() const {
+  // @@protoc_insertion_point(field_get:score.Decide.nodeid)
+  return _internal_nodeid();
+}
+inline void Decide::_internal_set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _has_bits_[0] |= 0x00000002u;
+  nodeid_ = value;
+}
+inline void Decide::set_nodeid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _internal_set_nodeid(value);
+  // @@protoc_insertion_point(field_set:score.Decide.nodeid)
+}
+
+// required uint64 fsn = 3;
+inline bool Decide::_internal_has_fsn() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
 inline bool Decide::has_fsn() const {
@@ -4285,7 +4767,7 @@ inline bool Decide::has_fsn() const {
 }
 inline void Decide::clear_fsn() {
   fsn_ = PROTOBUF_ULONGLONG(0);
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint64 Decide::_internal_fsn() const {
   return fsn_;
@@ -4295,7 +4777,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint64 Decide::fsn() const {
   return _internal_fsn();
 }
 inline void Decide::_internal_set_fsn(::PROTOBUF_NAMESPACE_ID::uint64 value) {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   fsn_ = value;
 }
 inline void Decide::set_fsn(::PROTOBUF_NAMESPACE_ID::uint64 value) {
@@ -4303,9 +4785,9 @@ inline void Decide::set_fsn(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   // @@protoc_insertion_point(field_set:score.Decide.fsn)
 }
 
-// required bool outcome = 3;
+// required bool outcome = 4;
 inline bool Decide::_internal_has_outcome() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
 inline bool Decide::has_outcome() const {
@@ -4313,7 +4795,7 @@ inline bool Decide::has_outcome() const {
 }
 inline void Decide::clear_outcome() {
   outcome_ = false;
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline bool Decide::_internal_outcome() const {
   return outcome_;
@@ -4323,7 +4805,7 @@ inline bool Decide::outcome() const {
   return _internal_outcome();
 }
 inline void Decide::_internal_set_outcome(bool value) {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   outcome_ = value;
 }
 inline void Decide::set_outcome(bool value) {

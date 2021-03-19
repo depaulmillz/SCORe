@@ -6,8 +6,13 @@ set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/
 project(SCORe LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
-find_package(rpclib CONFIG REQUIRED)
+
+enable_testing()
+
 find_package(GTest CONFIG REQUIRED)
+set(protobuf_MODULE_COMPATIBLE ON)
+find_package(protobuf CONFIG REQUIRED)
+find_package(gRPC CONFIG REQUIRED)
 
 add_subdirectory(Protocol)
 add_subdirectory(Store)
