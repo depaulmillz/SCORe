@@ -11,6 +11,7 @@
 #include <atomic>
 #include <utility>
 #include <rpc/client.h>
+#include <spdlog/spdlog.h>
 
 #ifndef SCORE_CONTEXT_HH
 #define SCORE_CONTEXT_HH
@@ -25,8 +26,8 @@ namespace score {
 
     struct Context {
 
-        explicit Context(uint64_t rank_, uint64_t nodes_) : rank(rank_), nodes(nodes_) {
-
+        explicit Context(uint64_t rank_, uint64_t nodes_) : rank(rank_), nodes(nodes_), nextID(0), commitID(0),
+                                                            maxSeen(0) {
         }
 
         ~Context() {
@@ -64,7 +65,11 @@ namespace score {
         }
 
         std::tuple<data_t, version_t, bool> doRead(version_t sid, data_t &key) {
+            SPDLOG_TRACE("{}({}, {})", __FUNCTION__, sid, key);
+
             nextID = std::max(nextID, sid);
+
+            SPDLOG_TRACE("{} while({} < {});", __FUNCTION__, commitID, sid);
             while (commitID < sid && exclusiveUnlocked(key));
             accessor_t a;
             if (m.find(a, key)) {

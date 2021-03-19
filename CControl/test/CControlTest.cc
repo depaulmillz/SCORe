@@ -10,6 +10,7 @@
 #include "gtest/gtest.h"
 #include "protocol.pb.h"
 #include <TxClientAPI.hh>
+#include <Server.hh>
 
 using namespace score;
 
@@ -243,4 +244,76 @@ TEST(CControlTest, TxClientAPIShouldCommitAllReads) {
     server2->Shutdown();
     f.get();
     f2.get();
+}
+
+TEST(CControlTest, TxClientAPIShouldCommitAllReadsServer) {
+    std::vector<std::string> internalAddr = {"127.0.0.1:8080"};
+    std::string clientAddr = "127.0.0.1:8081";
+
+    Server s(0, internalAddr, clientAddr);
+
+    TxClient client(clientAddr);
+
+    auto tx = client.StartTx();
+
+    ASSERT_TRUE(tx.Read("Hi").first);
+
+    ASSERT_TRUE(tx.Read("Hi2").first);
+
+    ASSERT_TRUE(tx.TryCommit()) << "Should succeed\n";
+    std::cerr << "Done\n";
+
+    s.stop();
+}
+
+TEST(CControlTest, TxClientAPIShouldCommitAllReads2Server) {
+    spdlog::set_level(spdlog::level::trace);
+
+    std::vector<std::string> internalAddr = {"127.0.0.1:8080", "127.0.0.1:8081"};
+
+    Server s1(0, internalAddr, "127.0.0.1:8082");
+    Server s2(1, internalAddr, "127.0.0.1:8083");
+
+    TxClient client("127.0.0.1:8082");
+
+    auto tx = client.StartTx();
+
+    ASSERT_TRUE(tx.Read("Hi").first);
+
+    ASSERT_TRUE(tx.Read("Hi2").first);
+
+    ASSERT_TRUE(tx.TryCommit()) << "Should succeed\n";
+    std::cerr << "Done\n";
+
+    s1.stop();
+    s2.stop();
+}
+
+TEST(CControlTest, TxClientAPIReadLastTx2Servers) {
+    spdlog::set_level(spdlog::level::trace);
+
+    std::vector<std::string> internalAddr = {"127.0.0.1:8080", "127.0.0.1:8081"};
+
+    Server s1(0, internalAddr, "127.0.0.1:8082");
+    Server s2(1, internalAddr, "127.0.0.1:8083");
+
+    TxClient client("127.0.0.1:8082");
+
+    auto tx = client.StartTx();
+
+    ASSERT_TRUE(tx.Write("Hi", "bye"));
+
+    ASSERT_TRUE(tx.TryCommit()) << "Should succeed\n";
+    std::cerr << "Done\n";
+
+    auto tx2 = client.StartTx();
+    auto res = tx.Read("Hi");
+    ASSERT_TRUE(res.first);
+
+    ASSERT_TRUE(res.second == "bye");
+
+    ASSERT_TRUE(tx2.TryCommit()) << "Should succeed\n";
+
+    s1.stop();
+    s2.stop();
 }

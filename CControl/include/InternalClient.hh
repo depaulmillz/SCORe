@@ -16,6 +16,7 @@
 #include <grpcpp/create_channel.h>
 #include <grpcpp/security/credentials.h>
 #include <protocol.grpc.pb.h>
+#include <spdlog/spdlog.h>
 
 #ifndef SCORE_INTERNALCLIENT_HH
 #define SCORE_INTERNALCLIENT_HH
@@ -38,7 +39,7 @@ namespace score {
         }
 
         void DoReadRequest(const ReadRequest &request, ReadReturn *response) {
-            std::cerr << "Calling " << __FUNCTION__ << " stub" << std::endl;
+            SPDLOG_TRACE("Calling stub");
 
             grpc::ClientContext context;
             stub_->DoReadRequest(&context, request, response);
@@ -46,14 +47,14 @@ namespace score {
 
         void DoPrepare(const Prepare &request, Vote *response) {
 
-            std::cerr << "Calling " << __FUNCTION__ << " stub" << std::endl;
+            SPDLOG_TRACE("Calling stub");
 
             grpc::ClientContext context;
             stub_->DoPrepare(&context, request, response);
         }
 
         void DoDecide(const Decide &request, Committed *response) {
-            std::cerr << "Calling " << __FUNCTION__ << " stub" << std::endl;
+            SPDLOG_TRACE("Calling stub");
 
             grpc::ClientContext context;
             stub_->DoDecide(&context, request, response);

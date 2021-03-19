@@ -13,6 +13,7 @@ find_package(GTest CONFIG REQUIRED)
 set(protobuf_MODULE_COMPATIBLE ON)
 find_package(protobuf CONFIG REQUIRED)
 find_package(gRPC CONFIG REQUIRED)
+find_package(spdlog CONFIG REQUIRED)
 
 add_subdirectory(Protocol)
 add_subdirectory(Store)

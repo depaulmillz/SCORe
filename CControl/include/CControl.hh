@@ -3,6 +3,7 @@
 //
 
 #include <protocol.pb.h>
+#include <spdlog/spdlog.h>
 
 #ifndef SCORE_CCONTROL_HH
 #define SCORE_CCONTROL_HH
@@ -19,17 +20,22 @@ namespace score {
 
         void DoReadRequest(const ReadRequest &request,
                            ReadReturn *response) {
+            SPDLOG_TRACE("{}", __FUNCTION__);
             version_t newReadSid = request.readsid();
 
+            SPDLOG_TRACE("Grabbing state lock {}", __FUNCTION__);
             std::unique_lock<std::mutex> stateLock(ctx_->stateMtx);
+            SPDLOG_TRACE("Grabbed state lock {}", __FUNCTION__);
             if (request.firstread() && ctx_->getCommitID(stateLock) > newReadSid) {
                 newReadSid = ctx_->getCommitID(stateLock);
             }
             stateLock.unlock();
+            SPDLOG_TRACE("Unlocked state lock {}", __FUNCTION__);
 
             std::string key = request.key();
             std::tuple<data_t, version_t, bool> p = ctx_->doRead(newReadSid, key);
 
+            SPDLOG_TRACE("Grabbing state lock {}", __FUNCTION__);
             stateLock.lock();
             ctx_->updateNodeTimestamps(request.readsid(), stateLock);
             stateLock.unlock();
@@ -39,11 +45,15 @@ namespace score {
             response->set_key(key);
             response->set_value(std::get<0>(p));
             response->set_mostrecent(std::get<2>(p));
+            SPDLOG_TRACE("Grabbing state lock {}", __FUNCTION__);
             stateLock.lock();
             response->set_lastcommitted(ctx_->getCommitID(stateLock));
+            SPDLOG_TRACE("Completed {}", __FUNCTION__);
         }
 
         void DoPrepare(const Prepare &request, Vote *response) {
+            SPDLOG_TRACE("");
+
             //std::cerr << "Running DoPrepare" << std::endl;
             std::map<data_t, bool> toLock;
             for (auto &r : request.ws()) {
@@ -99,6 +109,8 @@ namespace score {
         }
 
         void DoDecide(const Decide &request, Committed *response) {
+            SPDLOG_TRACE("");
+
             std::unique_lock<std::mutex> stateLock(ctx_->stateMtx);
 
             if (request.outcome()) {
@@ -136,6 +148,8 @@ namespace score {
         }
 
         void commitCondition(const std::unique_lock<std::mutex> &stateLock) {
+            SPDLOG_TRACE("");
+
             if (!ctx_->getStableQ(stateLock).empty()) {
                 version_t fsn = ctx_->getStableQ(stateLock).front().sn;
                 // does not exist a pending transaction with a timestamp less than the newest one to be committed

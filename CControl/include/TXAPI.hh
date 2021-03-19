@@ -31,6 +31,8 @@ namespace score {
         }
 
         void StartTx(const Empty &request, TxIDMsg *response) {
+            SPDLOG_TRACE("In TXAPI");
+
             txid_t id = ctx_->txid_counter.fetch_add(1);
             Context::txMapAccessor a;
             ctx_->txMap.insert(a, {id, ctx_->rank});
@@ -41,6 +43,8 @@ namespace score {
         }
 
         void Read(const ReadOperation &request, ReadOperationResponse *response) {
+            SPDLOG_TRACE("In TXAPI");
+
             assert(request.txid() == ctx_->rank);
 
             response->set_txid(request.txid());
@@ -102,6 +106,8 @@ namespace score {
         }
 
         void Write(const WriteOperation &request, WriteOperationResponse *response) {
+            SPDLOG_TRACE("In TXAPI");
+
             Context::txMapAccessor a;
             ctx_->txMap.find(a, {request.txid(), ctx_->rank});
             a->second.ws[request.key()] = request.value();
@@ -110,8 +116,7 @@ namespace score {
         }
 
         void Commit(const TxIDMsg &request, Committed *response) {
-
-            std::cerr << "Starting commit" << std::endl;
+            SPDLOG_TRACE("Starting commit");
 
             Context::txMapAccessor a;
             ctx_->txMap.find(a, {request.txid(), ctx_->rank});
@@ -149,8 +154,6 @@ namespace score {
                 }
             }
 
-            std::cerr << "Created ws and rs" << std::endl;
-
             std::unordered_map<uint64_t, Decide> decisions;
             uint64_t maxSid = 0;
             bool proceed = true;
@@ -161,7 +164,6 @@ namespace score {
                 prep.second.set_sid(tx.sid);
 
                 Vote v;
-                std::cerr << "Voting" << std::endl;
 
                 c[prep.first]->DoPrepare(prep.second, &v);
                 decisions[prep.first] = Decide();
@@ -170,7 +172,6 @@ namespace score {
             }
 
             Committed committed;
-            std::cerr << "Checking if committed" << std::endl;
 
             for (auto &decision : decisions) {
                 decision.second.set_txid(tx.txid);

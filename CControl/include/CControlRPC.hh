@@ -12,6 +12,7 @@
 #include <grpcpp/server_builder.h>
 #include <grpcpp/server_context.h>
 #include <grpcpp/security/server_credentials.h>
+#include <spdlog/spdlog.h>
 
 #ifndef SCORE_CCONTROLRPC_HH
 #define SCORE_CCONTROLRPC_HH
@@ -30,14 +31,14 @@ namespace score {
 
         grpc::Status DoReadRequest(::grpc::ServerContext *context, const ::score::ReadRequest *request,
                                    ::score::ReadReturn *response) override {
-            std::cerr << "In RPC " << __FUNCTION__ << std::endl;
+            SPDLOG_TRACE("In RPC");
             cc->DoReadRequest(*request, response);
             return ::grpc::Status::OK;
         }
 
         grpc::Status
         DoPrepare(::grpc::ServerContext *context, const ::score::Prepare *request, ::score::Vote *response) override {
-            std::cerr << "In RPC " << __FUNCTION__ << std::endl;
+            SPDLOG_TRACE("In RPC");
 
             cc->DoPrepare(*request, response);
             return ::grpc::Status::OK;
@@ -46,7 +47,7 @@ namespace score {
         grpc::Status
         DoDecide(::grpc::ServerContext *context, const ::score::Decide *request,
                  ::score::Committed *response) override {
-            std::cerr << "In RPC " << __FUNCTION__ << std::endl;
+            SPDLOG_TRACE("In RPC");
 
             cc->DoDecide(*request, response);
             return ::grpc::Status::OK;
