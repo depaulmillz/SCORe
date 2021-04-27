@@ -10,7 +10,6 @@
 #include <future>
 #include <atomic>
 #include <utility>
-#include <rpc/client.h>
 #include <spdlog/spdlog.h>
 
 #ifndef SCORE_CONTEXT_HH

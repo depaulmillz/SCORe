@@ -12,6 +12,5 @@
 #include <future>
 #include <atomic>
 #include <utility>
-#include <rpc/client.h>
 #include <CControl.hh>
 #include <CControlContextPair.hh>

@@ -168,6 +168,7 @@ namespace score {
                 ctx_->releaseLocks(toLock);
                 ctx_->getStableQ(stateLock).pop();
                 a->second.committed = true;
+                SPDLOG_DEBUG("Committed a transaction");
             }
         }
         ctx_->uponCondition(stateLock);

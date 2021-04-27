@@ -31,7 +31,7 @@ namespace score {
     void TXAPI::Read(const ReadOperation &request, ReadOperationResponse *response) {
         SPDLOG_TRACE("In TXAPI");
 
-        assert(request.txid() == ctx_->rank);
+        assert(request.nodeid() == ctx_->rank);
 
         response->set_txid(request.txid());
         response->set_nodeid(ctx_->rank);
