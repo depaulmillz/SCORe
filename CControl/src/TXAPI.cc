@@ -50,6 +50,7 @@ namespace score {
         if (a->second.firstRead) {
             std::unique_lock<std::mutex> stateLock(ctx_->stateMtx);
             a->second.sid = ctx_->getCommitID(stateLock);
+            SPDLOG_DEBUG("SET SID to {} for TX {}", a->second.sid, request.txid());
         }
         ReadRequest req;
         req.set_txid(request.txid());

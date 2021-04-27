@@ -12,7 +12,7 @@
 namespace score {
     class CControl {
     public:
-        CControl(std::shared_ptr<Context> ctx);
+        explicit CControl(std::shared_ptr<Context> ctx);
 
         ~CControl();
 

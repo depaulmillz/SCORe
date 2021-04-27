@@ -3,7 +3,7 @@
 //
 
 #include <TxClientAPI.hh>
-
+#include <spdlog/spdlog.h>
 
 namespace score {
 
@@ -22,6 +22,8 @@ namespace score {
     }
     
     std::pair<bool, std::string> Tx::Read(std::string key) {
+        SPDLOG_TRACE("Reading {} for TX {}", key, txid);
+
         if (aborted) {
             return {false, ""};
         }
@@ -44,6 +46,8 @@ namespace score {
     }
 
     bool Tx::Write(std::string key, std::string value) {
+        SPDLOG_TRACE("Writing {} for TX {}", key, txid);
+
         if (aborted)
             return false;
 
@@ -62,6 +66,8 @@ namespace score {
     }
 
     bool Tx::TryCommit() {
+        SPDLOG_TRACE("Trying to commit to TX {}", txid);
+
         if (aborted)
             return false;
 

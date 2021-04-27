@@ -47,7 +47,7 @@ namespace score {
     }
 
     void CControl::DoPrepare(const Prepare &request, Vote *response) {
-        SPDLOG_TRACE("");
+        SPDLOG_TRACE("Preparing");
 
         //std::cerr << "Running DoPrepare" << std::endl;
         std::map<data_t, bool> toLock;
@@ -77,7 +77,6 @@ namespace score {
                 stateLock.unlock();
                 // put tx in txMap
                 Context::txMapAccessor a;
-                std::cerr << "Inserting " << request.txid() << "," << request.nodeid() << std::endl;
                 ctx_->txMap.insert(a, {request.txid(), request.nodeid()});
 
                 Transaction tx;
@@ -104,7 +103,7 @@ namespace score {
     }
 
     void CControl::DoDecide(const Decide &request, Committed *response) {
-        SPDLOG_TRACE("");
+        SPDLOG_TRACE("Decided {} for TX {}", request.outcome() ? "commit" : "abort", request.txid());
 
         std::unique_lock<std::mutex> stateLock(ctx_->stateMtx);
 
@@ -143,8 +142,6 @@ namespace score {
     }
 
     void CControl::commitCondition(const std::unique_lock<std::mutex> &stateLock) {
-        SPDLOG_TRACE("");
-
         if (!ctx_->getStableQ(stateLock).empty()) {
             version_t fsn = ctx_->getStableQ(stateLock).front().sn;
             // does not exist a pending transaction with a timestamp less than the newest one to be committed
@@ -168,7 +165,10 @@ namespace score {
                 ctx_->releaseLocks(toLock);
                 ctx_->getStableQ(stateLock).pop();
                 a->second.committed = true;
-                SPDLOG_DEBUG("Committed a transaction");
+                if(fsn > ctx_->getMaxSeen(stateLock)){
+                    ctx_->getMaxSeen(stateLock) = fsn;
+                }
+                SPDLOG_DEBUG("Committed TX {} with timestamp {}", a->second.txid, a->second.sid);
             }
         }
         ctx_->uponCondition(stateLock);
