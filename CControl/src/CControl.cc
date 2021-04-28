@@ -28,7 +28,12 @@ namespace score {
         SPDLOG_TRACE("Unlocked state lock {}", __FUNCTION__);
 
         std::string key = request.key();
-        std::tuple<data_t, version_t, bool> p = ctx_->doRead(newReadSid, key);
+        SPDLOG_TRACE("Grabbing state lock {}", __FUNCTION__);
+        stateLock.lock();
+        SPDLOG_TRACE("Grabbed state lock {}", __FUNCTION__);
+        std::tuple<data_t, version_t, bool> p = ctx_->doRead(newReadSid, key, stateLock);
+        stateLock.unlock();
+        SPDLOG_TRACE("Unlocked state lock {}", __FUNCTION__);
 
         SPDLOG_TRACE("Grabbing state lock {}", __FUNCTION__);
         stateLock.lock();

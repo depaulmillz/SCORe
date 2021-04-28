@@ -4,11 +4,12 @@
 
 
 #include <Context.hh>
+#include <spdlog/spdlog.h>
+#include <thread>
 
 namespace score {
 
-    Context::Context(uint64_t rank_, uint64_t nodes_) : rank(rank_), nodes(nodes_), nextID(0), commitID(0),
-                                                        maxSeen(0) {
+    Context::Context(uint64_t rank_, uint64_t nodes_) : rank(rank_), nodes(nodes_), ts() {
     }
 
     Context::~Context() {
@@ -31,13 +32,23 @@ namespace score {
         return true;
     }
 
-    std::tuple<data_t, version_t, bool> Context::doRead(version_t sid, data_t &key) {
-        SPDLOG_TRACE("{}({}, {})", __FUNCTION__, sid, key);
+    bool Context::exclusiveLocked(const data_t &key) {
+        // TODO implement
+        return false;
+    }
 
-        nextID = std::max(nextID, sid);
 
-        SPDLOG_TRACE("{} while({} < {});", __FUNCTION__, commitID, sid);
-        while (commitID < sid && exclusiveUnlocked(key));
+    std::tuple<data_t, version_t, bool> Context::doRead(version_t sid, data_t &key, std::unique_lock<std::mutex> &stateLock) {
+        SPDLOG_TRACE("{}(sid = {}, key = {})", __FUNCTION__, sid, key);
+
+        ts.getNextID(stateLock) = std::max(ts.getNextID(stateLock), sid);
+
+        SPDLOG_TRACE("{} while(commitID({}) < sid({}));", __FUNCTION__, ts.getCommitID(stateLock), sid);
+        while (ts.getCommitID(stateLock) < sid && exclusiveLocked(key)){
+            stateLock.unlock();
+            std::this_thread::yield();
+            stateLock.lock();
+        }
         accessor_t a;
         if (m.find(a, key)) {
             std::shared_ptr<VersionList> v = a->second;
@@ -45,18 +56,19 @@ namespace score {
             bool isFirst = true;
             for (auto &elm : v->l) {
                 if (elm.second <= sid) {
-                    return {elm.first, commitID, isFirst};
+                    return {elm.first, ts.getCommitID(stateLock), isFirst};
                 }
                 isFirst = false;
             }
         }
-        return {data_t(), commitID, START_VERSION};
+        return {data_t(), ts.getCommitID(stateLock), START_VERSION};
     }
 
     void Context::updateNodeTimestamps(version_t lastCommitted, const std::unique_lock<std::mutex> &stateLock) {
-        assert(stateLock.owns_lock());
-        nextID = std::max(nextID, lastCommitted);
-        maxSeen = std::max(maxSeen, lastCommitted);
+        SPDLOG_DEBUG("Updating node time stamps with lastCommited {}", lastCommitted);
+        ts.getNextID(stateLock) = std::max(ts.getNextID(stateLock), lastCommitted);
+        ts.getMaxSeen(stateLock) = std::max(ts.getMaxSeen(stateLock), lastCommitted);
+        uponCondition(stateLock);
     }
 
     bool Context::getLocksWithTimeout(const std::map<data_t, bool> &toLock) {
@@ -90,9 +102,8 @@ namespace score {
 
     // need to be holding state mutex to call
     void Context::uponCondition(const std::unique_lock<std::mutex> &stateLock) {
-        assert(stateLock.owns_lock());
-        if (maxSeen > commitID && pendQ.empty() && stableQ.empty()) {
-            commitID = std::max(maxSeen, commitID);
+        if (ts.getMaxSeen(stateLock) > ts.getCommitID(stateLock) && pendQ.empty() && stableQ.empty()) {
+            ts.getCommitID(stateLock) = std::max(ts.getMaxSeen(stateLock), ts.getCommitID(stateLock));
         }
     }
 
@@ -107,18 +118,15 @@ namespace score {
     }
 
     version_t &Context::getNextID(const std::unique_lock<std::mutex> &stateLock) {
-        assert(stateLock.owns_lock());
-        return nextID;
+        return ts.getNextID(stateLock);
     }
 
     version_t &Context::getCommitID(const std::unique_lock<std::mutex> &stateLock) {
-        assert(stateLock.owns_lock());
-        return commitID;
+        return ts.getCommitID(stateLock);
     }
 
     version_t &Context::getMaxSeen(const std::unique_lock<std::mutex> &stateLock) {
-        assert(stateLock.owns_lock());
-        return maxSeen;
+        return ts.getMaxSeen(stateLock);
     }
 
 }

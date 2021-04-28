@@ -3,11 +3,14 @@
 //
 
 #include <TxClientAPI.hh>
+#include <boost/property_tree/ptree_fwd.hpp>
 #include <string>
 #include <thread>
 #include <vector>
 #include <spdlog/spdlog.h>
 #include <unordered_map>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
 
 struct ClientConf {
     unsigned port;
@@ -16,6 +19,16 @@ struct ClientConf {
     ClientConf() {
         port = 8081;
         server = "127.0.0.1";
+    }
+
+    explicit ClientConf(const std::string& filename) {
+        namespace pt = boost::property_tree;
+        pt::ptree root;
+
+        pt::read_json(filename, root);
+
+        port = root.get<unsigned>("port", 8081);
+        server = root.get<std::string>("server", "127.0.0.1");
     }
 
     ~ClientConf() = default;
@@ -27,10 +40,14 @@ int main(int argc, char** argv){
 
     ClientConf conf;
 
+    if(argc == 2){
+        conf = ClientConf(std::string(argv[1]));
+    }
+
     int accounts = 100;
     int start = 100;
 
-    std::cout << "Using server " << conf.server + ":" + std::to_string(conf.port) << std::endl;
+    SPDLOG_INFO("Using server {}:{}", conf.server, conf.port);
 
     score::TxClient client(conf.server + ":" + std::to_string(conf.port));
 
@@ -40,14 +57,17 @@ int main(int argc, char** argv){
 
     for(int i = 0; i < accounts; i++) {
         if (!tx.Write(std::to_string(i), std::to_string(start))) {
+            SPDLOG_INFO("Failed initial population");
             return 1;
         }
         assume[i] = start;
         //std::cerr << "Wrote " << i << "," << start << std::endl;
     }
 
-    if(!tx.TryCommit())
+    if(!tx.TryCommit()){
+        SPDLOG_INFO("Failed initial population");
         return 2;
+    }
 
     SPDLOG_DEBUG("Committed initial writes");
 

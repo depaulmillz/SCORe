@@ -3,10 +3,14 @@
 //
 
 #include <Server.hh>
+#include <spdlog/spdlog.h>
 
 namespace score {
 
     Server::Server(int rank, std::vector<std::string> addresses, std::string clientAddr) {
+
+        SPDLOG_INFO("Starting server with rank {} accessible at {}", rank, clientAddr);
+
         CControlContextPair pair(rank, addresses.size());
 
         server = RunServer(addresses[rank], pair.cc);

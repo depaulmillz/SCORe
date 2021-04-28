@@ -23,6 +23,33 @@ namespace score {
         version_t sn;
     };
 
+    class TimestampMetadata {
+    public:
+        TimestampMetadata() : nextID(0), commitID(0), maxSeen(0) {
+
+        }
+
+        inline version_t &getNextID(const std::unique_lock<std::mutex> &stateLock) {
+            assert(stateLock.owns_lock());
+            return nextID;
+        }
+
+        inline version_t &getCommitID(const std::unique_lock<std::mutex> &stateLock){
+            assert(stateLock.owns_lock());
+            return commitID;
+        }
+
+        inline version_t &getMaxSeen(const std::unique_lock<std::mutex> &stateLock){
+            assert(stateLock.owns_lock());
+            return maxSeen;
+        }
+
+    private:
+        version_t nextID;
+        version_t commitID;
+        version_t maxSeen;
+    };
+
     struct Context {
 
         explicit Context(uint64_t rank_, uint64_t nodes_);
@@ -50,7 +77,9 @@ namespace score {
 
         bool exclusiveUnlocked(const data_t &key);
 
-        std::tuple<data_t, version_t, bool> doRead(version_t sid, data_t &key);
+        bool exclusiveLocked(const data_t &key);
+
+        std::tuple<data_t, version_t, bool> doRead(version_t sid, data_t &key, std::unique_lock<std::mutex> &stateLock);
 
         void updateNodeTimestamps(version_t lastCommitted, const std::unique_lock<std::mutex> &stateLock);
 
@@ -72,9 +101,8 @@ namespace score {
         version_t &getMaxSeen(const std::unique_lock<std::mutex> &stateLock);
 
     private:
-        version_t nextID;
-        version_t commitID;
-        version_t maxSeen;
+
+        TimestampMetadata ts;
 
         p_t pendQ;
         q_t stableQ;

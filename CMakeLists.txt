@@ -15,6 +15,7 @@ find_package(protobuf CONFIG REQUIRED)
 find_package(gRPC CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
 find_package(tbb CONFIG REQUIRED)
+find_package(Boost REQUIRED)
 
 add_subdirectory(Protocol)
 add_subdirectory(Store)
