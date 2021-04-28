@@ -3,6 +3,7 @@
 //
 
 #include <TXAPI.hh>
+#include <spdlog/spdlog.h>
 
 namespace score {
 
@@ -22,6 +23,8 @@ namespace score {
         txid_t id = ctx_->txid_counter.fetch_add(1);
         Context::txMapAccessor a;
         ctx_->txMap.insert(a, {id, ctx_->rank});
+        SPDLOG_TRACE("Aware of TX ({},{})", id, ctx_->rank);
+
         a->second.txid = id;
         assert(a->second.firstRead == true);
         response->set_txid(id);
@@ -50,7 +53,7 @@ namespace score {
         if (a->second.firstRead) {
             std::unique_lock<std::mutex> stateLock(ctx_->stateMtx);
             a->second.sid = ctx_->getCommitID(stateLock);
-            SPDLOG_DEBUG("SET SID to {} for TX {}", a->second.sid, request.txid());
+            SPDLOG_TRACE("SET SID to {} for TX {}", a->second.sid, request.txid());
         }
         ReadRequest req;
         req.set_txid(request.txid());

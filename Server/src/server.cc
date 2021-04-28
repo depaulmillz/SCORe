@@ -2,6 +2,7 @@
 // Created by dePaul Miller on 4/27/21.
 //
 
+#include <spdlog/common.h>
 #include <spdlog/spdlog.h>
 #include <string>
 #include <vector>
@@ -43,7 +44,7 @@ struct ServerConf {
 };
 
 [[noreturn]] int main(int argc, char **argv) {
-    spdlog::set_level(spdlog::level::trace);
+    spdlog::set_level(spdlog::level::debug);
 
     ServerConf conf;
 

@@ -4,7 +4,7 @@
 
 #include <TxClientAPI.hh>
 #include <boost/property_tree/ptree_fwd.hpp>
-#include <chrono>
+#include <spdlog/common.h>
 #include <string>
 #include <thread>
 #include <vector>
@@ -37,7 +37,7 @@ struct ClientConf {
 };
 
 int main(int argc, char** argv){
-    spdlog::set_level(spdlog::level::err);
+    spdlog::set_level(spdlog::level::debug);
 
     ClientConf conf;
 
@@ -71,15 +71,14 @@ int main(int argc, char** argv){
 
     std::vector<std::thread> threads;
 
-    auto stime = std::chrono::high_resolution_clock::now();
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < 2; i++){
         threads.emplace_back([&](){
             unsigned seed = time(nullptr);
 
             for(int i = 0; i < 100; i++) {
                 auto tx = client.StartTx();
                 unsigned userA = rand_r(&seed) % 100;
-                unsigned userB = rand_r(&seed) % 100;
+                unsigned userB =  rand_r(&seed) % 100;
                 while(userA == userB) {
                     userB = rand_r(&seed) % 100;
                 }
@@ -88,29 +87,55 @@ int main(int argc, char** argv){
                     tx.TryCommit();
                     continue;
                 }
-                if(p.second.empty()){
-                    tx.TryCommit();
-                    continue;
-                }
                 auto p2 = tx.Read(std::to_string(userB));
                 if (!p2.first) {
                     auto b = tx.TryCommit();
+                    std::cout << b << " " << __LINE__ << std::endl;
                     continue;
                 }
 
                 if(p2.second.empty()) {
                     auto b = tx.TryCommit();
+                    std::cout << b << " " << __LINE__ << std::endl;
                     continue;
                 }
+
+                bool updated = false;
 
                 if(std::stoi(p2.second) - 5 >= 0){
                     tx.Write(std::to_string(userA), std::to_string(std::stoi(p.second) + 5));
                     tx.Write(std::to_string(userB), std::to_string(std::stoi(p2.second) - 5));
+
+                    updated = true;
+                    assert((std::stoi(p.second) + 5) + (std::stoi(p2.second) - 5) == std::stoi(p.second) + std::stoi(p2.second));
                 }
 
                 if(tx.TryCommit()){
-                    SPDLOG_DEBUG("Commit successful");
+                    if(updated)
+                        SPDLOG_DEBUG("Changed {} -> {}, {} -> {} to {} -> {}, {} -> {}", userA, p.second, userB, p2.second,
+                                 userA, std::stoi(p.second) + 5, userB, std::stoi(p2.second) - 5);
                 }
+
+                /*auto tx2 = client.StartTx();
+
+                int sum = 0;
+
+                for(int j = 0; j < accounts; j++) {
+                    auto p3 = tx2.Read(std::to_string(j));
+                    if (!p3.first) {
+                        exit(4);
+                    }
+                    sum += std::stoi(p3.second);
+                }
+
+                if(!tx2.TryCommit())
+                    exit(5);
+
+                if(sum != accounts * start) {
+                    std::cerr << "Weird balance " << sum << std::endl;
+                    exit(6);
+                }*/
+
             }
         });
     }
@@ -118,9 +143,6 @@ int main(int argc, char** argv){
     for(auto& t : threads){
         t.join();
     }
-    auto etime = std::chrono::high_resolution_clock::now();
-
-    std::cout << "Throughput (Tx/s) " << 4 * 100 / std::chrono::duration<double>(etime - stime).count() << std::endl;
 
     auto tx2 = client.StartTx();
 
@@ -131,6 +153,7 @@ int main(int argc, char** argv){
         if (!p.first) {
             return 4;
         }
+        SPDLOG_DEBUG("Read {} -> {}", i, p.second);
         sum += std::stoi(p.second);
         //std::cerr << "Wrote " << i << "," << start << std::endl;
     }
@@ -140,6 +163,24 @@ int main(int argc, char** argv){
 
     if(sum != accounts * start) {
         std::cerr << "Weird balance " << sum << std::endl;
+            auto tx2 = client.StartTx();
+
+            for(int i = 0; i < accounts; i++) {
+                auto p = tx2.Read(std::to_string(i));
+                if (!p.first) {
+                    return 4;
+                }
+                SPDLOG_DEBUG("Read {} -> {}", i, p.second);
+                sum += std::stoi(p.second);
+                //std::cerr << "Wrote " << i << "," << start << std::endl;
+            }
+
+            if(!tx2.TryCommit())
+                return 5;
+
+            if(sum != accounts * start)
+                std::cerr << "Still weird" << std::endl;
+
         return 6;
     }
 

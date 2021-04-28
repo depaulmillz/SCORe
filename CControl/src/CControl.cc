@@ -3,6 +3,7 @@
 //
 
 #include <CControl.hh>
+#include <spdlog/spdlog.h>
 
 namespace score {
 
@@ -52,7 +53,12 @@ namespace score {
     }
 
     void CControl::DoPrepare(const Prepare &request, Vote *response) {
-        SPDLOG_TRACE("Preparing");
+        SPDLOG_TRACE("Preparing {}, {}", request.txid(), request.nodeid());
+        Context::txMapAccessor txa;
+        ctx_->txMap.insert(txa, {request.txid(), request.nodeid()});
+        txa->second = Transaction{};
+        SPDLOG_TRACE("Aware of TX ({},{})", request.txid(), request.nodeid());
+        txa.release();
 
         //std::cerr << "Running DoPrepare" << std::endl;
         std::map<data_t, bool> toLock;
@@ -99,6 +105,8 @@ namespace score {
 
                 a->second = tx;
             }
+        } else {
+            SPDLOG_TRACE("Abort {}, {}", request.txid(), request.nodeid());
         }
         response->set_txid(request.txid());
         response->set_nodeid(request.nodeid());
@@ -120,6 +128,7 @@ namespace score {
             o.sn = request.fsn();
             ctx_->getStableQ(stateLock).push(o);
             response->set_success(true);
+            SPDLOG_DEBUG("Will commit {}, {}", request.fsn(), request.nodeid());
         }
         for (auto iter = ctx_->getPendQ(stateLock).begin(); iter != ctx_->getPendQ(stateLock).end(); ++iter) {
             if (iter->txid == request.txid()) {
@@ -132,6 +141,8 @@ namespace score {
             Context::txMapAccessor a;
             //std::cerr << "Finding " << request.txid() << "," << request.nodeid() << std::endl;
             ctx_->txMap.find(a, {request.txid(), request.nodeid()});
+
+            assert(!a.empty());
 
             for (auto &r : a->second.ws) {
                 toLock[r.first] = false;
@@ -147,8 +158,9 @@ namespace score {
     }
 
     void CControl::commitCondition(const std::unique_lock<std::mutex> &stateLock) {
-        if (!ctx_->getStableQ(stateLock).empty()) {
+        while (!ctx_->getStableQ(stateLock).empty()) {
             version_t fsn = ctx_->getStableQ(stateLock).front().sn;
+            SPDLOG_DEBUG("Pending commit with fsn {}", fsn);
             // does not exist a pending transaction with a timestamp less than the newest one to be committed
             if (ctx_->getPendQ(stateLock).empty() || (ctx_->getPendQ(stateLock).front().sn >= fsn)) {
                 std::map<data_t, bool> toLock;
@@ -162,6 +174,7 @@ namespace score {
                     accessor_t ma;
                     ctx_->m.find(ma, r.first);
                     ma->second->l.push_front({r.second, fsn});
+                    SPDLOG_DEBUG("Updated {}->{}", r.first, r.second);
                     toLock[r.first] = false;
                 }
                 for (auto &r : a->second.rs) {
@@ -174,6 +187,9 @@ namespace score {
                     ctx_->getMaxSeen(stateLock) = fsn;
                 }
                 SPDLOG_DEBUG("Committed TX {} with timestamp {}", a->second.txid, a->second.sid);
+            } else {
+                SPDLOG_DEBUG("Unable to apply: {} not >= {}", ctx_->getPendQ(stateLock).front().sn, fsn);
+                break;
             }
         }
         ctx_->uponCondition(stateLock);

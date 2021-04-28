@@ -6,6 +6,7 @@
 #include <tbb/concurrent_hash_map.h>
 #include <list>
 #include <shared_mutex>
+#include <thread>
 
 #ifndef SCORE_MAP_HH
 #define SCORE_MAP_HH
@@ -14,7 +15,60 @@ namespace score {
 
     using data_t = std::string;
 
-    using mutex = std::shared_mutex;
+    static_assert(std::atomic<ssize_t>::is_always_lock_free, "ssize_t needs to be lock free");
+    class mutex {
+    public:
+        mutex() : l(0) {
+            
+        }
+
+        ~mutex(){
+
+        }
+
+        inline void lock(){
+            while(!try_lock());
+        }
+
+        inline bool try_lock(){
+            ssize_t expected = 0;
+            if(l.load() != 0)
+                return false;
+            return l.compare_exchange_strong(expected, -1);
+        }
+
+        inline void lock_shared(){
+            while(!try_lock_shared());
+        }
+
+        inline bool try_lock_shared(){
+            ssize_t expected = l.load();
+            if(expected >= 0)
+                return l.compare_exchange_strong(expected, expected + 1);
+            else
+                return false;
+        }
+
+        inline void unlock(){
+            l.store(0);
+        }
+
+        inline void unlock_shared(){
+            l.fetch_sub(1);
+        }
+
+        inline bool isLocked_exclusive(){
+            return l.load() == -1;
+        }
+
+        inline bool isLocked_shared(){
+            return l.load() > 0;
+        }
+
+    private:
+        std::atomic<ssize_t> l;
+    };
+
     using unique_lock = std::unique_lock<mutex>;
     using shared_lock = std::shared_lock<mutex>;
 

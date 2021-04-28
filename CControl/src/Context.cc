@@ -33,7 +33,12 @@ namespace score {
     }
 
     bool Context::exclusiveLocked(const data_t &key) {
-        // TODO implement
+
+        accessor_t a;
+        if (m.find(a, key)) {
+            return a->second->mtx.isLocked_exclusive();
+        }
+
         return false;
     }
 
@@ -65,7 +70,7 @@ namespace score {
     }
 
     void Context::updateNodeTimestamps(version_t lastCommitted, const std::unique_lock<std::mutex> &stateLock) {
-        SPDLOG_DEBUG("Updating node time stamps with lastCommited {}", lastCommitted);
+        //SPDLOG_DEBUG("Updating node time stamps with lastCommited {}", lastCommitted);
         ts.getNextID(stateLock) = std::max(ts.getNextID(stateLock), lastCommitted);
         ts.getMaxSeen(stateLock) = std::max(ts.getMaxSeen(stateLock), lastCommitted);
         uponCondition(stateLock);
@@ -91,9 +96,12 @@ namespace score {
         for (auto &e : toLock) {
             accessor_t a;
             m.find(a, e.first);
+            assert(!a.empty());
             if (e.second) {
+                assert(a->second->mtx.isLocked_shared());
                 a->second->mtx.unlock_shared();
             } else {
+                assert(a->second->mtx.isLocked_exclusive());
                 a->second->mtx.unlock();
             }
         }
