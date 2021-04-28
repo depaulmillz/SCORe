@@ -14,6 +14,7 @@ struct ServerConf {
     unsigned clientPort;
     int rank;
     std::string address;
+    std::string log;
     std::vector<std::string> servers;
 
     ServerConf() {
@@ -21,6 +22,7 @@ struct ServerConf {
         rank = 0;
         address = "0.0.0.0";
         servers = {"127.0.0.1:8080"};
+        log = "log";
     }
 
     explicit ServerConf(const std::string &filename) {
@@ -32,7 +34,7 @@ struct ServerConf {
         clientPort = root.get<unsigned>("clientPort", 8081);
         rank = root.get<int>("rank");
         address = root.get<std::string>("address", "0.0.0.0");
-
+        log = root.get<std::string>("log", "log");
         for (auto &c : root.get_child("servers")) {
             servers.push_back(c.second.get<std::string>(""));
         }
@@ -48,14 +50,14 @@ struct ServerConf {
 
     ServerConf conf;
 
-    if(argc == 2){
+    if (argc == 2) {
         conf = ServerConf(std::string(argv[1]));
-        for(auto& i : conf.servers){
+        for (auto &i : conf.servers) {
             std::cerr << i << std::endl;
         }
     }
 
-    score::Server s(conf.rank, conf.servers, conf.address + ":" + std::to_string(conf.clientPort));
+    score::Server s(conf.rank, conf.servers, conf.address + ":" + std::to_string(conf.clientPort), conf.log);
 
     while (true) {}
 }

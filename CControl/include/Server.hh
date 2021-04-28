@@ -16,7 +16,7 @@
 namespace score {
     class Server {
     public:
-        Server(int rank, std::vector<std::string> addresses, std::string clientAddr) ;
+        Server(int rank, std::vector<std::string> addresses, std::string clientAddr, std::string log);
 
         void stop();
 

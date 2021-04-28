@@ -7,6 +7,7 @@
 #include <list>
 #include <shared_mutex>
 #include <thread>
+#include <atomic>
 
 #ifndef SCORE_MAP_HH
 #define SCORE_MAP_HH
@@ -15,7 +16,7 @@ namespace score {
 
     using data_t = std::string;
 
-    static_assert(std::atomic<ssize_t>::is_always_lock_free, "ssize_t needs to be lock free");
+    static_assert(std::atomic<long>::is_always_lock_free, "ssize_t needs to be lock free");
     class mutex {
     public:
         mutex() : l(0) {
@@ -66,7 +67,7 @@ namespace score {
         }
 
     private:
-        std::atomic<ssize_t> l;
+        std::atomic<long> l;
     };
 
     using unique_lock = std::unique_lock<mutex>;

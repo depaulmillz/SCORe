@@ -7,11 +7,11 @@
 
 namespace score {
 
-    Server::Server(int rank, std::vector<std::string> addresses, std::string clientAddr) {
+    Server::Server(int rank, std::vector<std::string> addresses, std::string clientAddr, std::string log) {
 
         SPDLOG_INFO("Starting server with rank {} accessible at {}", rank, clientAddr);
 
-        CControlContextPair pair(rank, addresses.size());
+        CControlContextPair pair(rank, addresses.size(), log);
 
         server = RunServer(addresses[rank], pair.cc);
         serverF = std::async([this]() {

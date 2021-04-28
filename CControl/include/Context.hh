@@ -11,6 +11,7 @@
 #include <atomic>
 #include <utility>
 #include <spdlog/spdlog.h>
+#include <fstream>
 
 #ifndef SCORE_CONTEXT_HH
 #define SCORE_CONTEXT_HH
@@ -34,12 +35,12 @@ namespace score {
             return nextID;
         }
 
-        inline version_t &getCommitID(const std::unique_lock<std::mutex> &stateLock){
+        inline version_t &getCommitID(const std::unique_lock<std::mutex> &stateLock) {
             assert(stateLock.owns_lock());
             return commitID;
         }
 
-        inline version_t &getMaxSeen(const std::unique_lock<std::mutex> &stateLock){
+        inline version_t &getMaxSeen(const std::unique_lock<std::mutex> &stateLock) {
             assert(stateLock.owns_lock());
             return maxSeen;
         }
@@ -52,7 +53,7 @@ namespace score {
 
     struct Context {
 
-        explicit Context(uint64_t rank_, uint64_t nodes_);
+        explicit Context(uint64_t rank_, uint64_t nodes_, const std::string &logFileName);
 
         ~Context();
 
@@ -100,10 +101,12 @@ namespace score {
 
         version_t &getMaxSeen(const std::unique_lock<std::mutex> &stateLock);
 
+        std::ofstream &getLogFile(const std::unique_lock<std::mutex> &stateLock);
+
     private:
 
         TimestampMetadata ts;
-
+        std::ofstream logFile;
         p_t pendQ;
         q_t stableQ;
     };

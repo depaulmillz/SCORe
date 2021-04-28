@@ -128,7 +128,15 @@ namespace score {
             o.sn = request.fsn();
             ctx_->getStableQ(stateLock).push(o);
             response->set_success(true);
-            SPDLOG_DEBUG("Will commit {}, {}", request.fsn(), request.nodeid());
+            SPDLOG_DEBUG("Will commit {}, {}", request.txid(), request.nodeid());
+            Context::txMapAccessor txa;
+            ctx_->txMap.insert(txa, {request.txid(), request.nodeid()});
+            if(!txa.empty()) {
+                ctx_->getLogFile(stateLock) << "TX: " << request.txid() << "," << request.nodeid() << "," << request.fsn() << std::endl;
+                for (auto &elm : txa->second.ws) {
+                    ctx_->getLogFile(stateLock) << elm.first << "," << elm.second << std::endl;
+                }
+            }
         }
         for (auto iter = ctx_->getPendQ(stateLock).begin(); iter != ctx_->getPendQ(stateLock).end(); ++iter) {
             if (iter->txid == request.txid()) {
@@ -183,7 +191,7 @@ namespace score {
                 ctx_->releaseLocks(toLock);
                 ctx_->getStableQ(stateLock).pop();
                 a->second.committed = true;
-                if(fsn > ctx_->getMaxSeen(stateLock)){
+                if (fsn > ctx_->getMaxSeen(stateLock)) {
                     ctx_->getMaxSeen(stateLock) = fsn;
                 }
                 SPDLOG_DEBUG("Committed TX {} with timestamp {}", a->second.txid, a->second.sid);

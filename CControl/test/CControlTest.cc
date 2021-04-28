@@ -17,13 +17,13 @@ using namespace score;
 TEST(CControlTest, AllocateAndDelete) {
     spdlog::set_level(spdlog::level::trace);
 
-    CControl c(std::make_shared<Context>(0, 1));
+    CControl c(std::make_shared<Context>(0, 1, "tmp"));
 }
 
 TEST(CControlTest, TestDoReadRequest) {
     spdlog::set_level(spdlog::level::trace);
 
-    CControl c(std::make_shared<Context>(0, 1));
+    CControl c(std::make_shared<Context>(0, 1, "tmp"));
     score::ReadRequest req;
     ReadReturn res;
     req.set_txid(1);
@@ -39,7 +39,7 @@ TEST(CControlTest, TestDoReadRequest) {
 TEST(CControlTest, TestTwoPC) {
     spdlog::set_level(spdlog::level::trace);
 
-    CControl c(std::make_shared<Context>(0, 1));
+    CControl c(std::make_shared<Context>(0, 1, "tmp"));
     Prepare req;
     Vote res;
     req.set_txid(1);
@@ -74,7 +74,7 @@ TEST(CControlTest, TxAPIStartTest) {
 
     std::string addr = "127.0.0.1:8080";
 
-    CControlContextPair pair(0, 1);
+    CControlContextPair pair(0, 1, "tmp");
 
     auto server = RunServer(addr, pair.cc);
 
@@ -103,7 +103,7 @@ TEST(CControlTest, TxAPIReadWhatYouWriteTest) {
 
     std::string addr = "127.0.0.1:8080";
 
-    CControlContextPair pair(0, 1);
+    CControlContextPair pair(0, 1, "tmp");
 
     auto server = RunServer(addr, pair.cc);
 
@@ -143,7 +143,7 @@ TEST(CControlTest, TxAPIShouldCommit) {
 
     std::string addr = "127.0.0.1:8080";
 
-    CControlContextPair pair(0, 1);
+    CControlContextPair pair(0, 1, "tmp");
 
     auto server = RunServer(addr, pair.cc);
 
@@ -187,7 +187,7 @@ TEST(CControlTest, TxAPIShouldCommitAllReads) {
 
     std::string addr = "127.0.0.1:8080";
 
-    CControlContextPair pair(0, 1);
+    CControlContextPair pair(0, 1, "tmp");
 
     auto server = RunServer(addr, pair.cc);
 
@@ -228,7 +228,7 @@ TEST(CControlTest, TxClientAPIShouldCommitAllReads) {
     std::string internalAddr = "127.0.0.1:8080";
     std::string clientAddr = "127.0.0.1:8081";
 
-    CControlContextPair pair(0, 1);
+    CControlContextPair pair(0, 1, "tmp");
 
     auto server = RunServer(internalAddr, pair.cc);
 
@@ -268,7 +268,7 @@ TEST(CControlTest, TxClientAPIShouldCommitAllReadsServer) {
     std::vector<std::string> internalAddr = {"127.0.0.1:8080"};
     std::string clientAddr = "127.0.0.1:8081";
 
-    Server s(0, internalAddr, clientAddr);
+    Server s(0, internalAddr, clientAddr, "tmp");
 
     TxClient client(clientAddr);
 
@@ -289,8 +289,8 @@ TEST(CControlTest, TxClientAPIShouldCommitAllReads2Server) {
 
     std::vector<std::string> internalAddr = {"127.0.0.1:8080", "127.0.0.1:8081"};
 
-    Server s1(0, internalAddr, "127.0.0.1:8082");
-    Server s2(1, internalAddr, "127.0.0.1:8083");
+    Server s1(0, internalAddr, "127.0.0.1:8082", "tmp");
+    Server s2(1, internalAddr, "127.0.0.1:8083", "tmp");
 
     TxClient client("127.0.0.1:8082");
 
@@ -312,8 +312,8 @@ TEST(CControlTest, TxClientAPIReadLastTx2Servers) {
 
     std::vector<std::string> internalAddr = {"127.0.0.1:8080", "127.0.0.1:8081"};
 
-    Server s1(0, internalAddr, "127.0.0.1:8082");
-    Server s2(1, internalAddr, "127.0.0.1:8083");
+    Server s1(0, internalAddr, "127.0.0.1:8082", "tmp");
+    Server s2(1, internalAddr, "127.0.0.1:8083", "tmp");
 
     TxClient client("127.0.0.1:8082");
 

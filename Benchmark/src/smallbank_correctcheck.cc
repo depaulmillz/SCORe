@@ -75,10 +75,10 @@ int main(int argc, char** argv){
         threads.emplace_back([&](){
             unsigned seed = time(nullptr);
 
-            for(int i = 0; i < 100; i++) {
+            for(int i = 0; i < 20; i++) {
                 auto tx = client.StartTx();
-                unsigned userA = rand_r(&seed) % 100;
-                unsigned userB =  rand_r(&seed) % 100;
+                unsigned userA = 1;//rand_r(&seed) % 100;
+                unsigned userB =  2;//rand_r(&seed) % 100;
                 while(userA == userB) {
                     userB = rand_r(&seed) % 100;
                 }

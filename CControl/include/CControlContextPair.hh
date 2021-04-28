@@ -9,7 +9,7 @@
 
 namespace score {
     struct CControlContextPair {
-        CControlContextPair(uint64_t rank, uint64_t nodes);
+        CControlContextPair(uint64_t rank, uint64_t nodes, const std::string &log);
 
         ~CControlContextPair();
 

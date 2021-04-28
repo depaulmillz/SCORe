@@ -9,11 +9,13 @@
 
 namespace score {
 
-    Context::Context(uint64_t rank_, uint64_t nodes_) : rank(rank_), nodes(nodes_), ts() {
+    Context::Context(uint64_t rank_, uint64_t nodes_, const std::string &logFileName) : rank(rank_), nodes(nodes_),
+                                                                                        ts() {
+        logFile.open(logFileName);
     }
 
     Context::~Context() {
-
+        logFile.close();
     }
 
     std::list<uint64_t> Context::replicas(const data_t &key) {
@@ -43,13 +45,14 @@ namespace score {
     }
 
 
-    std::tuple<data_t, version_t, bool> Context::doRead(version_t sid, data_t &key, std::unique_lock<std::mutex> &stateLock) {
+    std::tuple<data_t, version_t, bool>
+    Context::doRead(version_t sid, data_t &key, std::unique_lock<std::mutex> &stateLock) {
         SPDLOG_TRACE("{}(sid = {}, key = {})", __FUNCTION__, sid, key);
 
         ts.getNextID(stateLock) = std::max(ts.getNextID(stateLock), sid);
 
         SPDLOG_TRACE("{} while(commitID({}) < sid({}));", __FUNCTION__, ts.getCommitID(stateLock), sid);
-        while (ts.getCommitID(stateLock) < sid && exclusiveLocked(key)){
+        while (ts.getCommitID(stateLock) < sid && exclusiveLocked(key)) {
             stateLock.unlock();
             std::this_thread::yield();
             stateLock.lock();
@@ -85,10 +88,10 @@ namespace score {
                 a->second = std::make_shared<VersionList>();
             }
             if (e.second) {
-                if(!a->second->mtx.try_lock_shared())
+                if (!a->second->mtx.try_lock_shared())
                     return false;
             } else {
-                if(!a->second->mtx.try_lock()){
+                if (!a->second->mtx.try_lock()) {
                     return false;
                 }
             }
@@ -139,6 +142,10 @@ namespace score {
 
     version_t &Context::getMaxSeen(const std::unique_lock<std::mutex> &stateLock) {
         return ts.getMaxSeen(stateLock);
+    }
+
+    std::ofstream &Context::getLogFile(const std::unique_lock<std::mutex> &stateLock) {
+        return logFile;
     }
 
 }

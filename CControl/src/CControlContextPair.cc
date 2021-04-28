@@ -6,8 +6,10 @@
 
 namespace score {
 
-    CControlContextPair::CControlContextPair(uint64_t rank, uint64_t nodes) : ctx(new Context(rank, nodes)),
-                                                                              cc(new CControl(ctx)) {
+    CControlContextPair::CControlContextPair(uint64_t rank, uint64_t nodes,
+                                             const std::string &log) : ctx(new Context(rank, nodes, log)),
+                                                                       cc(new CControl(
+                                                                               ctx)) {
 
     }
 
