@@ -37,7 +37,7 @@ struct ClientConf {
 };
 
 int main(int argc, char** argv){
-    spdlog::set_level(spdlog::level::debug);
+    spdlog::set_level(spdlog::level::trace);
 
     ClientConf conf;
 
@@ -71,7 +71,7 @@ int main(int argc, char** argv){
 
     std::vector<std::thread> threads;
 
-    for(int i = 0; i < 2; i++){
+    for(int i = 0; i < 4; i++){
         threads.emplace_back([&](){
             unsigned seed = time(nullptr);
 

@@ -77,6 +77,7 @@ namespace score {
     }
 
     bool Context::getLocksWithTimeout(const std::map<data_t, bool> &toLock) {
+        //TODO: implement better timeout
         for (auto &e : toLock) {
             accessor_t a;
             while (!m.find(a, e.first)) {
@@ -84,9 +85,12 @@ namespace score {
                 a->second = std::make_shared<VersionList>();
             }
             if (e.second) {
-                a->second->mtx.lock_shared();
+                if(!a->second->mtx.try_lock_shared())
+                    return false;
             } else {
-                a->second->mtx.lock();
+                if(!a->second->mtx.try_lock()){
+                    return false;
+                }
             }
         }
         return true;
