@@ -16,6 +16,9 @@ namespace score {
 
     void CControl::DoReadRequest(const ReadRequest &request,
                                  ReadReturn *response) {
+        if (!cds::threading::Manager::isThreadAttached())
+            cds::threading::Manager::attachThread();
+
         SPDLOG_TRACE("{}", __FUNCTION__);
         version_t newReadSid = request.readsid();
 
@@ -55,6 +58,9 @@ namespace score {
     }
 
     void CControl::DoPrepare(const Prepare &request, Vote *response) {
+        if (!cds::threading::Manager::isThreadAttached())
+            cds::threading::Manager::attachThread();
+
         SPDLOG_TRACE("Preparing {}, {}", request.txid(), request.nodeid());
         Context::txMapAccessor txa;
         ctx_->txMap.insert(txa, {request.txid(), request.nodeid()});
@@ -75,21 +81,26 @@ namespace score {
         bool outcome = ctx_->getLocksWithTimeout(toLock);
         if (outcome) {
             for (auto &r : request.rs()) {
-                accessor_t a;
-                ctx_->m.find(a, r.key());
-                if (!a.empty())
-                    if (a->second->l.front().second > request.sid()) {
+
+                ctx_->m.find(r.key(), [&](map_t::value_type &item) {
+                    if (item.second->l.front().second > request.sid()) {
                         outcome = false;
-                        ctx_->releaseLocks(toLock);
-                        SPDLOG_DEBUG("Abort {}, {}", request.txid(), request.nodeid());
-                        Context::txMapAccessor txa2;
-                        ctx_->txMap.insert(txa2, {request.txid(), request.nodeid()});
-                        txa2->second.aborted = true;
-                        break;
                     }
+                });
+
+                if (!outcome) {
+                    ctx_->releaseLocks(toLock);
+                    SPDLOG_DEBUG("Abort {}, {}", request.txid(), request.nodeid());
+                    Context::txMapAccessor txa2;
+                    ctx_->txMap.insert(txa2, {request.txid(), request.nodeid()});
+                    txa2->second.aborted = true;
+                    break;
+                }
             }
             if (outcome) {
+
                 std::unique_lock<std::mutex> stateLock(ctx_->stateMtx);
+                SPDLOG_TRACE("Got statelock");
 
                 ctx_->getNextID(stateLock) += 1;
                 sn = ctx_->getNextID(stateLock);
@@ -131,9 +142,14 @@ namespace score {
     }
 
     void CControl::DoDecide(const Decide &request, Committed *response) {
+        if (!cds::threading::Manager::isThreadAttached())
+            cds::threading::Manager::attachThread();
+
         SPDLOG_TRACE("Decided {} for TX {}", request.outcome() ? "commit" : "abort", request.txid());
 
+        SPDLOG_TRACE("Grabbing statelock");
         std::unique_lock<std::mutex> stateLock(ctx_->stateMtx);
+        SPDLOG_TRACE("Got statelock");
 
         if (request.outcome()) {
             ctx_->getNextID(stateLock) = std::max(ctx_->getNextID(stateLock), request.fsn());
@@ -175,7 +191,7 @@ namespace score {
 
             assert(!a.empty());
 
-            if(!a->second.aborted) {
+            if (!a->second.aborted) {
                 for (auto &r : a->second.rs) {
                     toLock[r.first] = true;
                 }
@@ -208,11 +224,11 @@ namespace score {
                     toLock[r.first] = true;
                 }
                 for (auto &r : a->second.ws) {
-                    accessor_t ma;
-                    ctx_->m.find(ma, r.first);
-                    ma->second->l.push_front({r.second, fsn});
-                    SPDLOG_DEBUG("Updated {}->{}", r.first, r.second);
-                    toLock[r.first] = false;
+                    ctx_->m.find(r.first, [&](map_t::value_type &item) {
+                        item.second->l.push_front({r.second, fsn});
+                        SPDLOG_DEBUG("Updated {}->{}", r.first, r.second);
+                        toLock[r.first] = false;
+                    });
                 }
                 ctx_->releaseLocks(toLock);
                 ctx_->getStableQ(stateLock).pop();

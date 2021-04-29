@@ -16,6 +16,7 @@ find_package(gRPC CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
 find_package(TBB CONFIG REQUIRED)
 find_package(Boost REQUIRED)
+find_package(LibCDS CONFIG REQUIRED)
 
 add_subdirectory(Protocol)
 add_subdirectory(Store)

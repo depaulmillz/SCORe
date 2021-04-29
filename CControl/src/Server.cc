@@ -4,10 +4,15 @@
 
 #include <Server.hh>
 #include <spdlog/spdlog.h>
+#include <cds/init.h>
+#include <cds/gc/hp.h>
 
 namespace score {
 
     Server::Server(int rank, std::vector<std::string> addresses, std::string clientAddr, std::string log) {
+        cds::Initialize();
+        cds::gc::hp::GarbageCollector::Construct(map_t::c_nHazardPtrCount + 1, 16, 16 );
+        cds::threading::Manager::attachThread();
 
         SPDLOG_INFO("Starting server with rank {} accessible at {}", rank, clientAddr);
 

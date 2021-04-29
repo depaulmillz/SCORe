@@ -8,6 +8,8 @@
 #include <shared_mutex>
 #include <thread>
 #include <atomic>
+#include <cds/container/michael_kvlist_hp.h>
+#include <cds/container/michael_map.h>
 
 #ifndef SCORE_MAP_HH
 #define SCORE_MAP_HH
@@ -89,8 +91,13 @@ namespace score {
         std::list<std::pair<data_t, version_t>> l;
     };
 
-    using map_t = tbb::concurrent_hash_map<data_t, std::shared_ptr<VersionList>>;
-    using accessor_t = map_t::accessor;
+
+    using kvlist_t = cds::container::MichaelKVList<cds::gc::HP, data_t, std::shared_ptr<VersionList>>;
+
+    using map_t = cds::container::MichaelHashMap<cds::gc::HP, kvlist_t>;
+
+    //using map_t = tbb::concurrent_hash_map<data_t, std::shared_ptr<VersionList>>;
+    //using accessor_t = map_t::accessor;
 
 
 }

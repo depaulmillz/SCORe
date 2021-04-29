@@ -9,7 +9,8 @@
 
 namespace score {
 
-    Context::Context(uint64_t rank_, uint64_t nodes_, const std::string &logFileName) : rank(rank_), nodes(nodes_),
+    Context::Context(uint64_t rank_, uint64_t nodes_, const std::string &logFileName) : m(1000000, 1), rank(rank_),
+                                                                                        nodes(nodes_),
                                                                                         ts() {
         logFile.open(logFileName);
     }
@@ -35,18 +36,20 @@ namespace score {
     }
 
     bool Context::exclusiveLocked(const data_t &key) {
+        bool isLocked = false;
+        m.find(key, [&isLocked](map_t::value_type &v) {
+            isLocked = v.second->mtx.isLocked_exclusive();
+        });
 
-        accessor_t a;
-        if (m.find(a, key)) {
-            return a->second->mtx.isLocked_exclusive();
-        }
-
-        return false;
+        return isLocked;
     }
 
 
     std::tuple<data_t, version_t, bool>
     Context::doRead(version_t sid, data_t &key, std::unique_lock<std::mutex> &stateLock) {
+        if (!cds::threading::Manager::isThreadAttached())
+            cds::threading::Manager::attachThread();
+
         SPDLOG_TRACE("{}(sid = {}, key = {})", __FUNCTION__, sid, key);
 
         ts.getNextID(stateLock) = std::max(ts.getNextID(stateLock), sid);
@@ -58,22 +61,27 @@ namespace score {
             SPDLOG_TRACE("Yielding");
             stateLock.lock();
         }
-        accessor_t a;
-        if (m.find(a, key)) {
-            std::shared_ptr<VersionList> v = a->second;
+
+        std::tuple<data_t, version_t, bool> retVal = {data_t(), ts.getCommitID(stateLock), START_VERSION};
+
+        m.find(key, [&](map_t::value_type &v) {
+            std::shared_ptr<VersionList> l = v.second;
             SPDLOG_TRACE("Shared locking {}", key);
-            shared_lock sl(v->mtx);
+            shared_lock sl(l->mtx);
             SPDLOG_TRACE("Shared locked {}", key);
 
             bool isFirst = true;
-            for (auto &elm : v->l) {
+            for (auto &elm : l->l) {
                 if (elm.second <= sid) {
-                    return {elm.first, ts.getCommitID(stateLock), isFirst};
+                    SPDLOG_TRACE("Read {} -> {} at time {}", key, elm.first, elm.second);
+                    retVal = {elm.first, ts.getCommitID(stateLock), isFirst};
+                    return;
                 }
                 isFirst = false;
             }
-        }
-        return {data_t(), ts.getCommitID(stateLock), START_VERSION};
+        });
+
+        return retVal;
     }
 
     void Context::updateNodeTimestamps(version_t lastCommitted, const std::unique_lock<std::mutex> &stateLock) {
@@ -89,66 +97,49 @@ namespace score {
         int count = 0;
         for (auto &e : toLock) {
             SPDLOG_TRACE("Accessing {} in map", e.first);
-            accessor_t a;
-            while (!m.find(a, e.first)) {
-                m.insert(a, e.first);
-                a->second = std::make_shared<VersionList>();
-            }
-            SPDLOG_TRACE("Accessed {} in map", e.first);
-            if (e.second) {
-                if (!a->second->mtx.try_lock_shared()) {
-                    a.release();
 
-                    // unlock everything
-                    int count2 = 0;
-                    for (auto &e2 : toLock) {
-                        if (count2 == count)
-                            break;
-                        m.find(a, e.first);
-                        if (e2.second) {
-                            a->second->mtx.unlock_shared();
-                            SPDLOG_DEBUG("Shared unlocking {}", e.first);
+            data_t cpyOfKey = e.first;
 
-                        } else {
-                            a->second->mtx.unlock();
-                            SPDLOG_DEBUG("Unlocking {}", e.first);
-                        }
-                        a.release();
-                        count2++;
-                    }
+            bool failed = false;
 
-                    return false;
+            m.update(std::move(cpyOfKey), [&](bool bNew, map_t::value_type &item) {
+                SPDLOG_TRACE("Accessed {} in map", e.first);
+
+                if (bNew)
+                    item.second = std::make_shared<VersionList>();
+
+                if (e.second) {
+                    if (!item.second->mtx.try_lock_shared())
+                        failed = true;
+                    else
+                        SPDLOG_TRACE("shared lock {}", e.first);
+                } else {
+                    if (!item.second->mtx.try_lock())
+                        failed = true;
+                    else
+                        SPDLOG_TRACE("lock {}", e.first);
                 }
-                SPDLOG_DEBUG("Shared locked {}", e.first);
+            });
 
-            } else {
-                if (!a->second->mtx.try_lock()) {
-                    a.release();
-
-                    // unlock everything
-                    int count2 = 0;
-                    for (auto &e2 : toLock) {
-                        if (count2 == count)
-                            break;
-
-                        m.find(a, e.first);
+            if (failed) {
+                int count2 = 0;
+                for (auto &e2 : toLock) {
+                    if (count2 == count)
+                        break;
+                    m.find(e2.first, [&](map_t::value_type &item) {
                         if (e2.second) {
-                            a->second->mtx.unlock_shared();
-                            SPDLOG_DEBUG("Shared unlocking {}", e.first);
-
+                            item.second->mtx.unlock_shared();
+                            SPDLOG_DEBUG("Shared unlocking {}", e2.first);
                         } else {
-                            a->second->mtx.unlock();
-                            SPDLOG_DEBUG("Unlocking {}", e.first);
+                            item.second->mtx.unlock();
+                            SPDLOG_DEBUG("Unlocking {}", e2.first);
                         }
-                        a.release();
-                        count2++;
-                    }
-
-                    return false;
+                    });
+                    count2++;
                 }
-                SPDLOG_DEBUG("Locked {}", e.first);
-
+                return false;
             }
+
             count++;
         }
         return true;
@@ -158,18 +149,15 @@ namespace score {
         SPDLOG_DEBUG("Releasing locks");
 
         for (auto &e : toLock) {
-            accessor_t a;
-            m.find(a, e.first);
-            assert(!a.empty());
-            if (e.second) {
-                assert(a->second->mtx.isLocked_shared());
-                a->second->mtx.unlock_shared();
-                SPDLOG_DEBUG("Shared unlocking {}", e.first);
-            } else {
-                assert(a->second->mtx.isLocked_exclusive());
-                a->second->mtx.unlock();
-                SPDLOG_DEBUG("Unlocking {}", e.first);
-            }
+            m.find(e.first, [&](map_t::value_type &item) {
+                if (e.second) {
+                    item.second->mtx.unlock_shared();
+                    SPDLOG_DEBUG("Shared unlocking {}", e.first);
+                } else {
+                    item.second->mtx.unlock();
+                    SPDLOG_DEBUG("Unlocking {}", e.first);
+                }
+            });
         }
         return true;
     }

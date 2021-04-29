@@ -71,11 +71,11 @@ int main(int argc, char** argv){
 
     std::vector<std::thread> threads;
 
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < 8; i++){
         threads.emplace_back([&](){
             unsigned seed = time(nullptr);
 
-            for(int i = 0; i < 1; i++) {
+            for(int i = 0; i < 1000; i++) {
                 auto tx = client.StartTx();
                 unsigned userA = 1;//rand_r(&seed) % 100;
                 unsigned userB =  2;//rand_r(&seed) % 100;
