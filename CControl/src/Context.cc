@@ -55,12 +55,16 @@ namespace score {
         while (ts.getCommitID(stateLock) < sid && exclusiveLocked(key)) {
             stateLock.unlock();
             std::this_thread::yield();
+            SPDLOG_TRACE("Yielding");
             stateLock.lock();
         }
         accessor_t a;
         if (m.find(a, key)) {
             std::shared_ptr<VersionList> v = a->second;
+            SPDLOG_TRACE("Shared locking {}", key);
             shared_lock sl(v->mtx);
+            SPDLOG_TRACE("Shared locked {}", key);
+
             bool isFirst = true;
             for (auto &elm : v->l) {
                 if (elm.second <= sid) {
@@ -80,26 +84,79 @@ namespace score {
     }
 
     bool Context::getLocksWithTimeout(const std::map<data_t, bool> &toLock) {
+        SPDLOG_DEBUG("Getting locks");
         //TODO: implement better timeout
+        int count = 0;
         for (auto &e : toLock) {
+            SPDLOG_TRACE("Accessing {} in map", e.first);
             accessor_t a;
             while (!m.find(a, e.first)) {
                 m.insert(a, e.first);
                 a->second = std::make_shared<VersionList>();
             }
+            SPDLOG_TRACE("Accessed {} in map", e.first);
             if (e.second) {
-                if (!a->second->mtx.try_lock_shared())
-                    return false;
-            } else {
-                if (!a->second->mtx.try_lock()) {
+                if (!a->second->mtx.try_lock_shared()) {
+                    a.release();
+
+                    // unlock everything
+                    int count2 = 0;
+                    for (auto &e2 : toLock) {
+                        if (count2 == count)
+                            break;
+                        m.find(a, e.first);
+                        if (e2.second) {
+                            a->second->mtx.unlock_shared();
+                            SPDLOG_DEBUG("Shared unlocking {}", e.first);
+
+                        } else {
+                            a->second->mtx.unlock();
+                            SPDLOG_DEBUG("Unlocking {}", e.first);
+                        }
+                        a.release();
+                        count2++;
+                    }
+
                     return false;
                 }
+                SPDLOG_DEBUG("Shared locked {}", e.first);
+
+            } else {
+                if (!a->second->mtx.try_lock()) {
+                    a.release();
+
+                    // unlock everything
+                    int count2 = 0;
+                    for (auto &e2 : toLock) {
+                        if (count2 == count)
+                            break;
+
+                        m.find(a, e.first);
+                        if (e2.second) {
+                            a->second->mtx.unlock_shared();
+                            SPDLOG_DEBUG("Shared unlocking {}", e.first);
+
+                        } else {
+                            a->second->mtx.unlock();
+                            SPDLOG_DEBUG("Unlocking {}", e.first);
+                        }
+                        a.release();
+                        count2++;
+                    }
+
+                    return false;
+                }
+                SPDLOG_DEBUG("Locked {}", e.first);
+
             }
+            count++;
         }
         return true;
     }
 
     bool Context::releaseLocks(const std::map<data_t, bool> &toLock) {
+        SPDLOG_DEBUG("Releasing locks");
+
         for (auto &e : toLock) {
             accessor_t a;
             m.find(a, e.first);
@@ -107,9 +164,11 @@ namespace score {
             if (e.second) {
                 assert(a->second->mtx.isLocked_shared());
                 a->second->mtx.unlock_shared();
+                SPDLOG_DEBUG("Shared unlocking {}", e.first);
             } else {
                 assert(a->second->mtx.isLocked_exclusive());
                 a->second->mtx.unlock();
+                SPDLOG_DEBUG("Unlocking {}", e.first);
             }
         }
         return true;

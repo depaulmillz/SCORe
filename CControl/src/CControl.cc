@@ -33,6 +33,8 @@ namespace score {
         stateLock.lock();
         SPDLOG_TRACE("Grabbed state lock {}", __FUNCTION__);
         std::tuple<data_t, version_t, bool> p = ctx_->doRead(newReadSid, key, stateLock);
+        ctx_->getLogFile(stateLock) << request.txid() << "," << request.nodeid() << "," << newReadSid << ",r," << key
+                                    << "," << std::get<0>(p) << std::endl;
         stateLock.unlock();
         SPDLOG_TRACE("Unlocked state lock {}", __FUNCTION__);
 
@@ -62,11 +64,12 @@ namespace score {
 
         //std::cerr << "Running DoPrepare" << std::endl;
         std::map<data_t, bool> toLock;
-        for (auto &r : request.ws()) {
-            toLock[r.key()] = false;
-        }
         for (auto &r : request.rs()) {
             toLock[r.key()] = true;
+        }
+        for (auto &r : request.ws()) {
+            SPDLOG_DEBUG("Writing {}", r.key());
+            toLock[r.key()] = false;
         }
         version_t sn = 0;
         bool outcome = ctx_->getLocksWithTimeout(toLock);
@@ -74,16 +77,25 @@ namespace score {
             for (auto &r : request.rs()) {
                 accessor_t a;
                 ctx_->m.find(a, r.key());
-                if (a->second->l.begin()->second > request.sid()) {
-                    outcome = false;
-                    break;
-                }
+                if (!a.empty())
+                    if (a->second->l.front().second > request.sid()) {
+                        outcome = false;
+                        ctx_->releaseLocks(toLock);
+                        SPDLOG_DEBUG("Abort {}, {}", request.txid(), request.nodeid());
+                        Context::txMapAccessor txa2;
+                        ctx_->txMap.insert(txa2, {request.txid(), request.nodeid()});
+                        txa2->second.aborted = true;
+                        break;
+                    }
             }
             if (outcome) {
                 std::unique_lock<std::mutex> stateLock(ctx_->stateMtx);
 
                 ctx_->getNextID(stateLock) += 1;
                 sn = ctx_->getNextID(stateLock);
+                ctx_->getLogFile(stateLock) << request.txid() << "," << request.nodeid() << "," << sn
+                                            << ",u,x,x" << std::endl;
+
                 ctx_->getPendQ(stateLock).push_back({request.txid(), sn});
                 stateLock.unlock();
                 // put tx in txMap
@@ -106,7 +118,10 @@ namespace score {
                 a->second = tx;
             }
         } else {
-            SPDLOG_TRACE("Abort {}, {}", request.txid(), request.nodeid());
+            SPDLOG_DEBUG("Abort {}, {}", request.txid(), request.nodeid());
+            Context::txMapAccessor txa2;
+            ctx_->txMap.insert(txa2, {request.txid(), request.nodeid()});
+            txa2->second.aborted = true;
         }
         response->set_txid(request.txid());
         response->set_nodeid(request.nodeid());
@@ -131,12 +146,15 @@ namespace score {
             SPDLOG_DEBUG("Will commit {}, {}", request.txid(), request.nodeid());
             Context::txMapAccessor txa;
             ctx_->txMap.insert(txa, {request.txid(), request.nodeid()});
-            if(!txa.empty()) {
-                ctx_->getLogFile(stateLock) << "TX: " << request.txid() << "," << request.nodeid() << "," << request.fsn() << std::endl;
+            if (!txa.empty()) {
                 for (auto &elm : txa->second.ws) {
-                    ctx_->getLogFile(stateLock) << elm.first << "," << elm.second << std::endl;
+                    ctx_->getLogFile(stateLock) << request.txid() << "," << request.nodeid() << "," << request.fsn()
+                                                << ",w," << elm.first << "," << elm.second << std::endl;
                 }
             }
+            ctx_->getLogFile(stateLock) << request.txid() << "," << request.nodeid() << "," << request.fsn()
+                                        << ",c,x,x" << std::endl;
+
         }
         for (auto iter = ctx_->getPendQ(stateLock).begin(); iter != ctx_->getPendQ(stateLock).end(); ++iter) {
             if (iter->txid == request.txid()) {
@@ -145,20 +163,27 @@ namespace score {
             }
         }
         if (!request.outcome()) {
+
+            ctx_->getLogFile(stateLock) << request.txid() << "," << request.nodeid() << "," << request.fsn()
+                                        << ",a,x,x" << std::endl;
+
             std::map<data_t, bool> toLock;
+            SPDLOG_TRACE("Accessing tx map");
             Context::txMapAccessor a;
             //std::cerr << "Finding " << request.txid() << "," << request.nodeid() << std::endl;
             ctx_->txMap.find(a, {request.txid(), request.nodeid()});
 
             assert(!a.empty());
 
-            for (auto &r : a->second.ws) {
-                toLock[r.first] = false;
+            if(!a->second.aborted) {
+                for (auto &r : a->second.rs) {
+                    toLock[r.first] = true;
+                }
+                for (auto &r : a->second.ws) {
+                    toLock[r.first] = false;
+                }
+                ctx_->releaseLocks(toLock);
             }
-            for (auto &r : a->second.rs) {
-                toLock[r.first] = true;
-            }
-            ctx_->releaseLocks(toLock);
             a->second.aborted = true;
             response->set_success(false);
         }
@@ -166,9 +191,10 @@ namespace score {
     }
 
     void CControl::commitCondition(const std::unique_lock<std::mutex> &stateLock) {
+        SPDLOG_TRACE("In commit condition");
         while (!ctx_->getStableQ(stateLock).empty()) {
             version_t fsn = ctx_->getStableQ(stateLock).front().sn;
-            SPDLOG_DEBUG("Pending commit with fsn {}", fsn);
+            SPDLOG_DEBUG("Pending commit with fsn {} and txid {}", fsn, ctx_->getStableQ(stateLock).front().txid);
             // does not exist a pending transaction with a timestamp less than the newest one to be committed
             if (ctx_->getPendQ(stateLock).empty() || (ctx_->getPendQ(stateLock).front().sn >= fsn)) {
                 std::map<data_t, bool> toLock;
@@ -178,15 +204,15 @@ namespace score {
                 //std::cerr << "Finding " << txid << "," << nodeid << std::endl;
                 ctx_->txMap.find(a, {txid, nodeid});
 
+                for (auto &r : a->second.rs) {
+                    toLock[r.first] = true;
+                }
                 for (auto &r : a->second.ws) {
                     accessor_t ma;
                     ctx_->m.find(ma, r.first);
                     ma->second->l.push_front({r.second, fsn});
                     SPDLOG_DEBUG("Updated {}->{}", r.first, r.second);
                     toLock[r.first] = false;
-                }
-                for (auto &r : a->second.rs) {
-                    toLock[r.first] = true;
                 }
                 ctx_->releaseLocks(toLock);
                 ctx_->getStableQ(stateLock).pop();
