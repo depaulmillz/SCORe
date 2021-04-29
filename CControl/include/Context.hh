@@ -30,25 +30,22 @@ namespace score {
 
         }
 
-        inline version_t &getNextID(const std::unique_lock<std::mutex> &stateLock) {
-            assert(stateLock.owns_lock());
+        inline std::atomic<version_t> &getNextID() {
             return nextID;
         }
 
-        inline version_t &getCommitID(const std::unique_lock<std::mutex> &stateLock) {
-            assert(stateLock.owns_lock());
+        inline std::atomic<version_t> &getCommitID() {
             return commitID;
         }
 
-        inline version_t &getMaxSeen(const std::unique_lock<std::mutex> &stateLock) {
-            assert(stateLock.owns_lock());
+        inline std::atomic<version_t> &getMaxSeen() {
             return maxSeen;
         }
 
     private:
-        version_t nextID;
-        version_t commitID;
-        version_t maxSeen;
+        std::atomic<version_t> nextID;
+        std::atomic<version_t> commitID;
+        std::atomic<version_t> maxSeen;
     };
 
     struct Context {
@@ -80,26 +77,25 @@ namespace score {
 
         bool exclusiveLocked(const data_t &key);
 
-        std::tuple<data_t, version_t, bool> doRead(version_t sid, data_t &key, std::unique_lock<std::mutex> &stateLock);
+        std::tuple<data_t, version_t, bool> doRead(version_t sid, data_t &key);
 
-        void updateNodeTimestamps(version_t lastCommitted, const std::unique_lock<std::mutex> &stateLock);
+        void updateNodeTimestamps(version_t lastCommitted);
 
         bool getLocksWithTimeout(const std::map<data_t, bool> &toLock);
 
         bool releaseLocks(const std::map<data_t, bool> &toLock);
 
-        // need to be holding state mutex to call
-        void uponCondition(const std::unique_lock<std::mutex> &stateLock);
+        void uponCondition();
 
         q_t &getStableQ(const std::unique_lock<std::mutex> &stateLock);
 
         p_t &getPendQ(const std::unique_lock<std::mutex> &stateLock);
 
-        version_t &getNextID(const std::unique_lock<std::mutex> &stateLock);
+        std::atomic<version_t> &getNextID();
 
-        version_t &getCommitID(const std::unique_lock<std::mutex> &stateLock);
+        std::atomic<version_t> &getCommitID();
 
-        version_t &getMaxSeen(const std::unique_lock<std::mutex> &stateLock);
+        std::atomic<version_t> &getMaxSeen();
 
         std::ofstream &getLogFile(const std::unique_lock<std::mutex> &stateLock);
 

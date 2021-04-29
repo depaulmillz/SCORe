@@ -46,23 +46,24 @@ namespace score {
 
 
     std::tuple<data_t, version_t, bool>
-    Context::doRead(version_t sid, data_t &key, std::unique_lock<std::mutex> &stateLock) {
+    Context::doRead(version_t sid, data_t &key) {
         if (!cds::threading::Manager::isThreadAttached())
             cds::threading::Manager::attachThread();
 
         SPDLOG_TRACE("{}(sid = {}, key = {})", __FUNCTION__, sid, key);
 
-        ts.getNextID(stateLock) = std::max(ts.getNextID(stateLock), sid);
+        auto expected = ts.getNextID().load();
+        while(!ts.getNextID().compare_exchange_strong(expected, std::max(expected, sid)));
 
-        SPDLOG_TRACE("{} while(commitID({}) < sid({}));", __FUNCTION__, ts.getCommitID(stateLock), sid);
-        while (ts.getCommitID(stateLock) < sid && exclusiveLocked(key)) {
-            stateLock.unlock();
+        SPDLOG_TRACE("{} while(commitID({}) < sid({}));", __FUNCTION__, ts.getCommitID(), sid);
+        while (ts.getCommitID() < sid && exclusiveLocked(key)) {
             std::this_thread::yield();
             SPDLOG_TRACE("Yielding");
-            stateLock.lock();
         }
 
-        std::tuple<data_t, version_t, bool> retVal = {data_t(), ts.getCommitID(stateLock), START_VERSION};
+        auto commitID = ts.getCommitID().load();
+
+        std::tuple<data_t, version_t, bool> retVal = {data_t(), commitID, START_VERSION};
 
         m.find(key, [&](map_t::value_type &v) {
             std::shared_ptr<VersionList> l = v.second;
@@ -74,7 +75,7 @@ namespace score {
             for (auto &elm : l->l) {
                 if (elm.second <= sid) {
                     SPDLOG_TRACE("Read {} -> {} at time {}", key, elm.first, elm.second);
-                    retVal = {elm.first, ts.getCommitID(stateLock), isFirst};
+                    retVal = {elm.first, commitID, isFirst};
                     return;
                 }
                 isFirst = false;
@@ -84,11 +85,14 @@ namespace score {
         return retVal;
     }
 
-    void Context::updateNodeTimestamps(version_t lastCommitted, const std::unique_lock<std::mutex> &stateLock) {
+    void Context::updateNodeTimestamps(version_t lastCommitted) {
         //SPDLOG_DEBUG("Updating node time stamps with lastCommited {}", lastCommitted);
-        ts.getNextID(stateLock) = std::max(ts.getNextID(stateLock), lastCommitted);
-        ts.getMaxSeen(stateLock) = std::max(ts.getMaxSeen(stateLock), lastCommitted);
-        uponCondition(stateLock);
+
+        auto expected = ts.getNextID().load();
+        while(!ts.getNextID().compare_exchange_strong(expected, std::max(expected, lastCommitted)));
+        expected = ts.getMaxSeen().load();
+        while(!ts.getMaxSeen().compare_exchange_strong(expected, std::max(expected, lastCommitted)));
+        uponCondition();
     }
 
     bool Context::getLocksWithTimeout(const std::map<data_t, bool> &toLock) {
@@ -163,9 +167,10 @@ namespace score {
     }
 
     // need to be holding state mutex to call
-    void Context::uponCondition(const std::unique_lock<std::mutex> &stateLock) {
-        if (ts.getMaxSeen(stateLock) > ts.getCommitID(stateLock) && pendQ.empty() && stableQ.empty()) {
-            ts.getCommitID(stateLock) = std::max(ts.getMaxSeen(stateLock), ts.getCommitID(stateLock));
+    void Context::uponCondition() {
+        while(ts.getMaxSeen() > ts.getCommitID() && pendQ.empty() && stableQ.empty()) {
+            auto expected = ts.getCommitID().load();
+            ts.getCommitID().compare_exchange_strong(expected, ts.getMaxSeen());
         }
     }
 
@@ -179,16 +184,16 @@ namespace score {
         return pendQ;
     }
 
-    version_t &Context::getNextID(const std::unique_lock<std::mutex> &stateLock) {
-        return ts.getNextID(stateLock);
+    std::atomic<version_t> &Context::getNextID() {
+        return ts.getNextID();
     }
 
-    version_t &Context::getCommitID(const std::unique_lock<std::mutex> &stateLock) {
-        return ts.getCommitID(stateLock);
+    std::atomic<version_t> &Context::getCommitID() {
+        return ts.getCommitID();
     }
 
-    version_t &Context::getMaxSeen(const std::unique_lock<std::mutex> &stateLock) {
-        return ts.getMaxSeen(stateLock);
+    std::atomic<version_t> &Context::getMaxSeen() {
+        return ts.getMaxSeen();
     }
 
     std::ofstream &Context::getLogFile(const std::unique_lock<std::mutex> &stateLock) {

@@ -23,37 +23,30 @@ namespace score {
         version_t newReadSid = request.readsid();
 
         SPDLOG_TRACE("Grabbing state lock {}", __FUNCTION__);
-        std::unique_lock<std::mutex> stateLock(ctx_->stateMtx);
         SPDLOG_TRACE("Grabbed state lock {}", __FUNCTION__);
-        if (request.firstread() && ctx_->getCommitID(stateLock) > newReadSid) {
-            newReadSid = ctx_->getCommitID(stateLock);
+        if (request.firstread() && ctx_->getCommitID() > newReadSid) {
+            newReadSid = ctx_->getCommitID();
         }
-        stateLock.unlock();
         SPDLOG_TRACE("Unlocked state lock {}", __FUNCTION__);
 
         std::string key = request.key();
         SPDLOG_TRACE("Grabbing state lock {}", __FUNCTION__);
-        stateLock.lock();
+
+        std::tuple<data_t, version_t, bool> p = ctx_->doRead(newReadSid, key);
+        std::unique_lock<std::mutex> stateLock(ctx_->stateMtx);
         SPDLOG_TRACE("Grabbed state lock {}", __FUNCTION__);
-        std::tuple<data_t, version_t, bool> p = ctx_->doRead(newReadSid, key, stateLock);
         ctx_->getLogFile(stateLock) << request.txid() << "," << request.nodeid() << "," << newReadSid << ",r," << key
                                     << "," << std::get<0>(p) << std::endl;
         stateLock.unlock();
         SPDLOG_TRACE("Unlocked state lock {}", __FUNCTION__);
-
-        SPDLOG_TRACE("Grabbing state lock {}", __FUNCTION__);
-        stateLock.lock();
-        ctx_->updateNodeTimestamps(request.readsid(), stateLock);
-        stateLock.unlock();
+        ctx_->updateNodeTimestamps(request.readsid());
 
         response->set_txid(request.txid());
         response->set_nodeid(request.nodeid());
         response->set_key(key);
         response->set_value(std::get<0>(p));
         response->set_mostrecent(std::get<2>(p));
-        SPDLOG_TRACE("Grabbing state lock {}", __FUNCTION__);
-        stateLock.lock();
-        response->set_lastcommitted(ctx_->getCommitID(stateLock));
+        response->set_lastcommitted(std::min((unsigned long)newReadSid, (unsigned long)ctx_->getCommitID()));
         SPDLOG_TRACE("Completed {}", __FUNCTION__);
     }
 
@@ -83,6 +76,7 @@ namespace score {
             for (auto &r : request.rs()) {
 
                 ctx_->m.find(r.key(), [&](map_t::value_type &item) {
+                    SPDLOG_TRACE("Validating {} > {} for key {}", item.second->l.front().second, request.sid(), r.key());
                     if (item.second->l.front().second > request.sid()) {
                         outcome = false;
                     }
@@ -102,8 +96,7 @@ namespace score {
                 std::unique_lock<std::mutex> stateLock(ctx_->stateMtx);
                 SPDLOG_TRACE("Got statelock");
 
-                ctx_->getNextID(stateLock) += 1;
-                sn = ctx_->getNextID(stateLock);
+                sn = ctx_->getNextID().fetch_add(1) + 1;
                 ctx_->getLogFile(stateLock) << request.txid() << "," << request.nodeid() << "," << sn
                                             << ",u,x,x" << std::endl;
 
@@ -152,7 +145,12 @@ namespace score {
         SPDLOG_TRACE("Got statelock");
 
         if (request.outcome()) {
-            ctx_->getNextID(stateLock) = std::max(ctx_->getNextID(stateLock), request.fsn());
+
+            auto expected = ctx_->getNextID().load();
+            while(!ctx_->getNextID().compare_exchange_strong(expected, std::max(expected, request.fsn()))) {
+                expected = ctx_->getNextID().load();
+            }
+
             OpTriple o;
             o.txid = request.txid();
             o.node = request.nodeid();
@@ -233,8 +231,9 @@ namespace score {
                 ctx_->releaseLocks(toLock);
                 ctx_->getStableQ(stateLock).pop();
                 a->second.committed = true;
-                if (fsn > ctx_->getMaxSeen(stateLock)) {
-                    ctx_->getMaxSeen(stateLock) = fsn;
+                while (fsn > ctx_->getMaxSeen()) {
+                    auto expected = ctx_->getMaxSeen().load();
+                    ctx_->getMaxSeen().compare_exchange_strong(expected, fsn);
                 }
                 SPDLOG_DEBUG("Committed TX {} with timestamp {}", a->second.txid, a->second.sid);
             } else {
@@ -242,7 +241,7 @@ namespace score {
                 break;
             }
         }
-        ctx_->uponCondition(stateLock);
+        ctx_->uponCondition();
     }
 
 }

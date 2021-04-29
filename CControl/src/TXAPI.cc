@@ -51,8 +51,7 @@ namespace score {
 
 
         if (a->second.firstRead) {
-            std::unique_lock<std::mutex> stateLock(ctx_->stateMtx);
-            a->second.sid = ctx_->getCommitID(stateLock);
+            a->second.sid = ctx_->getCommitID();
             SPDLOG_TRACE("SET SID to {} for TX {}", a->second.sid, request.txid());
         }
         ReadRequest req;
@@ -70,10 +69,7 @@ namespace score {
             auto reps = ctx_->replicas(request.key());
             for (auto &rep : reps) {
                 c[rep]->DoReadRequest(req, &ret);
-                {
-                    std::unique_lock<std::mutex> stateLock(ctx_->stateMtx);
-                    ctx_->updateNodeTimestamps(ret.lastcommitted(), stateLock);
-                }
+                ctx_->updateNodeTimestamps(ret.lastcommitted());
             }
         }
 
@@ -81,6 +77,7 @@ namespace score {
 
         if (a->second.firstRead) {
             a->second.sid = ret.lastcommitted();
+            a->second.firstRead = false;
         }
 
         if (a->second.isUpdate && !ret.mostrecent()) {
